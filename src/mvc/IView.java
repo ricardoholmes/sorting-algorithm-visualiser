@@ -1,8 +1,9 @@
+package mvc;
 public interface IView {
 	/*
 	 * Initialise the view
 	 */
-	void initialise();
+	void initialise(Model m, Controller c);
 	
 	/*
 	 * Refresh the display
