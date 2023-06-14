@@ -34,6 +34,13 @@ public class Controller {
 	}
 
 	void update() {
-		view.refreshView();
+		int[] nums = model.getList();
+		for (int i = 0; i < nums.length - 1; i++) {
+			if (nums[i + 1] > nums[i]) {
+				view.refreshView(false);
+				return;
+			}
+		}
+		view.refreshView(true);
 	}
 }

@@ -21,30 +21,41 @@ public class CLIView implements IView {
 
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();
-        
+
         // no need to check if it's negative because it won't match the regex if it is
-        while (!choice.matches("^[0-9]+$") && Integer.parseInt(choice) < sorters.length) {
+        while (!choice.matches("^[0-9]+$") || Integer.parseInt(choice) > sorters.length) {
             System.out.print("Invalid, choose again: ");
             scanner = new Scanner(System.in);
             choice = scanner.nextLine();
         }
         System.out.println();
 
-        int n = Integer.parseInt(choice);
-        ISorter sorter = sorters[n];
+        ISorter sorter = sorters[Integer.parseInt(choice)];
         sorter.initialise(c, m);
-        sorter.sort();
+
+        System.out.print("Delay between numbers moving position (milliseconds): ");
+        choice = scanner.nextLine();
+        while (!choice.matches("^[0-9]+$")) {
+            System.out.print("Invalid, choose again: ");
+            choice = scanner.nextLine();
+        }
+
+        sorter.sort(Integer.parseInt(choice));
 
         scanner.close();
     }
 
     @Override
-    public void refreshView() {
+    public void refreshView(boolean isSorted) {
         int[] nums = model.getList();
+        System.out.print("\r");
         for (int i = 0; i < nums.length; i++) {
             System.out.print(nums[i] + (i == nums.length - 1 ? "" : ", "));
         }
-        System.out.println();
+
+        if (isSorted) {
+            System.out.println();
+        }
     }
     
 }

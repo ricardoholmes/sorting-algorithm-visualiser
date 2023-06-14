@@ -19,7 +19,7 @@ public class BubbleSort implements ISorter {
     }
 
     @Override
-    public void sort() {
+    public void sort(int delay) {
         boolean sorted = false;
         int iterations = 0;
         while (!sorted) {
@@ -27,6 +27,9 @@ public class BubbleSort implements ISorter {
             for (int i = 0; i < model.getArrayLength() - 1 - iterations; i++) {
                 if (controller.getNumAtIndex(i) > controller.getNumAtIndex(i + 1)) {
                     controller.swapIndexes(i, i+1);
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) { }
                     sorted = false;
                 }
             }

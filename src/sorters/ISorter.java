@@ -11,6 +11,7 @@ public interface ISorter {
     /*
      * Sorts the array, refreshing UI at every change
      * Will get array from IModel, which will be passed through the constructor
+     * @param delay The delay between numbers changing positions
      */
-    public void sort();
+    public void sort(int delay);
 }
