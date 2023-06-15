@@ -1,5 +1,6 @@
 package mvc;
 
+import sorters.BogoSort;
 import sorters.BubbleSort;
 import sorters.ISorter;
 
@@ -9,10 +10,7 @@ public class Controller {
 
 	private ISorter[] sorters = {
 		new BubbleSort(),
-		new BubbleSort(),
-		new BubbleSort(),
-		new BubbleSort(),
-		new BubbleSort()
+		new BogoSort()
 	};
 
 	private int chosenSorterIndex = -1;
@@ -67,6 +65,18 @@ public class Controller {
 		model.updateList(nums);
 
 		update();
+	}
+
+	public boolean isSorted() {
+		boolean sorted = true;
+		int[] nums = model.getList();
+		for (int i = 0; i < nums.length - 1; i++) {
+			if (nums[i + 1] < nums[i]) {
+				sorted = false;
+				break;
+			}
+		}
+		return sorted;
 	}
 
 	void update() {

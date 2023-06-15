@@ -8,7 +8,7 @@ public class OptionsPanel extends JPanel {
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
             c.selectSorter(0);
-            c.sort(1);
+            c.sort(10);
         });
 
         JButton shuffleButton = new JButton("Shuffle");
