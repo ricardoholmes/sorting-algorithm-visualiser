@@ -8,5 +8,5 @@ public interface IView {
 	/*
 	 * Refresh the display
 	 */
-	void refreshView(boolean isSorted);
+	void refreshView();
 }

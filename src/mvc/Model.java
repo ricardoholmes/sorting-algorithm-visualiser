@@ -12,6 +12,10 @@ public class Model {
         return nums;
     }
 
+    public int getValueAt(int index) {
+        return nums[index];
+    }
+
     public int getArrayLength() {
         return nums.length;
     }

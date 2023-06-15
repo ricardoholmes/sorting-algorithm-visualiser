@@ -28,7 +28,7 @@ public class BubbleSort implements ISorter {
                 if (controller.getNumAtIndex(i) > controller.getNumAtIndex(i + 1)) {
                     controller.swapIndexes(i, i+1);
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(delay);
                     } catch (InterruptedException e) { }
                     sorted = false;
                 }
