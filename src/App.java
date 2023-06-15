@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import mvc.*;
 
 public class App {
-    final int DEFAULT_ARRAY_LENGTH = 200;
+    final int DEFAULT_ARRAY_LENGTH = 250;
 
     App() {
         Model model = new Model();

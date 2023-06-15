@@ -9,7 +9,7 @@ public class Model {
 	}
 
     public int[] getList() {
-        return nums;
+        return nums.clone();
     }
 
     public int getValueAt(int index) {
