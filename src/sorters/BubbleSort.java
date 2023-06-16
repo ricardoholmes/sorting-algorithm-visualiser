@@ -1,19 +1,6 @@
 package sorters;
 
-import mvc.Controller;
-import mvc.Model;
-
-public class BubbleSort implements ISorter {
-    Controller controller;
-    Model model;
-    private boolean shouldStop;
-
-    @Override
-    public void initialise(Controller c, Model m) {
-        controller = c;
-        model = m;
-    }
-
+public class BubbleSort extends Sorter {
     @Override
     public String getName() {
         return "Bubble Sort";
@@ -43,15 +30,5 @@ public class BubbleSort implements ISorter {
             }
             iterations++;
         }
-    }
-
-    @Override
-    public void stop() {
-        shouldStop = true;
-    }
-
-    @Override
-    public boolean isStopped() {
-        return shouldStop;
     }
 }
