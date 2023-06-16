@@ -53,7 +53,7 @@ public class BarPanel extends JPanel {
 
         int[] nums = model.getList();
         for (int i = 0; i < model.getArrayLength(); i++) {
-            int barHeight = (int)(maxHeight * ((double)nums[i] / (double)(model.getArrayLength() + 1)));
+            int barHeight = (int)(maxHeight * ((double)nums[i] / (double)model.getArrayLength()));
             int barWidth = baseBarWidth;
             if (barsWithExtraPixels.contains(nums[i])) {
                 barWidth++;
