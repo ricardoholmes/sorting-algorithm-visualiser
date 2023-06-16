@@ -79,6 +79,13 @@ public class Controller {
 		sorter.stop();
 	}
 
+	public void generateList(int length) {
+		stopSorting();
+		model.generateList(length);
+		BarPanel.resetBarSample();
+		view.refreshView();
+	}
+
 	public void shuffle() {
 		model.shuffle();
 		view.refreshView();

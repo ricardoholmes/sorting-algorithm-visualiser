@@ -4,8 +4,8 @@ import mvc.Controller;
 import mvc.Model;
 
 public abstract class Sorter {
-    Controller controller;
-    Model model;
+    protected Controller controller;
+    protected Model model;
     protected boolean shouldStop;
 
     public final void initialise(Controller c, Model m) {

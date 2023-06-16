@@ -9,16 +9,22 @@ import javax.swing.JPanel;
 public class BarPanel extends JPanel {
     final int PADDING = 10;
 
-    Model model;
-    boolean hasBorder = true;
+    private static Model model;
+    private static Controller controller;
+    private static OptionsPanel optionsPanel;
+    private boolean hasBorder = true;
 
-    // TODO: Add functionality to make this change when the number of bars changes
-    int[] barSample;
+    private static int[] barSample;
 
-    public BarPanel(Model m) {
+    public BarPanel(Model m, Controller c, OptionsPanel options) {
         model = m;
+        controller = c;
+        optionsPanel = options;
+        resetBarSample();
+    }
 
-        barSample = m.getList();
+    public static void resetBarSample() {
+        barSample = model.getList();
     }
 
     public void setBorderActive(boolean b) {
@@ -28,6 +34,13 @@ public class BarPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        int maxBars = getSize().width / (hasBorder ? 3 : 1);
+        optionsPanel.setMaximumBarCount(maxBars);
+        
+        if (model.getArrayLength() > maxBars) {
+            controller.generateList(maxBars);
+        }
 
         int baseBarWidth = (getSize().width - 2 * PADDING) / model.getArrayLength();
         int spareWidthPixels = (getSize().width - 2 * PADDING) % model.getArrayLength();
