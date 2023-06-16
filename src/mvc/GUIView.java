@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 public class GUIView implements IView {
     Model model;
@@ -45,10 +45,10 @@ public class GUIView implements IView {
 
         barsPanel = new BarPanel(model, controller, optionsPanel);
         barsPanel.setPreferredSize(new Dimension(1024, 720));
-        barsPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
         mainPanel.add(barsPanel);
 
         constraints.fill = GridBagConstraints.BOTH;
+        constraints.insets = new Insets(10, 10, 10, 10);
         constraints.weightx = 0.75;
         constraints.weighty = 1;
         constraints.gridx = 1;

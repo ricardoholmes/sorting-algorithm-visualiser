@@ -8,10 +8,16 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class OptionsPanel extends JPanel {
+    Controller controller;
+
     JSpinner delaySpinner;
     JSpinner countSpinner;
 
+    int maxBars;
+
     public OptionsPanel(Controller c) {
+        controller = c;
+
         String[] sortingAlgorithmNames = c.getSorterNames();
         JComboBox<String> sorterDropDown = new JComboBox<>(sortingAlgorithmNames);
         sorterDropDown.addItemListener(e -> {
@@ -33,16 +39,16 @@ public class OptionsPanel extends JPanel {
             c.shuffle();
         });
 
-        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
-        delaySpinner = new JSpinner(delaySpinnerModel);
-
-        SpinnerModel countSpinnerModel = new SpinnerNumberModel(10, 1, Integer.MAX_VALUE, 1);
+        SpinnerModel countSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
         countSpinner = new JSpinner(countSpinnerModel);
 
         JButton generateArrayButton = new JButton("Generate");
         generateArrayButton.addActionListener(e -> {
             c.generateList((int)countSpinner.getValue());
         });
+
+        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
+        delaySpinner = new JSpinner(delaySpinnerModel);
 
         add(sorterDropDown);
         add(countSpinner);
@@ -54,13 +60,26 @@ public class OptionsPanel extends JPanel {
     }
 
     public void setMaximumBarCount(int count) {
+        maxBars = count;
+
         int value = (int)countSpinner.getValue();
-        if (value > count) {
-            value = count;
+        if (value > maxBars) {
+            value = maxBars;
+            generateList();
         }
 
-        SpinnerModel countSpinnerModel = new SpinnerNumberModel((int)countSpinner.getValue(), 1, count, 1);
-        countSpinner.setModel(countSpinnerModel);
+    }
 
+    void generateList() {
+        int count = (int)countSpinner.getValue();
+        if (count > maxBars) {
+            count = maxBars;
+        }
+        else if (count < 1) {
+            count = 1;
+        }
+
+        countSpinner.setValue(count);
+        controller.generateList(count);
     }
 }

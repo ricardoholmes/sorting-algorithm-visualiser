@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 public class BarPanel extends JPanel {
-    final int PADDING = 10;
-
     private static Model model;
     private static Controller controller;
     private static OptionsPanel optionsPanel;
@@ -42,16 +40,16 @@ public class BarPanel extends JPanel {
             controller.generateList(maxBars);
         }
 
-        int baseBarWidth = (getSize().width - 2 * PADDING) / model.getArrayLength();
-        int spareWidthPixels = (getSize().width - 2 * PADDING) % model.getArrayLength();
-        int x = PADDING;
+        int baseBarWidth = getSize().width / model.getArrayLength();
+        int spareWidthPixels = getSize().width % model.getArrayLength();
+        int x = 0;
 
         ArrayList<Integer> barsWithExtraPixels = new ArrayList<>();
         for (int i = 0; i < spareWidthPixels; i++) {
             barsWithExtraPixels.add(barSample[i]);
         }
 
-        int maxHeight = getSize().height - 2 * PADDING;
+        int maxHeight = getSize().height;
 
         int[] nums = model.getList();
         for (int i = 0; i < model.getArrayLength(); i++) {
@@ -61,7 +59,7 @@ public class BarPanel extends JPanel {
                 barWidth++;
             }
 
-            int y = PADDING + maxHeight - barHeight;
+            int y = maxHeight - barHeight;
 
             g.setColor(Color.BLACK);
             g.fillRect(x, y, barWidth, barHeight);
