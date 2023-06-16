@@ -15,6 +15,8 @@ public class App {
 
         JFrame frame = new JFrame("Choice");
         frame.setPreferredSize(new Dimension(500, 250));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         JPanel panel = new JPanel(new GridLayout(1, 2));
 
         JButton cliButton = new JButton("CLI");

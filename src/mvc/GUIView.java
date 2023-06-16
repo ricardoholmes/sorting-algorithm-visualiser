@@ -24,6 +24,8 @@ public class GUIView implements IView {
 
         JFrame frame = new JFrame("Sorting Algorithm Visualiser");
         frame.setPreferredSize(new Dimension(1280, 720));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         frame.add(mainPanel);

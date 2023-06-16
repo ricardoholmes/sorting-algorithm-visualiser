@@ -1,13 +1,19 @@
 package mvc;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class OptionsPanel extends JPanel {
     public OptionsPanel(Controller c) {
+        String[] sortingAlgorithmNames = c.getSorterNames();
+        JComboBox<String> sorterDropDown = new JComboBox<>(sortingAlgorithmNames);
+        sorterDropDown.addItemListener(e -> {
+            c.selectSorter(sorterDropDown.getSelectedIndex());
+        });
+
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.selectSorter(0);
             c.sort(10);
         });
 
@@ -16,7 +22,8 @@ public class OptionsPanel extends JPanel {
             c.shuffle();
         });
 
-        this.add(sortButton);
-        this.add(shuffleButton);
+        add(sorterDropDown);
+        add(sortButton);
+        add(shuffleButton);
     }
 }

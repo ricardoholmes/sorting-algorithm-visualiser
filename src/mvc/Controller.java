@@ -13,7 +13,7 @@ public class Controller {
 		new BogoSort()
 	};
 
-	private int chosenSorterIndex = -1;
+	private int chosenSorterIndex = 0;
 
     /*
 	 * Initialise the controller
@@ -26,6 +26,16 @@ public class Controller {
 
 	public String getNameOfSorterAt(int index) {
 		return sorters[index].getName();
+	}
+
+	public String[] getSorterNames() {
+		String[] names = new String[sorters.length];
+
+		for (int i = 0; i < sorters.length; i++) {
+			names[i] = getNameOfSorterAt(i);
+		}
+
+		return names;
 	}
 
 	public int getSorterCount() {
@@ -64,7 +74,8 @@ public class Controller {
 		nums[i] = temp;
 		model.updateList(nums);
 
-		update();
+		view.refreshView();
+		// update();
 	}
 
 	public boolean isSorted() {
@@ -79,15 +90,15 @@ public class Controller {
 		return sorted;
 	}
 
-	void update() {
-		// int[] nums = model.getList();
-		// for (int i = 0; i < nums.length - 1; i++) {
-		// 	if (nums[i + 1] > nums[i]) {
-		// 		view.refreshView(false);
-		// 		return;
-		// 	}
-		// }
-		// view.refreshView(true);
-		view.refreshView();
-	}
+	// void update() {
+	// 	// int[] nums = model.getList();
+	// 	// for (int i = 0; i < nums.length - 1; i++) {
+	// 	// 	if (nums[i + 1] > nums[i]) {
+	// 	// 		view.refreshView(false);
+	// 	// 		return;
+	// 	// 	}
+	// 	// }
+	// 	// view.refreshView(true);
+	// 	view.refreshView();
+	// }
 }
