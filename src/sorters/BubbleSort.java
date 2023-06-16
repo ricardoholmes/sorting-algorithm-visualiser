@@ -6,13 +6,14 @@ import mvc.Model;
 public class BubbleSort implements ISorter {
     Controller controller;
     Model model;
+    private boolean shouldStop;
 
     @Override
     public void initialise(Controller c, Model m) {
         controller = c;
         model = m;
     }
-    
+
     @Override
     public String getName() {
         return "Bubble Sort";
@@ -20,11 +21,16 @@ public class BubbleSort implements ISorter {
 
     @Override
     public void sort(int delay) {
+        shouldStop = false;
         boolean sorted = false;
         int iterations = 0;
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < model.getArrayLength() - 1 - iterations; i++) {
+                if (shouldStop) {
+                    return;
+                }
+
                 if (controller.getNumAtIndex(i) > controller.getNumAtIndex(i + 1)) {
                     controller.swapIndexes(i, i+1);
                     sorted = false;
@@ -37,5 +43,15 @@ public class BubbleSort implements ISorter {
             }
             iterations++;
         }
+    }
+
+    @Override
+    public void stop() {
+        shouldStop = true;
+    }
+
+    @Override
+    public boolean isStopped() {
+        return shouldStop;
     }
 }

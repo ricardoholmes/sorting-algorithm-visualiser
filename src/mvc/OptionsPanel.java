@@ -17,6 +17,11 @@ public class OptionsPanel extends JPanel {
             c.sort(10);
         });
 
+        JButton stopButton = new JButton("Stop");
+        stopButton.addActionListener(e -> {
+            c.stopSorting();
+        });
+
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
             c.shuffle();
@@ -25,5 +30,6 @@ public class OptionsPanel extends JPanel {
         add(sorterDropDown);
         add(sortButton);
         add(shuffleButton);
+        add(stopButton);
     }
 }

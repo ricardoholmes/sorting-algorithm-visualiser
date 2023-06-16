@@ -14,4 +14,8 @@ public interface ISorter {
      * @param delay The delay between numbers changing positions
      */
     public void sort(int delay);
+
+    public void stop();
+
+    public boolean isStopped();
 }

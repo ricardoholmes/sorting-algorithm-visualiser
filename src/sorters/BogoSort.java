@@ -6,6 +6,7 @@ import mvc.Model;
 public class BogoSort implements ISorter {
     Controller controller;
     Model model;
+    private boolean shouldStop;
 
     @Override
     public void initialise(Controller c, Model m) {
@@ -20,7 +21,12 @@ public class BogoSort implements ISorter {
 
     @Override
     public void sort(int delay) {
+        shouldStop = false;
         while (!controller.isSorted()) {
+            if (shouldStop) {
+                return;
+            }
+
             controller.shuffle();
 
             // delay
@@ -28,5 +34,13 @@ public class BogoSort implements ISorter {
                 Thread.sleep(delay);
             } catch (InterruptedException e) { }
         }
+    }
+
+    public void stop() {
+        shouldStop = true;
+    }
+
+    public boolean isStopped() {
+        return shouldStop;
     }
 }

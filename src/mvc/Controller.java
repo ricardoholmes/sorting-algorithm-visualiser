@@ -13,7 +13,11 @@ public class Controller {
 		new BogoSort()
 	};
 
+	private ISorter sorter;
+
 	private int chosenSorterIndex = 0;
+
+	private Thread sortThread;
 
     /*
 	 * Initialise the controller
@@ -51,11 +55,28 @@ public class Controller {
 	}
 
 	public void sort(int delay) {
-		ISorter sorter = sorters[chosenSorterIndex];
+		if (delay < 0) {
+			throw new IllegalArgumentException();
+		}
+
+		// fail silently if it is still being sorted
+		if (sortThread != null && sortThread.isAlive()) {
+			return;
+		}
+
+		sorter = sorters[chosenSorterIndex];
 		sorter.initialise(this, model);
 
-		Thread thread = new Thread(() -> sorter.sort(delay));
-		thread.start();
+		sortThread = new Thread(() -> sorter.sort(delay));
+		sortThread.start();
+	}
+
+	public void stopSorting() {
+		// if (sorter == null || sortThread == null || !sortThread.isAlive()) {
+		if (sorter == null || sortThread == null || !sortThread.isAlive()) {
+			return;
+		}
+		sorter.stop();
 	}
 
 	public void shuffle() {
@@ -79,15 +100,15 @@ public class Controller {
 	}
 
 	public boolean isSorted() {
-		boolean sorted = true;
+		boolean isSorted = true;
 		int[] nums = model.getList();
 		for (int i = 0; i < nums.length - 1; i++) {
 			if (nums[i + 1] < nums[i]) {
-				sorted = false;
+				isSorted = false;
 				break;
 			}
 		}
-		return sorted;
+		return isSorted;
 	}
 
 	// void update() {
