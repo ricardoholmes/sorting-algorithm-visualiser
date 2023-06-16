@@ -22,10 +22,7 @@ public class BubbleSort extends Sorter {
                     controller.swapIndexes(i, i+1);
                     sorted = false;
 
-                    // delay
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) { }
+                    sleep(delay);
                 }
             }
             iterations++;

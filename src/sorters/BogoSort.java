@@ -16,10 +16,7 @@ public class BogoSort extends Sorter {
 
             controller.shuffle();
 
-            // delay
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException e) { }
+            sleep(delay);
         }
     }
 }

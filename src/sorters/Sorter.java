@@ -17,11 +17,19 @@ public abstract class Sorter {
 
     public abstract void sort(int delay);
 
-    public final void stop() {
-        shouldStop = true;
+    protected final void sleep(int delay) {
+        for (int i = 0; i < delay; i++) {
+            if (shouldStop) {
+                return;
+            }
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) { }
+        }
     }
 
-    public final boolean isStopped() {
-        return shouldStop;
+    public final void stop() {
+        shouldStop = true;
     }
 }
