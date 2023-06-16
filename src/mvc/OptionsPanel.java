@@ -47,7 +47,7 @@ public class OptionsPanel extends JPanel {
 
         JButton generateArrayButton = new JButton("Generate");
         generateArrayButton.addActionListener(e -> {
-            c.generateList((int)countSpinner.getValue());
+            generateList();
         });
 
         SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
