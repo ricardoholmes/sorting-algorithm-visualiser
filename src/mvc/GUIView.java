@@ -31,7 +31,7 @@ public class GUIView implements IView {
         GridBagConstraints constraints = new GridBagConstraints();
         frame.add(mainPanel);
 
-        optionsPanel = new OptionsPanel(controller);
+        optionsPanel = new OptionsPanel(controller, model);
         optionsPanel.setPreferredSize(new Dimension(256, 720));
         optionsPanel.setBackground(Color.GREEN);
         mainPanel.add(optionsPanel);

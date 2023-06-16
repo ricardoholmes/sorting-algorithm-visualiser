@@ -9,14 +9,16 @@ import javax.swing.SpinnerNumberModel;
 
 public class OptionsPanel extends JPanel {
     Controller controller;
+    Model model;
 
     JSpinner delaySpinner;
     JSpinner countSpinner;
 
     int maxBars;
 
-    public OptionsPanel(Controller c) {
+    public OptionsPanel(Controller c, Model m) {
         controller = c;
+        model = m;
 
         String[] sortingAlgorithmNames = c.getSorterNames();
         JComboBox<String> sorterDropDown = new JComboBox<>(sortingAlgorithmNames);
@@ -62,9 +64,8 @@ public class OptionsPanel extends JPanel {
     public void setMaximumBarCount(int count) {
         maxBars = count;
 
-        int value = (int)countSpinner.getValue();
-        if (value > maxBars) {
-            value = maxBars;
+        if (model.getArrayLength() > maxBars) {
+            countSpinner.setValue(maxBars);
             generateList();
         }
 
