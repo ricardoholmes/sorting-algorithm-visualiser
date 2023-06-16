@@ -24,15 +24,15 @@ public class GUIView implements IView {
 
         JFrame frame = new JFrame("Sorting Algorithm Visualiser");
         frame.setPreferredSize(new Dimension(1280, 720));
-        frame.setMinimumSize(new Dimension(640, 360));
+        frame.setMinimumSize(new Dimension(854, 480));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         frame.add(mainPanel);
 
-        optionsPanel = new OptionsPanel(controller, model);
-        optionsPanel.setPreferredSize(new Dimension(256, 720));
+        optionsPanel = new OptionsPanel(controller, this, model);
+        optionsPanel.setMinimumSize(new Dimension(0, 0));
         optionsPanel.setBackground(Color.GREEN);
         mainPanel.add(optionsPanel);
 
@@ -58,6 +58,11 @@ public class GUIView implements IView {
         frame.pack();
         frame.setVisible(true);
 
+        refreshView();
+    }
+
+    public void setBorderActive(boolean b) {
+        barsPanel.setBorderActive(b);
         refreshView();
     }
 

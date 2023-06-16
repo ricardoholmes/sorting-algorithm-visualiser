@@ -1,6 +1,7 @@
 package mvc;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -16,7 +17,7 @@ public class OptionsPanel extends JPanel {
 
     int maxBars;
 
-    public OptionsPanel(Controller c, Model m) {
+    public OptionsPanel(Controller c, GUIView v, Model m) {
         controller = c;
         model = m;
 
@@ -52,10 +53,16 @@ public class OptionsPanel extends JPanel {
         SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
 
+        JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
+        borderActiveCheckBox.addActionListener(e -> {
+            v.setBorderActive(borderActiveCheckBox.isSelected());
+        });
+
         add(sorterDropDown);
         add(countSpinner);
         add(generateArrayButton);
         add(delaySpinner);
+        add(borderActiveCheckBox);
         add(sortButton);
         add(shuffleButton);
         add(stopButton);
