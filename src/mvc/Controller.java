@@ -2,6 +2,7 @@ package mvc;
 
 import sorters.BogoSort;
 import sorters.BubbleSort;
+import sorters.CocktailSort;
 import sorters.Sorter;
 
 public class Controller {
@@ -10,6 +11,7 @@ public class Controller {
 
 	private Sorter[] sorters = {
 		new BubbleSort(),
+		new CocktailSort(),
 		new BogoSort()
 	};
 

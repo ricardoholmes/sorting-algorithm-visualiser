@@ -3,13 +3,47 @@ package sorters;
 public class CocktailSort extends Sorter {
     @Override
     public String getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+        return "Cocktail Shaker Sort";
     }
 
     @Override
     public void sort(int delay) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sort'");
+        shouldStop = false;
+        boolean sorted = false;
+        while (!sorted) {
+            // sort forwards
+            sorted = true;
+            for (int i = 0; i < model.getArrayLength() - 1; i++) {
+                if (shouldStop) {
+                    return;
+                }
+
+                if (controller.getNumAtIndex(i) > controller.getNumAtIndex(i + 1)) {
+                    controller.swapIndexes(i, i + 1);
+                    sorted = false;
+
+                    sleep(delay);
+                }
+            }
+
+            if (sorted) {
+                break;
+            }
+
+            // sort backwards
+            sorted = true;
+            for (int i = model.getArrayLength() - 1; i > 0; i--) {
+                if (shouldStop) {
+                    return;
+                }
+
+                if (controller.getNumAtIndex(i - 1) > controller.getNumAtIndex(i)) {
+                    controller.swapIndexes(i - 1, i);
+                    sorted = false;
+
+                    sleep(delay);
+                }
+            }
+        }
     }
 }
