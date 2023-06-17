@@ -15,6 +15,8 @@ public class OptionsPanel extends JPanel {
     JSpinner delaySpinner;
     JSpinner countSpinner;
 
+    JCheckBox sortAscendingCheckBox;
+
     int maxBars;
 
     public OptionsPanel(Controller c, GUIView v, Model m) {
@@ -29,7 +31,7 @@ public class OptionsPanel extends JPanel {
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.sort((int)delaySpinner.getValue(), true);
+            c.sort((int)delaySpinner.getValue(), sortAscendingCheckBox.isSelected());
         });
 
         JButton stopButton = new JButton("Stop");
@@ -58,11 +60,14 @@ public class OptionsPanel extends JPanel {
             v.setBorderActive(borderActiveCheckBox.isSelected());
         });
 
+        sortAscendingCheckBox = new JCheckBox("Sort Ascending", true);
+
         add(sorterDropDown);
         add(countSpinner);
         add(generateArrayButton);
         add(delaySpinner);
         add(borderActiveCheckBox);
+        add(sortAscendingCheckBox);
         add(sortButton);
         add(shuffleButton);
         add(stopButton);
