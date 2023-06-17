@@ -15,7 +15,20 @@ public abstract class Sorter {
 
     public abstract String getName();
 
-    public abstract void sort(int delay);
+    public abstract void sort(int delay, boolean sortAscending);
+
+    /*
+     * Returns whether if placed in order "a, b", the numbers would be in the correct order,
+     * as stated by sortAscending
+     */
+    protected final boolean inOrder(int a, int b, boolean sortAscending) {
+        // sortAscending AND !(a < b)
+        // OR
+        // !sortAscending AND (a < b)
+        // THEREFORE
+        // sortAscending XOR a > b
+        return sortAscending ^ (a < b);
+    }
 
     protected final void sleep(int delay) {
         for (int i = 0; i < delay; i++) {

@@ -2,6 +2,7 @@ package mvc;
 
 import sorters.BogoSort;
 import sorters.BubbleSort;
+import sorters.CocktailSort;
 import sorters.Sorter;
 
 public class Controller {
@@ -10,6 +11,7 @@ public class Controller {
 
 	private Sorter[] sorters = {
 		new BubbleSort(),
+		new CocktailSort(),
 		new BogoSort()
 	};
 
@@ -54,7 +56,7 @@ public class Controller {
 		chosenSorterIndex = index;
 	}
 
-	public void sort(int delay) {
+	public void sort(int delay, boolean sortAscending) {
 		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -67,7 +69,7 @@ public class Controller {
 		sorter = sorters[chosenSorterIndex];
 		sorter.initialise(this, model);
 
-		sortThread = new Thread(() -> sorter.sort(delay));
+		sortThread = new Thread(() -> sorter.sort(delay, sortAscending));
 		sortThread.start();
 	}
 
@@ -106,11 +108,12 @@ public class Controller {
 		// update();
 	}
 
-	public boolean isSorted() {
+	public boolean isSorted(boolean ascending) {
 		boolean isSorted = true;
 		int[] nums = model.getList();
 		for (int i = 0; i < nums.length - 1; i++) {
-			if (nums[i + 1] < nums[i]) {
+			// (ascending AND !(nums[i+1] > nums[i])) OR (!ascending AND (nums[i+1] > nums[i]))
+			if (ascending ^ (nums[i + 1] > nums[i])) {
 				isSorted = false;
 				break;
 			}
