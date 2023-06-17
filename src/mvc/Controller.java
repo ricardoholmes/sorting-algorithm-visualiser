@@ -56,7 +56,7 @@ public class Controller {
 		chosenSorterIndex = index;
 	}
 
-	public void sort(int delay) {
+	public void sort(int delay, boolean sortAscending) {
 		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -69,7 +69,7 @@ public class Controller {
 		sorter = sorters[chosenSorterIndex];
 		sorter.initialise(this, model);
 
-		sortThread = new Thread(() -> sorter.sort(delay));
+		sortThread = new Thread(() -> sorter.sort(delay, sortAscending));
 		sortThread.start();
 	}
 

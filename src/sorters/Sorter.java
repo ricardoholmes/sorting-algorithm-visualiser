@@ -15,7 +15,7 @@ public abstract class Sorter {
 
     public abstract String getName();
 
-    public abstract void sort(int delay);
+    public abstract void sort(int delay, boolean sortAscending);
 
     protected final void sleep(int delay) {
         for (int i = 0; i < delay; i++) {

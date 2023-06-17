@@ -7,7 +7,7 @@ public class BogoSort extends Sorter {
     }
 
     @Override
-    public void sort(int delay) {
+    public void sort(int delay, boolean sortAscending) {
         shouldStop = false;
         while (!controller.isSorted()) {
             if (shouldStop) {

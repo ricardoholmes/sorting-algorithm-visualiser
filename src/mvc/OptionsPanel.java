@@ -29,7 +29,7 @@ public class OptionsPanel extends JPanel {
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.sort((int)delaySpinner.getValue());
+            c.sort((int)delaySpinner.getValue(), true);
         });
 
         JButton stopButton = new JButton("Stop");

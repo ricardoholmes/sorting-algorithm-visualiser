@@ -35,7 +35,7 @@ public class CLIView implements IView {
             choice = scanner.nextLine();
         }
 
-        c.sort(Integer.parseInt(choice));
+        c.sort(Integer.parseInt(choice), true);
 
         scanner.close();
     }
