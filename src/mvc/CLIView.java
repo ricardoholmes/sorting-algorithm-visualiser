@@ -34,8 +34,17 @@ public class CLIView implements IView {
             System.out.print("Invalid, choose again: ");
             choice = scanner.nextLine();
         }
+        int delay = Integer.parseInt(choice);
 
-        c.sort(Integer.parseInt(choice), true);
+        System.out.print("Sort in ascending order (y or n)? ");
+        choice = scanner.nextLine();
+        while (!choice.matches("^[yn]$")) {
+            System.out.print("Invalid, choose again: ");
+            choice = scanner.nextLine();
+        }
+        boolean sortAscending = (choice == "y");
+
+        c.sort(delay, sortAscending);
 
         scanner.close();
     }
