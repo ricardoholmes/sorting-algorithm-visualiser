@@ -108,11 +108,12 @@ public class Controller {
 		// update();
 	}
 
-	public boolean isSorted() {
+	public boolean isSorted(boolean ascending) {
 		boolean isSorted = true;
 		int[] nums = model.getList();
 		for (int i = 0; i < nums.length - 1; i++) {
-			if (nums[i + 1] < nums[i]) {
+			// (ascending AND !(nums[i+1] > nums[i])) OR (!ascending AND (nums[i+1] > nums[i]))
+			if (ascending ^ (nums[i + 1] > nums[i])) {
 				isSorted = false;
 				break;
 			}

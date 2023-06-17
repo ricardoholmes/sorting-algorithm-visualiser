@@ -18,7 +18,7 @@ public class CocktailSort extends Sorter {
                     return;
                 }
 
-                if (controller.getNumAtIndex(i) > controller.getNumAtIndex(i + 1)) {
+                if (inOrder(controller.getNumAtIndex(i), controller.getNumAtIndex(i+1), sortAscending)) {
                     controller.swapIndexes(i, i + 1);
                     sorted = false;
 
@@ -37,7 +37,7 @@ public class CocktailSort extends Sorter {
                     return;
                 }
 
-                if (controller.getNumAtIndex(i - 1) > controller.getNumAtIndex(i)) {
+                if (inOrder(controller.getNumAtIndex(i-1), controller.getNumAtIndex(i), sortAscending)) {
                     controller.swapIndexes(i - 1, i);
                     sorted = false;
 

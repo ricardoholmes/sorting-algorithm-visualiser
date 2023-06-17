@@ -18,7 +18,7 @@ public class BubbleSort extends Sorter {
                     return;
                 }
 
-                if (controller.getNumAtIndex(i) > controller.getNumAtIndex(i + 1)) {
+                if (inOrder(controller.getNumAtIndex(i), controller.getNumAtIndex(i+1), sortAscending)) {
                     controller.swapIndexes(i, i+1);
                     sorted = false;
 
