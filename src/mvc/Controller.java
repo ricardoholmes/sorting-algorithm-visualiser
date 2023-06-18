@@ -106,6 +106,25 @@ public class Controller {
 		// update();
 	}
 
+	public void moveNumber(int currentIndex, int newIndex) {
+		int[] nums = model.getList();
+		int currentNum = nums[currentIndex];
+
+		if (newIndex > currentIndex) {
+			for (int i = currentIndex; i < newIndex; i++) {
+				nums[i] = nums[i + 1];
+			}
+		}
+		else if (newIndex < currentIndex) {
+			for (int i = currentIndex; i > newIndex; i--) {
+				nums[i] = nums[i - 1];
+			}
+		}
+
+		nums[newIndex] = currentNum;
+		model.updateList(nums);
+	}
+
 	public boolean isSorted(boolean ascending) {
 		boolean isSorted = true;
 		int[] nums = model.getList();
