@@ -1,9 +1,6 @@
 package mvc;
 
-import sorters.BogoSort;
-import sorters.BubbleSort;
-import sorters.CocktailSort;
-import sorters.Sorter;
+import sorters.*;
 
 public class Controller {
 	Model model;
@@ -11,6 +8,7 @@ public class Controller {
 
 	private Sorter[] sorters = {
 		new BubbleSort(),
+		new SelectionSort(),
 		new CocktailSort(),
 		new BogoSort()
 	};
@@ -105,7 +103,26 @@ public class Controller {
 		model.updateList(nums);
 
 		view.refreshView();
-		// update();
+	}
+
+	public void moveNumber(int currentIndex, int newIndex) {
+		int[] nums = model.getList();
+		int currentNum = nums[currentIndex];
+
+		if (newIndex > currentIndex) {
+			for (int i = currentIndex; i < newIndex; i++) {
+				nums[i] = nums[i + 1];
+			}
+		}
+		else if (newIndex < currentIndex) {
+			for (int i = currentIndex; i > newIndex; i--) {
+				nums[i] = nums[i - 1];
+			}
+		}
+
+		nums[newIndex] = currentNum;
+		model.updateList(nums);
+		view.refreshView();
 	}
 
 	public boolean isSorted(boolean ascending) {

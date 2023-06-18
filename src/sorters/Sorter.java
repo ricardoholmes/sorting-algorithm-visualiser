@@ -22,12 +22,12 @@ public abstract class Sorter {
      * as stated by sortAscending
      */
     protected final boolean inOrder(int a, int b, boolean sortAscending) {
-        // sortAscending AND !(a < b)
+        // sortAscending AND !(a > b)
         // OR
-        // !sortAscending AND (a < b)
+        // !sortAscending AND (a > b)
         // THEREFORE
         // sortAscending XOR a > b
-        return sortAscending ^ (a < b);
+        return sortAscending ^ (a > b);
     }
 
     protected final void sleep(int delay) {
