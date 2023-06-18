@@ -103,7 +103,6 @@ public class Controller {
 		model.updateList(nums);
 
 		view.refreshView();
-		// update();
 	}
 
 	public void moveNumber(int currentIndex, int newIndex) {
@@ -123,6 +122,7 @@ public class Controller {
 
 		nums[newIndex] = currentNum;
 		model.updateList(nums);
+		view.refreshView();
 	}
 
 	public boolean isSorted(boolean ascending) {
