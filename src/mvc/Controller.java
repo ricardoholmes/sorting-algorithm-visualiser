@@ -10,6 +10,7 @@ public class Controller {
 		new BubbleSort(),
 		new SelectionSort(),
 		new CocktailSort(),
+		new QuickSort(),
 		new BogoSort()
 	};
 
