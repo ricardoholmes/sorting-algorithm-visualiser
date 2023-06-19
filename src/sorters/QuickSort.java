@@ -23,6 +23,8 @@ public class QuickSort extends Sorter {
             if (inOrder(controller.getNumAtIndex(i), pivotVal, sortAscending)) {
                 controller.moveNumber(i, start);
                 pivotPos++;
+
+                sleep(delay);
             }
         }
         recursiveSort(delay, sortAscending, start, pivotPos);
