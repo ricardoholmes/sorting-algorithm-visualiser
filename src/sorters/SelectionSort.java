@@ -13,6 +13,10 @@ public class SelectionSort extends Sorter {
             int smallest = controller.getNumAtIndex(amountDone);
             int smallestIndex = amountDone;
             for (int i = amountDone; i < model.getArrayLength(); i++) {
+                if (shouldStop) {
+                    return;
+                }
+
                 int num = controller.getNumAtIndex(i);
 
                 // in case of ascending, if num < smallest
