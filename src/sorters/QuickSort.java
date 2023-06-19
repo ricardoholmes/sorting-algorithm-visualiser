@@ -8,6 +8,7 @@ public class QuickSort extends Sorter {
 
     @Override
     public void sort(int delay, boolean sortAscending) {
+        shouldStop = false;
         recursiveSort(delay, sortAscending, 0, model.getArrayLength());
     }
 
