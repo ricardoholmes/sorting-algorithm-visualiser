@@ -11,6 +11,7 @@ public class Controller {
 		new SelectionSort(),
 		new CocktailSort(),
 		new QuickSort(),
+		new MergeSort(),
 		new BogoSort()
 	};
 
