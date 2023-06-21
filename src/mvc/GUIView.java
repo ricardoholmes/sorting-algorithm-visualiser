@@ -33,8 +33,8 @@ public class GUIView implements IView {
 
         optionsPanel = new OptionsPanel(controller, this, model);
         optionsPanel.setMinimumSize(new Dimension(0, 0));
+        optionsPanel.setPreferredSize(new Dimension(320, 720));
         optionsPanel.setBackground(Color.GREEN);
-        mainPanel.add(optionsPanel);
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.25;
@@ -45,7 +45,7 @@ public class GUIView implements IView {
 
         barsPanel = new BarPanel(model, controller, optionsPanel);
         barsPanel.setPreferredSize(new Dimension(1024, 720));
-        mainPanel.add(barsPanel);
+        barsPanel.setPreferredSize(new Dimension(960, 720));
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.insets = new Insets(10, 10, 10, 10);
