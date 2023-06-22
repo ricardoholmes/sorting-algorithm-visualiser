@@ -42,7 +42,7 @@ public class CLIView implements IView {
             System.out.print("Invalid, choose again: ");
             choice = scanner.nextLine();
         }
-        boolean sortAscending = (choice == "y");
+        boolean sortAscending = (choice.compareTo("y") == 0);
 
         c.sort(delay, sortAscending);
 

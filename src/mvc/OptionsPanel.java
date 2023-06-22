@@ -41,7 +41,9 @@ public class OptionsPanel extends JPanel {
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            c.shuffle();
+            if (c.sortThread == null || !c.sortThread.isAlive()) {
+                c.shuffle();
+            }
         });
 
         SpinnerModel countSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
