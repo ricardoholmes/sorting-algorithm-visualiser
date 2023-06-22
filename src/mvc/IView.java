@@ -9,4 +9,6 @@ public interface IView {
 	 * Refresh the display
 	 */
 	void refreshView();
+
+	void doneSorting();
 }
