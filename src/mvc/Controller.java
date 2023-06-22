@@ -9,6 +9,7 @@ public class Controller {
 	private Sorter[] sorters = {
 		new BubbleSort(),
 		new SelectionSort(),
+		new InsertionSort(),
 		new CocktailSort(),
 		new QuickSort(),
 		new MergeSort(),

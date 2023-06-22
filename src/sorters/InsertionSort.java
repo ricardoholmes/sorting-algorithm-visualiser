@@ -11,21 +11,18 @@ public class InsertionSort extends Sorter {
     public void sort(int delay, boolean sortAscending) {
         shouldStop = false;
         for (int i = 1; i < model.getArrayLength(); i++) {
-            if (shouldStop) {
-                return;
-            }
-
             int currentValue = controller.getNumAtIndex(i);
             int j = i - 1;
 
             while (j >= 0 && !inOrder(controller.getNumAtIndex(j), currentValue, sortAscending)) {
+                if (shouldStop) {
+                    return;
+                }
                 controller.swapIndexes(j, j + 1);
                 j--;
 
                 sleep(delay);
             }
-
-            controller.setNumAtIndex(j + 1, currentValue);
         }
     }
 }
