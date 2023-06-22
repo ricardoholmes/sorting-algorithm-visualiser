@@ -99,6 +99,9 @@ public class Controller {
 	}
 
 	public void shuffle() {
+		if (sortThread != null && sortThread.isAlive()) {
+			return;
+		}
 		model.shuffle();
 		BarPanel.resetBarColor();
 		view.refreshView();
