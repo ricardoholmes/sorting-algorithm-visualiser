@@ -67,10 +67,17 @@ public class Controller {
 			return;
 		}
 
+		BarPanel.resetBarColor();
+
 		sorter = sorters[chosenSorterIndex];
 		sorter.initialise(this, model);
 
-		sortThread = new Thread(() -> sorter.sort(delay, sortAscending));
+		sortThread = new Thread(() -> {
+			sorter.sort(delay, sortAscending);
+			if (isSorted(sortAscending)) {
+				view.doneSorting();
+			}
+		});
 		sortThread.start();
 	}
 
@@ -80,17 +87,23 @@ public class Controller {
 			return;
 		}
 		sorter.stop();
+		BarPanel.stopDoneAnimation();
 	}
 
 	public void generateList(int length) {
 		stopSorting();
 		model.generateList(length);
 		BarPanel.resetBarSample();
+		BarPanel.resetBarColor();
 		view.refreshView();
 	}
 
 	public void shuffle() {
+		if (sortThread != null && sortThread.isAlive()) {
+			return;
+		}
 		model.shuffle();
+		BarPanel.resetBarColor();
 		view.refreshView();
 	}
 

@@ -14,19 +14,47 @@ public class BarPanel extends JPanel {
 
     private static int[] barSample;
 
+    private static int sortedCount = 0;
+    private static boolean stopDoneAnim = false;
+
     public BarPanel(Model m, Controller c, OptionsPanel options) {
         model = m;
         controller = c;
         optionsPanel = options;
         resetBarSample();
+        resetBarColor();
     }
 
     public static void resetBarSample() {
         barSample = model.getList();
     }
 
+    public static void resetBarColor() {
+        sortedCount = 0;
+        stopDoneAnim = false;
+    }
+
+    public static void stopDoneAnimation() {
+        stopDoneAnim = true;
+    }
+
     public void setBorderActive(boolean b) {
         hasBorder = b;
+    }
+
+    public void doneSorting() {
+        for (int i = 0; i <= model.getArrayLength(); i++) {
+            sortedCount = i;
+            repaint();
+
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) { }
+
+            if (stopDoneAnim) {
+                return;
+            }
+        }
     }
 
     @Override
@@ -51,6 +79,8 @@ public class BarPanel extends JPanel {
 
         int maxHeight = getSize().height;
 
+        int tempSortedCount = sortedCount;
+
         int[] nums = model.getList();
         for (int i = 0; i < model.getArrayLength(); i++) {
             int barHeight = (int)(maxHeight * ((double)nums[i] / (double)model.getArrayLength()));
@@ -61,7 +91,13 @@ public class BarPanel extends JPanel {
 
             int y = maxHeight - barHeight;
 
-            g.setColor(Color.BLACK);
+            if (tempSortedCount > 0) {
+                g.setColor(Color.GREEN);
+                tempSortedCount--;
+            }
+            else {
+                g.setColor(Color.BLACK);
+            }
             g.fillRect(x, y, barWidth, barHeight);
 
             if (hasBorder) {
