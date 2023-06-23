@@ -59,7 +59,7 @@ public class Controller {
 		chosenSorterIndex = index;
 	}
 
-	public void sort(int delay, boolean sortAscending) {
+	public void sort(double delay, boolean sortAscending) {
 		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -154,26 +154,13 @@ public class Controller {
 	}
 
 	public void playSoundForIndex(int index, int millis) {
-		// range 1000hz - 3000hz
+		// range 1000hz - 2000hz (TODO: make this range customizable)
 
 		int value = getNumAtIndex(index);
-
-		int hz = 1000 + (int)(2000 * ((value - 1) / (double)(model.getArrayLength() - 1)));
+		int hz = 1000 + (int)(1000 * ((value - 1) / (double)(model.getArrayLength() - 1)));
 
 		try {
 			Sound.playTone(hz, millis);
 		} catch (LineUnavailableException e) { }
 	}
-
-	// void update() {
-	// 	// int[] nums = model.getList();
-	// 	// for (int i = 0; i < nums.length - 1; i++) {
-	// 	// 	if (nums[i + 1] > nums[i]) {
-	// 	// 		view.refreshView(false);
-	// 	// 		return;
-	// 	// 	}
-	// 	// }
-	// 	// view.refreshView(true);
-	// 	view.refreshView();
-	// }
 }

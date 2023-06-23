@@ -30,11 +30,11 @@ public class CLIView implements IView {
 
         System.out.print("Delay between numbers moving position (milliseconds): ");
         choice = scanner.nextLine();
-        while (!choice.matches("^[0-9]+$")) {
+        while (!choice.matches("^[0-9]+(\\.[0-9]+)?$")) {
             System.out.print("Invalid, choose again: ");
             choice = scanner.nextLine();
         }
-        int delay = Integer.parseInt(choice);
+        double delay = Double.parseDouble(choice);
 
         System.out.print("Sort in ascending order (y or n)? ");
         choice = scanner.nextLine();

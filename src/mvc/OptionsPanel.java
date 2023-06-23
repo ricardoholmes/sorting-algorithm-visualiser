@@ -31,7 +31,7 @@ public class OptionsPanel extends JPanel {
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.sort((int)delaySpinner.getValue(), sortAscendingCheckBox.isSelected());
+            c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected());
         });
 
         JButton stopButton = new JButton("Stop");
@@ -54,7 +54,7 @@ public class OptionsPanel extends JPanel {
             generateList();
         });
 
-        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
+        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
