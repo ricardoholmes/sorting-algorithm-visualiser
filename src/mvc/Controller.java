@@ -1,5 +1,7 @@
 package mvc;
 
+import javax.sound.sampled.LineUnavailableException;
+
 import sorters.*;
 
 public class Controller {
@@ -149,6 +151,18 @@ public class Controller {
 			}
 		}
 		return isSorted;
+	}
+
+	public void playSoundForIndex(int index, int millis) {
+		// range 1000hz - 3000hz
+
+		int value = getNumAtIndex(index);
+
+		int hz = 1000 + (int)(2000 * ((value - 1) / (double)(model.getArrayLength() - 1)));
+
+		try {
+			Sound.playTone(hz, millis);
+		} catch (LineUnavailableException e) { }
 	}
 
 	// void update() {
