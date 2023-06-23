@@ -24,7 +24,7 @@ public class Controller {
 
 	public Thread sortThread;
 
-	private double currentDelay;
+	public static double currentDelay;
 
     /*
 	 * Initialise the controller
