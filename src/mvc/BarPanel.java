@@ -49,10 +49,10 @@ public class BarPanel extends JPanel {
 
             if (!OptionsPanel.isMuted()) {
                 final int x = i - 1;
-                controller.playSoundForIndex(x, 10);
+                controller.playSoundForIndex(x, (int)Controller.currentDelay);
             }
             try {
-                Thread.sleep(10);
+                Thread.sleep((int)Controller.currentDelay);
             } catch (InterruptedException e) { }
 
             if (stopDoneAnim) {
