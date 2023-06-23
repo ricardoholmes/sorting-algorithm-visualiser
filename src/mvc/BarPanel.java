@@ -47,14 +47,13 @@ public class BarPanel extends JPanel {
             sortedCount = i;
             repaint();
 
-            if (optionsPanel.isMuted()) {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) { }
+            if (!OptionsPanel.isMuted()) {
+                final int x = i - 1;
+                controller.playSoundForIndex(x, 10);
             }
-            else {
-                controller.playSoundForIndex(i-1, 50);
-            }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) { }
 
             if (stopDoneAnim) {
                 return;
