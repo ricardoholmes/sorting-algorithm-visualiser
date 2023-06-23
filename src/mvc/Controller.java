@@ -168,7 +168,7 @@ public class Controller {
 
 	// only works for GUI
 	public void playSoundForIndex(int index, int millis) {
-		if (millis == 0 || OptionsPanel.isMuted()) {
+		if (OptionsPanel.isMuted()) {
 			return;
 		}
 
