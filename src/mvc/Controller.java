@@ -154,10 +154,10 @@ public class Controller {
 	}
 
 	public void playSoundForIndex(int index, int millis) {
-		// range 1000hz - 2000hz (TODO: make this range customizable)
+		double normalisedValue = (getNumAtIndex(index) - 1) / (double)(model.getArrayLength() - 1);
 
-		int value = getNumAtIndex(index);
-		int hz = 1000 + (int)(1000 * ((value - 1) / (double)(model.getArrayLength() - 1)));
+		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
+		int hz = 120 + (int)(1200 * (normalisedValue * normalisedValue));
 
 		try {
 			Sound.playTone(hz, millis);

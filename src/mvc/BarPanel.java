@@ -43,13 +43,18 @@ public class BarPanel extends JPanel {
     }
 
     public void doneSorting() {
-        for (int i = 0; i <= model.getArrayLength(); i++) {
+        for (int i = 1; i <= model.getArrayLength(); i++) {
             sortedCount = i;
             repaint();
 
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) { }
+            if (optionsPanel.isMuted()) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) { }
+            }
+            else {
+                controller.playSoundForIndex(i-1, 50);
+            }
 
             if (stopDoneAnim) {
                 return;

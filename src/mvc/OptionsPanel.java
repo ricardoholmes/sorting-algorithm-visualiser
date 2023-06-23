@@ -16,6 +16,7 @@ public class OptionsPanel extends JPanel {
     JSpinner countSpinner;
 
     JCheckBox sortAscendingCheckBox;
+    JCheckBox muteCheckBox;
 
     int maxBars;
 
@@ -64,12 +65,15 @@ public class OptionsPanel extends JPanel {
 
         sortAscendingCheckBox = new JCheckBox("Sort Ascending", true);
 
+        muteCheckBox = new JCheckBox("Mute", false);
+
         add(sorterDropDown);
         add(countSpinner);
         add(generateArrayButton);
         add(delaySpinner);
         add(borderActiveCheckBox);
         add(sortAscendingCheckBox);
+        add(muteCheckBox);
         add(sortButton);
         add(shuffleButton);
         add(stopButton);
@@ -96,5 +100,9 @@ public class OptionsPanel extends JPanel {
 
         countSpinner.setValue(count);
         controller.generateList(count);
+    }
+
+    public boolean isMuted() {
+        return muteCheckBox.isSelected();
     }
 }
