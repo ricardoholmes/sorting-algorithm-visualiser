@@ -7,7 +7,7 @@ public class SelectionSort extends Sorter {
     }
 
     @Override
-    public void sort(int delay, boolean sortAscending) {
+    public void sort(double delay, boolean sortAscending) {
         for (int amountDone = 0; amountDone < model.getArrayLength(); amountDone++) {
             // will be largest if sorted in descending order
             int smallest = controller.getNumAtIndex(amountDone);

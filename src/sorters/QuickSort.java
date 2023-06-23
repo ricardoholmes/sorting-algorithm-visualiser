@@ -7,13 +7,13 @@ public class QuickSort extends Sorter {
     }
 
     @Override
-    public void sort(int delay, boolean sortAscending) {
+    public void sort(double delay, boolean sortAscending) {
         shouldStop = false;
         recursiveSort(delay, sortAscending, 0, model.getArrayLength());
     }
 
     // inclusive start and exclusive end, ie. in interval [start, end)
-    void recursiveSort(int delay, boolean sortAscending, int start, int end) {
+    void recursiveSort(double delay, boolean sortAscending, int start, int end) {
         if (start == end) {
             return;
         }
