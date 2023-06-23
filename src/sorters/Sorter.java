@@ -15,7 +15,7 @@ public abstract class Sorter {
 
     public abstract String getName();
 
-    public abstract void sort(int delay, boolean sortAscending);
+    public abstract void sort(double delay, boolean sortAscending);
 
     /*
      * Returns whether if placed in order "a, b", the numbers would be in the correct order,
@@ -30,8 +30,15 @@ public abstract class Sorter {
         return sortAscending ^ (a > b);
     }
 
-    protected final void sleep(int delay) {
-        for (int i = 0; i < delay; i++) {
+    protected final void sleep(double delay) {
+        long millis = (long)delay;
+        int nanos = (int)((delay % 1) * 1_000_000);
+
+        try {
+            Thread.sleep(0, nanos);
+        } catch (InterruptedException e) { }
+
+        for (int i = 0; i < millis; i++) {
             if (shouldStop) {
                 return;
             }

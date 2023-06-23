@@ -1,5 +1,7 @@
 package mvc;
 
+import javax.sound.sampled.LineUnavailableException;
+
 import sorters.*;
 
 public class Controller {
@@ -21,6 +23,8 @@ public class Controller {
 	private int chosenSorterIndex = 0;
 
 	public Thread sortThread;
+
+	private double currentDelay;
 
     /*
 	 * Initialise the controller
@@ -57,7 +61,7 @@ public class Controller {
 		chosenSorterIndex = index;
 	}
 
-	public void sort(int delay, boolean sortAscending) {
+	public void sort(double delay, boolean sortAscending) {
 		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -66,6 +70,8 @@ public class Controller {
 		if (sortThread != null && sortThread.isAlive()) {
 			return;
 		}
+
+		currentDelay = delay;
 
 		BarPanel.resetBarColor();
 
@@ -108,17 +114,26 @@ public class Controller {
 		return model.getList()[index];
 	}
 
+	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
+		playSoundForIndex(i, (int)currentDelay);
+
 		int[] nums = model.getList();
 		int temp = nums[j];
 		nums[j] = nums[i];
 		nums[i] = temp;
+		
 		model.updateList(nums);
-
 		view.refreshView();
 	}
 
 	public void moveNumber(int currentIndex, int newIndex) {
+		if (currentIndex == newIndex) {
+			return;
+		}
+
+		playSoundForIndex(currentIndex, (int)currentDelay);
+
 		int[] nums = model.getList();
 		int currentNum = nums[currentIndex];
 
@@ -151,15 +166,22 @@ public class Controller {
 		return isSorted;
 	}
 
-	// void update() {
-	// 	// int[] nums = model.getList();
-	// 	// for (int i = 0; i < nums.length - 1; i++) {
-	// 	// 	if (nums[i + 1] > nums[i]) {
-	// 	// 		view.refreshView(false);
-	// 	// 		return;
-	// 	// 	}
-	// 	// }
-	// 	// view.refreshView(true);
-	// 	view.refreshView();
-	// }
+	// only works for GUI
+	public void playSoundForIndex(int index, int millis) {
+		if (OptionsPanel.isMuted()) {
+			return;
+		}
+
+		double normalisedValue = (getNumAtIndex(index) - 1) / (double)(model.getArrayLength() - 1);
+
+		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
+		int hz = 120 + (int)(1200 * (normalisedValue * normalisedValue));
+
+		Thread soundThread = new Thread(() -> {
+			try {
+				Sound.playTone(hz, millis + 10);
+			} catch (LineUnavailableException e) { }
+		});
+		soundThread.start();
+	}
 }

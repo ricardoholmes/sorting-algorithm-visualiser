@@ -7,13 +7,13 @@ public class MergeSort extends Sorter {
     }
 
     @Override
-    public void sort(int delay, boolean sortAscending) {
+    public void sort(double delay, boolean sortAscending) {
         shouldStop = false;
         recursiveSort(0, model.getArrayLength(), delay, sortAscending);
     }
 
     // interval [start, end)
-    void recursiveSort(int start, int end, int delay, boolean sortAscending) {
+    void recursiveSort(int start, int end, double delay, boolean sortAscending) {
         if (start + 1 == end) {
             return;
         }

@@ -16,6 +16,7 @@ public class OptionsPanel extends JPanel {
     JSpinner countSpinner;
 
     JCheckBox sortAscendingCheckBox;
+    static JCheckBox muteCheckBox;
 
     int maxBars;
 
@@ -31,7 +32,7 @@ public class OptionsPanel extends JPanel {
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.sort((int)delaySpinner.getValue(), sortAscendingCheckBox.isSelected());
+            c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected());
         });
 
         JButton stopButton = new JButton("Stop");
@@ -54,7 +55,7 @@ public class OptionsPanel extends JPanel {
             generateList();
         });
 
-        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
+        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
@@ -64,12 +65,15 @@ public class OptionsPanel extends JPanel {
 
         sortAscendingCheckBox = new JCheckBox("Sort Ascending", true);
 
+        muteCheckBox = new JCheckBox("Mute", false);
+
         add(sorterDropDown);
         add(countSpinner);
         add(generateArrayButton);
         add(delaySpinner);
         add(borderActiveCheckBox);
         add(sortAscendingCheckBox);
+        add(muteCheckBox);
         add(sortButton);
         add(shuffleButton);
         add(stopButton);
@@ -96,5 +100,9 @@ public class OptionsPanel extends JPanel {
 
         countSpinner.setValue(count);
         controller.generateList(count);
+    }
+
+    public static boolean isMuted() {
+        return muteCheckBox.isSelected();
     }
 }
