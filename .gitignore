@@ -25,3 +25,23 @@ replay_pid*
 
 # vscode folder
 .vscode/
+
+# gradle things
+.gradle
+**/build/
+!src/**/build/
+
+# ignore Gradle GUI config
+gradle-app.setting
+
+# avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# avoid ignore Gradle wrappper properties
+!gradle-wrapper.properties
+
+# cache of project
+.gradletasknamecache
+
+# Ignore Gradle build output directory
+build
