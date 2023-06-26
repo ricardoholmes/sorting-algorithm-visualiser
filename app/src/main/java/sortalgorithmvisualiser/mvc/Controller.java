@@ -1,8 +1,8 @@
-package mvc;
+package sortalgorithmvisualiser.mvc;
 
 import javax.sound.sampled.LineUnavailableException;
 
-import sorters.*;
+import sortalgorithmvisualiser.sorters.*;
 
 public class Controller {
 	Model model;

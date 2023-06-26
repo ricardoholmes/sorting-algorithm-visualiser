@@ -1,5 +1,4 @@
-
-package sorters;
+package sortalgorithmvisualiser.sorters;
 
 public class InsertionSort extends Sorter {
     @Override
