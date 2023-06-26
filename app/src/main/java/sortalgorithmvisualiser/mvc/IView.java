@@ -1,4 +1,5 @@
-package mvc;
+package sortalgorithmvisualiser.mvc;
+
 public interface IView {
 	/*
 	 * Initialise the view

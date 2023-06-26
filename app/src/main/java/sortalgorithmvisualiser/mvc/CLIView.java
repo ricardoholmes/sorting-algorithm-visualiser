@@ -1,4 +1,4 @@
-package mvc;
+package sortalgorithmvisualiser.mvc;
 
 import java.util.Scanner;
 

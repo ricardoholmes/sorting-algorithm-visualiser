@@ -1,4 +1,4 @@
-package mvc;
+package sortalgorithmvisualiser.mvc;
 
 import java.awt.Color;
 import java.awt.Graphics;
