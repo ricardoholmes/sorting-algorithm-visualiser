@@ -1,7 +1,7 @@
-package sorters;
+package sortalgorithmvisualiser.sorters;
 
-import mvc.Controller;
-import mvc.Model;
+import sortalgorithmvisualiser.mvc.Controller;
+import sortalgorithmvisualiser.mvc.Model;
 
 public abstract class Sorter {
     protected Controller controller;

@@ -1,4 +1,4 @@
-package sorters;
+package sortalgorithmvisualiser.sorters;
 
 public class CocktailSort extends Sorter {
     @Override

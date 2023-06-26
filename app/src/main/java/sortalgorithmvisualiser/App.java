@@ -1,3 +1,5 @@
+package sortalgorithmvisualiser;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -5,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import mvc.*;
+import sortalgorithmvisualiser.mvc.*;
 
 public class App {
     final int DEFAULT_ARRAY_LENGTH = 10;

@@ -1,4 +1,4 @@
-package mvc;
+package sortalgorithmvisualiser.mvc;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;

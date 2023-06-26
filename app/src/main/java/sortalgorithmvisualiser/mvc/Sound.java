@@ -1,4 +1,4 @@
-package mvc;
+package sortalgorithmvisualiser.mvc;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;

@@ -1,4 +1,4 @@
-package sorters;
+package sortalgorithmvisualiser.sorters;
 
 public class BogoSort extends Sorter {
     @Override
