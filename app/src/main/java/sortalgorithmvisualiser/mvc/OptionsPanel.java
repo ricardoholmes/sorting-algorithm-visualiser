@@ -1,6 +1,7 @@
 package sortalgorithmvisualiser.mvc;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -46,9 +47,8 @@ public class OptionsPanel extends JPanel {
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            if (c.sortThread == null || !c.sortThread.isAlive()) {
-                c.shuffle();
-            }
+            c.stopSorting();
+            c.shuffle();
         });
 
         SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
@@ -71,34 +71,57 @@ public class OptionsPanel extends JPanel {
 
         muteCheckBox = new JCheckBox("Mute", false);
 
-        setLayout(new FlowLayout(FlowLayout.CENTER));
         setBackground(Color.GRAY);
         
         // Select sorter
-        add(sorterDropDown);
+        Container container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(sorterDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
         
         // select number of bars
-        add(new JLabel("Number of bars:"));
-        add(numCountSpinner);
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JLabel numberOfBarsLabel = new JLabel("Number of bars:");
+        container.add(numberOfBarsLabel);
+        container.add(numCountSpinner);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
 
         // generate array
-        add(generateArrayButton);
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(generateArrayButton);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
 
         // choose delay
-        add(new JLabel("Delay (ms):"));
-        add(delaySpinner);
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JLabel delayLabel = new JLabel("Delay (ms):");
+        container.add(delayLabel);
+        container.add(delaySpinner);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
 
         // checkboxes
-        add(borderActiveCheckBox);
-        add(sortAscendingCheckBox);
-        add(muteCheckBox);
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(borderActiveCheckBox);
+        container.add(sortAscendingCheckBox);
+        container.add(muteCheckBox);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
 
         // sort + stop
-        add(sortButton);
-        add(stopButton);
-        
-        // shuffle
-        add(shuffleButton);
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(sortButton);
+        container.add(stopButton);
+        container.add(shuffleButton);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
     }
 
     public void setMaximumBarCount(int count) {
