@@ -1,8 +1,13 @@
 package sortalgorithmvisualiser.mvc;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
@@ -13,7 +18,7 @@ public class OptionsPanel extends JPanel {
     Model model;
 
     JSpinner delaySpinner;
-    JSpinner countSpinner;
+    JSpinner numCountSpinner;
 
     JCheckBox sortAscendingCheckBox;
     static JCheckBox muteCheckBox;
@@ -42,13 +47,12 @@ public class OptionsPanel extends JPanel {
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            if (c.sortThread == null || !c.sortThread.isAlive()) {
-                c.shuffle();
-            }
+            c.stopSorting();
+            c.shuffle();
         });
 
-        SpinnerModel countSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
-        countSpinner = new JSpinner(countSpinnerModel);
+        SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+        numCountSpinner = new JSpinner(numCountSpinnerModel);
 
         JButton generateArrayButton = new JButton("Generate");
         generateArrayButton.addActionListener(e -> {
@@ -67,30 +71,71 @@ public class OptionsPanel extends JPanel {
 
         muteCheckBox = new JCheckBox("Mute", false);
 
-        add(sorterDropDown);
-        add(countSpinner);
-        add(generateArrayButton);
-        add(delaySpinner);
-        add(borderActiveCheckBox);
-        add(sortAscendingCheckBox);
-        add(muteCheckBox);
-        add(sortButton);
-        add(shuffleButton);
-        add(stopButton);
+        setBackground(Color.GRAY);
+        
+        // Select sorter
+        Container container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(sorterDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+        
+        // select number of bars
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JLabel numberOfBarsLabel = new JLabel("Number of bars:");
+        container.add(numberOfBarsLabel);
+        container.add(numCountSpinner);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        // generate array
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(generateArrayButton);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        // choose delay
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JLabel delayLabel = new JLabel("Delay (ms):");
+        container.add(delayLabel);
+        container.add(delaySpinner);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        // checkboxes
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(borderActiveCheckBox);
+        container.add(sortAscendingCheckBox);
+        container.add(muteCheckBox);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        // sort + stop
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(sortButton);
+        container.add(stopButton);
+        container.add(shuffleButton);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
     }
 
     public void setMaximumBarCount(int count) {
         maxBars = count;
 
         if (model.getArrayLength() > maxBars) {
-            countSpinner.setValue(maxBars);
+            numCountSpinner.setValue(maxBars);
             generateList();
         }
 
     }
 
     void generateList() {
-        int count = (int)countSpinner.getValue();
+        int count = (int)numCountSpinner.getValue();
         if (count > maxBars) {
             count = maxBars;
         }
@@ -98,7 +143,7 @@ public class OptionsPanel extends JPanel {
             count = 1;
         }
 
-        countSpinner.setValue(count);
+        numCountSpinner.setValue(count);
         controller.generateList(count);
     }
 

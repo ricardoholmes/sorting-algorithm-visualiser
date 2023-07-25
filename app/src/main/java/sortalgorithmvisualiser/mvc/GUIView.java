@@ -1,11 +1,11 @@
 package sortalgorithmvisualiser.mvc;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -34,7 +34,7 @@ public class GUIView implements IView {
         optionsPanel = new OptionsPanel(controller, this, model);
         optionsPanel.setMinimumSize(new Dimension(0, 0));
         optionsPanel.setPreferredSize(new Dimension(320, 720));
-        optionsPanel.setBackground(Color.GREEN);
+        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.25;
