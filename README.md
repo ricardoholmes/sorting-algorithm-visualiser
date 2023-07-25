@@ -2,6 +2,7 @@
 
 ## Requirements
 
+- [Git](https://git-scm.com/downloads)
 - [JDK 20](https://www.oracle.com/java/technologies/downloads/)
 
 ## How to run
