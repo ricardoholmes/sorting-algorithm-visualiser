@@ -1,7 +1,5 @@
 package sortalgorithmvisualiser.mvc;
 
-import java.util.Arrays;
-
 import javax.sound.sampled.LineUnavailableException;
 
 import sortalgorithmvisualiser.sorters.*;
@@ -133,11 +131,6 @@ public class Controller {
     public void removeIndex(int index) {
 		playSoundForIndex(index, (int)currentDelay);
 		model.removeValueAt(index);
-
-		System.out.println(Arrays.toString(model.getList()));
-
-		BarPanel.resetBarSample();
-		BarPanel.resetBarColor();
 		view.refreshView();
     }
 
