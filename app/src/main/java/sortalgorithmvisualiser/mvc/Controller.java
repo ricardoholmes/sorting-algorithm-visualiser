@@ -15,7 +15,8 @@ public class Controller {
 		new CocktailSort(),
 		new QuickSort(),
 		new MergeSort(),
-		new BogoSort()
+		new BogoSort(),
+		new StalinSort()
 	};
 
 	private Sorter sorter;
@@ -126,6 +127,12 @@ public class Controller {
 		model.updateList(nums);
 		view.refreshView();
 	}
+
+    public void removeIndex(int index) {
+		playSoundForIndex(index, (int)currentDelay);
+		model.removeValueAt(index);
+		view.refreshView();
+    }
 
 	public void moveNumber(int currentIndex, int newIndex) {
 		if (currentIndex == newIndex) {

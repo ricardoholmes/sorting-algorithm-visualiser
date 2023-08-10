@@ -20,14 +20,6 @@ public class Model {
         return nums.length;
     }
 
-    public void updateList(int[] newList) {
-        if (nums.length != newList.length) {
-            throw new IllegalArgumentException();
-        }
-
-        nums = newList;
-    }
-
     public void generateList(int length) {
         nums = new int[length];
 
@@ -36,6 +28,33 @@ public class Model {
         }
 
         shuffle();
+    }
+
+    public void updateList(int[] newList) {
+        if (nums.length != newList.length) {
+            throw new IllegalArgumentException();
+        }
+
+        nums = newList;
+    }
+
+    public void removeValueAt(int index) {
+        if (index >= nums.length || index < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        int currentIndex = 0;
+        int numCount = nums.length - 1;
+        int[] newNumList = new int[numCount];
+        for (int i = 0; i < numCount; i++) {
+            if (i == index) {
+                currentIndex++;
+            }
+            newNumList[i] = nums[currentIndex];
+            currentIndex++;
+        }
+
+        nums = newNumList;
     }
 
     public void shuffle() {
