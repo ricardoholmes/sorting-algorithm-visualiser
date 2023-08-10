@@ -15,7 +15,8 @@ public class Controller {
 		new CocktailSort(),
 		new QuickSort(),
 		new MergeSort(),
-		new BogoSort()
+		new BogoSort(),
+		new StalinSort()
 	};
 
 	private Sorter sorter;
