@@ -52,7 +52,7 @@ public class OptionsPanel extends JPanel {
             c.shuffle();
         });
 
-        SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+        SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, 1, Integer.MAX_VALUE, 1);
         numCountSpinner = new JSpinner(numCountSpinnerModel);
 
         JButton generateArrayButton = new JButton("Generate");
@@ -60,10 +60,10 @@ public class OptionsPanel extends JPanel {
             generateList();
         });
 
-        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10.0, 0, Integer.MAX_VALUE, 1);
+        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(25.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
 
-        SpinnerModel endDelaySpinnerModel = new SpinnerNumberModel(10.0, 0, Integer.MAX_VALUE, 1);
+        SpinnerModel endDelaySpinnerModel = new SpinnerNumberModel(50.0, 0, Integer.MAX_VALUE, 1);
         endDelaySpinner = new JSpinner(endDelaySpinnerModel);
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
