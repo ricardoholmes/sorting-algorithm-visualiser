@@ -74,5 +74,6 @@ public class GUIView implements IView {
     @Override
     public void doneSorting() {
         barsPanel.doneSorting();
+        Sound.stopSound();
     }
 }
