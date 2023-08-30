@@ -27,6 +27,8 @@ public class Controller {
 
 	public static double currentDelay;
 
+	static long nextSound = 0;
+
     /*
 	 * Initialise the controller
      * @param view The view to use
@@ -79,20 +81,29 @@ public class Controller {
 		sorter = sorters[chosenSorterIndex];
 		sorter.initialise(this, model);
 
+		try {
+			Sound.initialise();
+		} catch (LineUnavailableException e) {}
+		nextSound = 0;
+
 		sortThread = new Thread(() -> {
 			sorter.sort(delay, sortAscending);
 			if (isSorted(sortAscending)) {
 				view.doneSorting();
+			} else {
+				Sound.stopSound();
 			}
 		});
 		sortThread.start();
 	}
 
 	public void stopSorting() {
-		// if (sorter == null || sortThread == null || !sortThread.isAlive()) {
 		if (sorter == null || sortThread == null || !sortThread.isAlive()) {
 			return;
 		}
+
+		// Sound.stopSound();
+		Sound.stopSound();
 		sorter.stop();
 		BarPanel.stopDoneAnimation();
 	}
@@ -164,7 +175,6 @@ public class Controller {
 		boolean isSorted = true;
 		int[] nums = model.getList();
 		for (int i = 0; i < nums.length - 1; i++) {
-			// (ascending AND !(nums[i+1] > nums[i])) OR (!ascending AND (nums[i+1] > nums[i]))
 			if (ascending ^ (nums[i + 1] > nums[i])) {
 				isSorted = false;
 				break;
@@ -175,20 +185,25 @@ public class Controller {
 
 	// only works for GUI
 	public void playSoundForIndex(int index, int millis) {
-		if (OptionsPanel.isMuted()) {
+		if (OptionsPanel.isMuted() || (System.currentTimeMillis() < nextSound)) {
 			return;
 		}
 
 		double normalisedValue = (getNumAtIndex(index) - 1) / (double)(model.getArrayLength() - 1);
 
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
-		int hz = 120 + (int)(1200 * (normalisedValue * normalisedValue));
+		int hz = 120 + (int)(1200 * normalisedValue);
 
-		Thread soundThread = new Thread(() -> {
-			try {
-				Sound.playTone(hz, millis + 10);
-			} catch (LineUnavailableException e) { }
-		});
-		soundThread.start();
+		if (millis < 5) {
+			millis = 5;
+		}
+
+		try {
+			Sound.playTone(hz, millis);
+		} catch (LineUnavailableException e) { }
+
+		if (millis == 5) {
+			nextSound = System.currentTimeMillis() + 5;
+		}
 	}
 }
