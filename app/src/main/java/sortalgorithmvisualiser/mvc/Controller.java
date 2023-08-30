@@ -26,7 +26,7 @@ public class Controller {
 	public Thread sortThread;
 
 	public static double currentDelay;
-	static double endAnimDelay;
+	public static double endAnimDelay;
 
 	static long nextSound = 0;
 

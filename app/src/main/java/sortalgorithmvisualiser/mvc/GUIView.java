@@ -70,7 +70,7 @@ public class GUIView implements IView {
     public void refreshView() {
         barsPanel.repaint();
     }
-    
+
     @Override
     public void doneSorting() {
         barsPanel.doneSorting();
