@@ -147,7 +147,6 @@ public class Controller {
 	}
 
     public void removeIndex(int index) {
-		playSoundForIndex(index, (int)currentDelay);
 		model.removeValueAt(index);
 		view.refreshView();
     }

@@ -16,6 +16,7 @@ public class BogoSort extends Sorter {
 
             controller.shuffle();
 
+            controller.playSoundForIndex(0, (int)delay);
             sleep(delay);
         }
     }
