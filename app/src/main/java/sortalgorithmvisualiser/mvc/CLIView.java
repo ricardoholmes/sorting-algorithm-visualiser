@@ -13,14 +13,14 @@ public class CLIView implements IView {
         for (int i = 0; i < c.getSorterCount(); i++) {
             System.out.println(i + ". " + c.getNameOfSorterAt(i));
         }
-        System.out.print("Choice: ");
+        System.out.print("Choice (enter your desired algorithm's corresponding number): ");
 
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine();
 
         // no need to check if it's negative because it won't match the regex if it is
-        while (!choice.matches("^[0-9]+$") || Integer.parseInt(choice) > c.getSorterCount()) {
-            System.out.print("Invalid, choose again: ");
+        while (!choice.matches("^[0-9]+$") || Integer.parseInt(choice) >= c.getSorterCount()) {
+            System.out.print("Invalid, choose again (enter your desired algorithm's corresponding number): ");
             scanner = new Scanner(System.in);
             choice = scanner.nextLine();
         }
