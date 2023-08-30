@@ -26,8 +26,10 @@ public class Controller {
 	public Thread sortThread;
 
 	public static double currentDelay;
+	static double endAnimDelay;
 
 	static long nextSound = 0;
+
 
     /*
 	 * Initialise the controller
@@ -65,6 +67,10 @@ public class Controller {
 	}
 
 	public void sort(double delay, boolean sortAscending) {
+		sort(delay, sortAscending, delay);
+	}
+	
+	public void sort(double delay, boolean sortAscending, double endDelay) {
 		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -74,7 +80,8 @@ public class Controller {
 			return;
 		}
 
-		currentDelay = delay;
+		Controller.currentDelay = delay;
+		Controller.endAnimDelay = endDelay;
 
 		BarPanel.resetBarColor();
 

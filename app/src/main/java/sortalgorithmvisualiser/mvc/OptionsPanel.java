@@ -18,6 +18,7 @@ public class OptionsPanel extends JPanel {
     Model model;
 
     JSpinner delaySpinner;
+    JSpinner endDelaySpinner;
     JSpinner numCountSpinner;
 
     JCheckBox sortAscendingCheckBox;
@@ -37,7 +38,7 @@ public class OptionsPanel extends JPanel {
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected());
+            c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected(), (double)endDelaySpinner.getValue());
         });
 
         JButton stopButton = new JButton("Stop");
@@ -61,6 +62,9 @@ public class OptionsPanel extends JPanel {
 
         SpinnerModel delaySpinnerModel = new SpinnerNumberModel(10.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
+
+        SpinnerModel endDelaySpinnerModel = new SpinnerNumberModel(10.0, 0, Integer.MAX_VALUE, 1);
+        endDelaySpinner = new JSpinner(endDelaySpinnerModel);
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
         borderActiveCheckBox.addActionListener(e -> {
@@ -102,6 +106,15 @@ public class OptionsPanel extends JPanel {
         JLabel delayLabel = new JLabel("Delay (ms):");
         container.add(delayLabel);
         container.add(delaySpinner);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        // choose delay for end animation
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JLabel endDelayLabel = new JLabel("End Delay (ms):");
+        container.add(endDelayLabel);
+        container.add(endDelaySpinner);
         container.setMaximumSize(container.getPreferredSize());
         add(container);
 
