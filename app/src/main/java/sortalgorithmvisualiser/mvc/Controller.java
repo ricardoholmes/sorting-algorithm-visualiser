@@ -190,9 +190,9 @@ public class Controller {
 		return isSorted;
 	}
 
-	// only works for GUI
+	// only supports GUI
 	public void playSoundForIndex(int index, int millis) {
-		if (OptionsPanel.isMuted() || (System.currentTimeMillis() < nextSound)) {
+		if (view.getClass() == CLIView.class || OptionsPanel.isMuted() || System.currentTimeMillis() < nextSound) {
 			return;
 		}
 
