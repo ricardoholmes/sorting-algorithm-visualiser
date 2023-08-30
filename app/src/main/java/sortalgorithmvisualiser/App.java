@@ -122,9 +122,9 @@ public class App {
         }
 
         if (startupCode == INVALID_LAUNCH_OPTION) {
-            System.out.println("Invalid argument(s) provided.");
             System.out.println("Usage: ./sorting-algorithm-visualiser [OPTION]");
             System.out.println("Try './sorting-algorithm-visualiser --help' for more information.");
+            return;
         }
 
         new App(startupCode);
