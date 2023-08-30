@@ -32,3 +32,7 @@ application {
     // Define the main class for the application.
     mainClass.set("sortalgorithmvisualiser.App")
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
