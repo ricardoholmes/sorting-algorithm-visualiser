@@ -6,8 +6,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
 public class Sound {
-    private static float SAMPLE_RATE = 8000f;
-    private static boolean running = false;
+    private static final int SAMPLE_RATE = 4096;
+
+    private static boolean running;
     private static SourceDataLine sdl;
     private static Thread drainThread;
 
@@ -27,35 +28,46 @@ public class Sound {
         sdl.flush();
 
         running = true;
-        drainThread = new Thread(() -> {
+        drainThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
             while (running) {
                 sdl.drain();
+                while (OptionsPanel.isMuted()) {
+                    sdl.flush();
+                }
             }
             sdl.flush();
             sdl.stop();
             sdl.close();
+            }
         });
         drainThread.start();
     }
 
-    public static void playTone(int hz, int millis) throws LineUnavailableException 
+    public static void playTone(int hz, int ms) throws LineUnavailableException 
     {
-        playTone(hz, millis, 1.0);
+        playTone(hz, ms, 1.0);
     }
 
-    public static void playTone(int hz, int millis, double vol) throws LineUnavailableException 
+    public static void playTone(int hz, int ms, double vol) throws LineUnavailableException 
     {
-        byte[] buf = new byte[1];
-        sdl.start();
-        for (int i=0; running && i < millis * 8; i++) {
-            double angle = i / (SAMPLE_RATE / hz) * 2.0 * Math.PI;
-            buf[0] = (byte)(Math.sin(angle) * 127.0 * vol);
-
-            sdl.write(buf, 0, 1);
-        }
+        int length = (int)(SAMPLE_RATE * ms / 1000.0);
+        sdl.write(getDataToWrite(hz, ms, length, vol), 0, length);
     }
 
     public static void stopSound() {
         running = false;
+    }
+
+    private static byte[] getDataToWrite(int hz, int ms, int length, double vol) {
+        byte[] sin = new byte[length];
+        for (int i = 0; i < sin.length; i++) {
+            double period = (double)SAMPLE_RATE / hz;
+            double angle = 2.0 * Math.PI * i / period;
+            sin[i] = (byte)(Math.sin(angle) * 127f * vol);
+        }
+
+        return sin;
     }
 }
