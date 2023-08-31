@@ -14,17 +14,17 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class OptionsPanel extends JPanel {
-    Controller controller;
-    Model model;
+    private Controller controller;
+    private Model model;
 
-    JSpinner delaySpinner;
-    JSpinner endDelaySpinner;
-    JSpinner numCountSpinner;
+    private JSpinner delaySpinner;
+    private JSpinner endDelaySpinner;
+    private JSpinner numCountSpinner;
 
-    JCheckBox sortAscendingCheckBox;
-    static JCheckBox muteCheckBox;
+    private JCheckBox sortAscendingCheckBox;
+    private static JCheckBox muteCheckBox;
 
-    int maxBars;
+    private int maxBars;
 
     public OptionsPanel(Controller c, GUIView v, Model m) {
         controller = c;
@@ -48,11 +48,12 @@ public class OptionsPanel extends JPanel {
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            c.stopSorting();
-            c.shuffle();
+            if (!c.sortThread.isAlive()) {
+                c.shuffle();
+            }
         });
 
-        SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, 1, Integer.MAX_VALUE, 1);
+        SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
         numCountSpinner = new JSpinner(numCountSpinnerModel);
 
         JButton generateArrayButton = new JButton("Generate");
