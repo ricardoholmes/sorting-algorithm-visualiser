@@ -191,7 +191,7 @@ public class Controller {
 
 	// only supports GUI
 	public void playSoundForIndex(int index, int millis) {
-		if (view.getClass() == CLIView.class || OptionsPanel.isMuted() || System.currentTimeMillis() < nextSound) {
+		if (System.currentTimeMillis() < nextSound || view.getClass() != GUIView.class || OptionsPanel.isMuted()) {
 			return;
 		}
 
@@ -200,16 +200,14 @@ public class Controller {
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
 		int hz = 120 + (int)(1200 * normalisedValue);
 
-		if (millis < 5) {
-			millis = 5;
+		if (millis < 10) {
+			millis = 10;
 		}
 
 		try {
 			Sound.playTone(hz, millis);
 		} catch (LineUnavailableException e) { }
 
-		if (millis == 5) {
-			nextSound = System.currentTimeMillis() + 5;
-		}
+		nextSound = System.currentTimeMillis() + millis;
 	}
 }
