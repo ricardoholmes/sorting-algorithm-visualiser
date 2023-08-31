@@ -9,8 +9,8 @@
 
 plugins {
     // Apply the foojay-resolver plugin to allow automatic download of JDKs
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.4.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
 }
 
-rootProject.name = "SortAlgorithmVisualiser"
+rootProject.name = "sorting-algorithm-visualiser"
 include("app")

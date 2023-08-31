@@ -12,6 +12,7 @@ public class StalinSort extends Sorter {
         int i = 1;
         while (!shouldStop && i < model.getArrayLength()) {
             if (!inOrder(model.getValueAt(i-1), model.getValueAt(i), sortAscending)) {
+                controller.playSoundForIndex(i, (int)delay);
                 controller.removeIndex(i);
                 sleep(delay);
             }

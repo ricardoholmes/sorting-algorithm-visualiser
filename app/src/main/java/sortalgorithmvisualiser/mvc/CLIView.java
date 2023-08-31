@@ -4,27 +4,31 @@ import java.util.Scanner;
 
 public class CLIView implements IView {
     Model model;
+    Controller controller;
+    Scanner scanner;
 
     @Override
     public void initialise(Model m, Controller c) {
         model = m;
+        controller = c;
 
         System.out.println("Choose a sorting algorithm from the list below:");
         for (int i = 0; i < c.getSorterCount(); i++) {
             System.out.println(i + ". " + c.getNameOfSorterAt(i));
         }
-        System.out.print("Choice: ");
+        System.out.print("Choice (enter your desired algorithm's corresponding number): ");
 
-        Scanner scanner = new Scanner(System.in);
+        if (scanner == null) {
+            scanner = new Scanner(System.in);
+        }
         String choice = scanner.nextLine();
 
         // no need to check if it's negative because it won't match the regex if it is
-        while (!choice.matches("^[0-9]+$") || Integer.parseInt(choice) > c.getSorterCount()) {
-            System.out.print("Invalid, choose again: ");
+        while (!choice.matches("^[0-9]+$") || Integer.parseInt(choice) >= c.getSorterCount()) {
+            System.out.print("Invalid, choose again (enter your desired algorithm's corresponding number): ");
             scanner = new Scanner(System.in);
             choice = scanner.nextLine();
         }
-        System.out.println();
 
         c.selectSorter(Integer.parseInt(choice));
 
@@ -44,9 +48,8 @@ public class CLIView implements IView {
         }
         boolean sortAscending = (choice.compareTo("y") == 0);
 
+        System.out.println();
         c.sort(delay, sortAscending);
-
-        scanner.close();
     }
 
     @Override
@@ -60,6 +63,18 @@ public class CLIView implements IView {
 
     @Override
     public void doneSorting() {
-        System.out.println();
+        System.out.print("\nRun again (y or n)? ");
+        String choice = scanner.nextLine();
+        while (!choice.matches("^[yn]$")) {
+            System.out.print("Invalid, choose again: ");
+            choice = scanner.nextLine();
+        }
+
+        if (choice.compareTo("n") == 0) {
+            scanner.close();
+            return;
+        }
+
+        initialise(model, controller);
     }
 }

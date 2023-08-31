@@ -26,8 +26,10 @@ public class Controller {
 	public Thread sortThread;
 
 	public static double currentDelay;
+	public static double endAnimDelay;
 
 	static long nextSound = 0;
+
 
     /*
 	 * Initialise the controller
@@ -65,6 +67,10 @@ public class Controller {
 	}
 
 	public void sort(double delay, boolean sortAscending) {
+		sort(delay, sortAscending, delay);
+	}
+	
+	public void sort(double delay, boolean sortAscending, double endDelay) {
 		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
@@ -74,7 +80,8 @@ public class Controller {
 			return;
 		}
 
-		currentDelay = delay;
+		Controller.currentDelay = delay;
+		Controller.endAnimDelay = endDelay;
 
 		BarPanel.resetBarColor();
 
@@ -140,7 +147,6 @@ public class Controller {
 	}
 
     public void removeIndex(int index) {
-		playSoundForIndex(index, (int)currentDelay);
 		model.removeValueAt(index);
 		view.refreshView();
     }
@@ -183,9 +189,9 @@ public class Controller {
 		return isSorted;
 	}
 
-	// only works for GUI
+	// only supports GUI
 	public void playSoundForIndex(int index, int millis) {
-		if (OptionsPanel.isMuted() || (System.currentTimeMillis() < nextSound)) {
+		if (view.getClass() == CLIView.class || OptionsPanel.isMuted() || System.currentTimeMillis() < nextSound) {
 			return;
 		}
 

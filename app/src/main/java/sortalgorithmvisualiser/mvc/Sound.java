@@ -31,6 +31,9 @@ public class Sound {
             while (running) {
                 sdl.drain();
             }
+            sdl.flush();
+            sdl.stop();
+            sdl.close();
         });
         drainThread.start();
     }
@@ -54,10 +57,5 @@ public class Sound {
 
     public static void stopSound() {
         running = false;
-        if (sdl != null) {
-            sdl.flush();
-            sdl.stop();
-            sdl.close();
-        }
     }
 }
