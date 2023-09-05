@@ -1,25 +1,53 @@
 package sortalgorithmvisualiser.sorters;
 
 import sortalgorithmvisualiser.mvc.Controller;
-import sortalgorithmvisualiser.mvc.Model;
 
 public abstract class Sorter {
     protected Controller controller;
-    protected Model model;
+    protected int sizeOfArray;
     protected boolean shouldStop;
 
-    public final void initialise(Controller c, Model m) {
+    /**
+     * @param c the controller
+     * @param numberOfElements the number of numbers in the list that is to be sorted
+     */
+    public final void initialise(Controller c, int numberOfElements) {
         controller = c;
-        model = m;
+        sizeOfArray = numberOfElements;
     }
 
+    /**
+     * @return the name of the sorting algorithm
+     */
     public abstract String getName();
 
+    /**
+     * @param delay
+     *      the length of time to sleep after moving a value, in milliseconds
+     * 
+     * @param sortAscending
+     *      whether the list should be sorted in ascending order (true) or in
+     *      descending order (false)
+     */
     public abstract void sort(double delay, boolean sortAscending);
 
     /*
      * Returns whether if placed in order "a, b", the numbers would be in the correct order,
      * as stated by sortAscending
+     */
+    /**
+     * @param a
+     *      a value in the list
+     * 
+     * @param b
+     *      the value that directly follows {@code a}
+     * 
+     * @param sortAscending
+     *      whether the list is being sorted in ascending order (true) or in
+     *      descending order (false)
+     * 
+     * @return whether or not {@code a} should be followed by {@code b} if sorted in
+     *          the order given by {@code sortAscending}
      */
     protected final boolean inOrder(int a, int b, boolean sortAscending) {
         // sortAscending AND !(a > b)

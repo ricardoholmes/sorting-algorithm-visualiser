@@ -86,7 +86,7 @@ public class Controller {
 		BarPanel.resetBarColor();
 
 		sorter = sorters[chosenSorterIndex];
-		sorter.initialise(this, model);
+		sorter.initialise(this, model.getArrayLength());
 
 		try {
 			Sound.initialise();

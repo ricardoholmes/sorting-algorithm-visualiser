@@ -18,6 +18,8 @@ public class CLIView implements IView {
         }
         System.out.print("Choice (enter your desired algorithm's corresponding number): ");
 
+        // having multiple scanners can break things,
+        // this makes sure that that doesn't happen
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
@@ -29,7 +31,6 @@ public class CLIView implements IView {
             scanner = new Scanner(System.in);
             choice = scanner.nextLine();
         }
-
         c.selectSorter(Integer.parseInt(choice));
 
         System.out.print("Size of the list of numbers that is to be sorted: ");

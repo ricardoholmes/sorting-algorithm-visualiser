@@ -13,7 +13,7 @@ public class BubbleSort extends Sorter {
         int iterations = 0;
         while (!sorted) {
             sorted = true;
-            for (int i = 0; i < model.getArrayLength() - 1 - iterations; i++) {
+            for (int i = 0; i < sizeOfArray - 1 - iterations; i++) {
                 if (shouldStop) {
                     return;
                 }
