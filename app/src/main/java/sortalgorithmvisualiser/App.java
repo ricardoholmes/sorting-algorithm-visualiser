@@ -106,12 +106,14 @@ public class App {
                 case "help":
                 case "--h":
                 case "-h":
+                case "h":
                     System.out.println("Usage: ./sorting-algorithm-visualiser [OPTION]\n");
                     System.out.println("Options:");
-                    System.out.println("  -cli, --command-line-interface   \tLaunches directly to cli mode.");
-                    System.out.println("  -gui, --graphical-user-interface \tLaunches directly to gui mode.");
+                    System.out.println("  -h,\t--help                      \tShow this message.");
+                    System.out.println("  -cli,\t--command-line-interface  \tLaunches directly to CLI mode.");
+                    System.out.println("  -gui,\t--graphical-user-interface\tLaunches directly to GUI mode.");
                     return;
-                
+
                 default:
                     startupCode = INVALID_LAUNCH_OPTION;
                     break;

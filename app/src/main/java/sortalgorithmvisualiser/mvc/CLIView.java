@@ -72,7 +72,7 @@ public class CLIView implements IView {
 
     @Override
     public void doneSorting() {
-        System.out.print("\nRun again (y or n)? ");
+        System.out.print("\n\nRun again (y or n)? ");
         String choice = scanner.nextLine();
         while (!choice.matches("^[yn]$")) {
             System.out.print("Invalid, choose again: ");
