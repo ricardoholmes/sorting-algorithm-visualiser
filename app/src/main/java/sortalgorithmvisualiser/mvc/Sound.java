@@ -46,11 +46,6 @@ public class Sound {
         drainThread.start();
     }
 
-    public static void playTone(int hz, int ms) throws LineUnavailableException 
-    {
-        playTone(hz, ms, 1.0);
-    }
-
     public static void playTone(int hz, int ms, double vol) throws LineUnavailableException 
     {
         int length = (int)(SAMPLE_RATE * ms / 1000.0);

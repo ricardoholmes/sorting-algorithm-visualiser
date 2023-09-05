@@ -188,7 +188,8 @@ public class Controller {
 		return isSorted;
 	}
 
-	// only supports GUI
+	// only plays in GUI mode
+	// will fail silently when called for CLI
 	public void playSoundForIndex(int index, int millis) {
 		if (System.currentTimeMillis() < nextSound || view.getClass() != GUIView.class || Sound.muted) {
 			return;
@@ -204,7 +205,7 @@ public class Controller {
 		}
 
 		try {
-			Sound.playTone(hz, millis);
+			Sound.playTone(hz, millis, 1.0);
 		} catch (LineUnavailableException e) { }
 
 		nextSound = System.currentTimeMillis() + millis;
