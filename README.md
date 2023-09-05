@@ -69,7 +69,7 @@ Follow these steps to install the software:
 
 To run the software, follow these instructions:
 
-- **Batch File (Windows)**: If you are using Windows you can run the software through the Windows GUI, or you can go into terminal and :
+- **Batch File (Windows)**: If you are using Windows you can run the software through the Windows GUI or through terminal (CMD or Powershell, unless you've installed an alternative).
 
     ```bash
     ./sorting-algorithm-visualiser.bat [OPTION]
@@ -81,7 +81,7 @@ To run the software, follow these instructions:
     ./sorting-algorithm-visualiser [OPTION]
     ```
 
-- **JAR File**: To run the JAR file, ensure you have Java installed on your system. It works on all platforms.
+- **JAR File**: Platform independent, but requires [Java](https://www.oracle.com/java/technologies/downloads/#jdk20) to be installed on your system.
 
     ```bash
     java -jar ./sorting-algorithm-visualiser.jar [OPTION]
@@ -91,7 +91,7 @@ To run the software, follow these instructions:
   - `-h`: List all available options.
   - `-cli`: Launch in CLI mode.
   - `-gui`: Launch in GUI mode.
-  - Nothing: If both modes are supported by your device, you will be prompted to choose between them.
+  - Nothing: If both modes are supported by your device, you will be prompted to choose between them. Otherwise, it will automatically launch in the mode that your device supports.
 
 ### CLI Mode
 
@@ -129,19 +129,19 @@ This project currently includes the following sorting algorithms:
 - **Bubble Sort**
   - A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
 - **Selection Sort**
-  - A straightforward sorting algorithm that divides the input list into two parts: the sorted part and the unsorted part. It repeatedly selects the smallest (or largest) element from the unsorted part and moves it to the sorted part.
+  - A straightforward sorting algorithm that divides the input list into two parts: the sorted part and the unsorted part. It repeatedly selects the smallest (or largest) element from the unsorted part and moves it to the end of the sorted part.
 - **Insertion Sort**
   - This algorithm builds a sorted array one item at a time. It takes one element from the input data and inserts it into the correct position within the already sorted part of the array.
-- **Cocktail Shaker**
-  - ort: Also known as bidirectional bubble sort, this algorithm is a variation of the bubble sort that sorts in both directions.
+- **Cocktail Shaker Sort**
+  - Also known as bidirectional bubble sort, this algorithm is a variation of the bubble sort that sorts in both directions.
 - **Quick Sort**
   - A divide-and-conquer sorting algorithm that works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays according to whether they are less than or greater than the pivot.
 - **Merge Sort**
   - Another divide-and-conquer algorithm that divides the input array into two halves, recursively sorts them, and then merges the two sorted halves to produce a single sorted output.
 - **Bogo Sort**
-  - A highly ineffective sorting algorithm that generates permutations of its input until it finds one that is sorted.
+  - A highly ineffective sorting algorithm that randomises the order of the list until it is sorted.
 - **Stalin Sort**
-  - A humorous sorting algorithm that removes elements that are out of order, leaving only the sorted elements in the list.
+  - An esoteric sorting algorithm that removes elements that are out of order, leaving only the sorted elements in the list.
 
 Feel free to explore and visualize these algorithms to gain a better understanding of how they work!
 
