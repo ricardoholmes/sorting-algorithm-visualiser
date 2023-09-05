@@ -75,6 +75,9 @@ public class OptionsPanel extends JPanel {
         sortAscendingCheckBox = new JCheckBox("Sort Ascending", true);
 
         muteCheckBox = new JCheckBox("Mute", false);
+        borderActiveCheckBox.addActionListener(e -> {
+            Sound.muted = muteCheckBox.isSelected();
+        });
 
         setBackground(Color.GRAY);
         
@@ -159,9 +162,5 @@ public class OptionsPanel extends JPanel {
 
         numCountSpinner.setValue(count);
         controller.generateList(count);
-    }
-
-    public static boolean isMuted() {
-        return muteCheckBox.isSelected();
     }
 }

@@ -12,7 +12,7 @@ public class BarPanel extends JPanel {
     private static OptionsPanel optionsPanel;
     private boolean hasBorder = true;
 
-    private static double maxValue;
+    public static double maxValue;
 
     private static int sortedCount = 0;
     private static boolean stopDoneAnim = false;
@@ -47,10 +47,7 @@ public class BarPanel extends JPanel {
             sortedCount = i;
             repaint();
 
-            if (!OptionsPanel.isMuted()) {
-                final int x = i - 1;
-                controller.playSoundForIndex(x, (int)Controller.endAnimDelay);
-            }
+            controller.playSoundForIndex(i - 1, (int)Controller.endAnimDelay);
             try {
                 Thread.sleep((int)Controller.endAnimDelay);
             } catch (InterruptedException e) { }

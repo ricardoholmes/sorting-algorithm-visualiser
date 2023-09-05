@@ -191,11 +191,11 @@ public class Controller {
 
 	// only supports GUI
 	public void playSoundForIndex(int index, int millis) {
-		if (System.currentTimeMillis() < nextSound || view.getClass() != GUIView.class || OptionsPanel.isMuted()) {
+		if (System.currentTimeMillis() < nextSound || view.getClass() != GUIView.class || Sound.muted) {
 			return;
 		}
 
-		double normalisedValue = (getNumAtIndex(index) - 1) / (double)(model.getArrayLength() - 1);
+		double normalisedValue = (getNumAtIndex(index) - 1) / BarPanel.maxValue;
 
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
 		int hz = 120 + (int)(1200 * normalisedValue);
