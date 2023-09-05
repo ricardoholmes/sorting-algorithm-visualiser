@@ -12,8 +12,17 @@ Welcome to the **Sorting Algorithm Visualiser**! This Java-based project allows 
   - [CLI Mode](#cli-mode)
   - [GUI Mode](#gui-mode)
 - [Sorting Algorithms](#sorting-algorithms)
+  - [Bubble Sort](#bubble-sort)
+  - [Selection Sort](#selection-sort)
+  - [Insertion Sort](#insertion-sort)
+  - [Cocktail Shaker Sort](#cocktail-shaker-sort)
+  - [Quick Sort](#quick-sort)
+  - [Merge Sort](#merge-sort)
+  - [Bogo Sort](#bogo-sort)
+  - [Stalin Sort](#stalin-sort)
 - [License](#license)
 - [See Also](#see-also)
+- [:)](#happy-sorting-d)
 
 ## Installation
 
@@ -124,34 +133,51 @@ The options section also lets you start and stop the sorting process.
 
 ## Sorting Algorithms
 
-This project currently includes the following sorting algorithms:
+The algorithms currently included in the software are listed below.
 
-- **Bubble Sort**
-  - A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
-- **Selection Sort**
-  - A straightforward sorting algorithm that divides the input list into two parts: the sorted part and the unsorted part. It repeatedly selects the smallest (or largest) element from the unsorted part and moves it to the end of the sorted part.
-- **Insertion Sort**
-  - This algorithm builds a sorted array one item at a time. It takes one element from the input data and inserts it into the correct position within the already sorted part of the array.
-- **Cocktail Shaker Sort**
-  - Also known as bidirectional bubble sort, this algorithm is a variation of the bubble sort that sorts in both directions.
-- **Quick Sort**
-  - A divide-and-conquer sorting algorithm that works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays according to whether they are less than or greater than the pivot.
-- **Merge Sort**
-  - Another divide-and-conquer algorithm that divides the input array into two halves, recursively sorts them, and then merges the two sorted halves to produce a single sorted output.
-- **Bogo Sort**
-  - A highly ineffective sorting algorithm that randomises the order of the list until it is sorted.
-- **Stalin Sort**
-  - An esoteric sorting algorithm that removes elements that are out of order, leaving only the sorted elements in the list.
+Feel free to explore and visualize them to gain a better understanding of how they work (or to listen to the cool sounds that they make)!
 
-Feel free to explore and visualize these algorithms to gain a better understanding of how they work!
+### **Bubble Sort**
+
+A simple sorting algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
+
+### **Selection Sort**
+
+A straightforward sorting algorithm that divides the input list into two parts: the sorted part and the unsorted part. It repeatedly selects the smallest (or largest) element from the unsorted part and moves it to the end of the sorted part.
+
+### **Insertion Sort**
+
+This algorithm builds a sorted array one item at a time. It takes one element from the input data and inserts it into the correct position within the already sorted part of the array.
+
+### **Cocktail Shaker Sort**
+
+Also known as bidirectional bubble sort, this algorithm is a variation of the bubble sort that sorts in both directions.
+
+### **Quick Sort**
+
+A divide-and-conquer sorting algorithm that works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays according to whether they are less than or greater than the pivot.
+
+### **Merge Sort**
+
+Another divide-and-conquer algorithm that divides the input array into two halves, recursively sorts them, and then merges the two sorted halves to produce a single sorted output.
+
+### **Bogo Sort**
+
+A highly ineffective sorting algorithm that randomises the order of the list until it is sorted.
+
+### **Stalin Sort**
+
+An esoteric sorting algorithm that removes elements that are out of order, leaving only the sorted elements in the list.
 
 ## License
 
-This project is licensed under the MIT License - see [the license](LICENSE) for details.
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for more details.
 
 ## See Also
 
 [Sound of Sorting](https://panthema.net/2013/sound-of-sorting/) \
 [15 Sorting Algorithms in 6 Minutes](https://youtu.be/kPRA0W1kECg)
+
+---
 
 ### ***Happy Sorting!* :D**
