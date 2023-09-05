@@ -195,7 +195,7 @@ public class Controller {
 			return;
 		}
 
-		double normalisedValue = (getNumAtIndex(index) - 1) / model.getMaxValueAtCreation();
+		double normalisedValue = (getNumAtIndex(index) - 1) / (double)model.getMaxValueAtCreation();
 
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
 		int hz = 120 + (int)(1200 * normalisedValue);
