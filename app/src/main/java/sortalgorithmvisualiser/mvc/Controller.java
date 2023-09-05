@@ -67,11 +67,11 @@ public class Controller {
 	}
 
 	public void sort(double delay, boolean sortAscending) {
-		sort(delay, sortAscending, delay);
+		sort(delay, sortAscending, 0);
 	}
 	
 	public void sort(double delay, boolean sortAscending, double endDelay) {
-		if (delay < 0) {
+		if (delay < 0 || endDelay < 0) {
 			throw new IllegalArgumentException();
 		}
 
