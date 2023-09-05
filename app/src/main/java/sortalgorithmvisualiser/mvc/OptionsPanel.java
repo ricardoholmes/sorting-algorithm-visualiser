@@ -9,6 +9,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
@@ -23,6 +24,9 @@ public class OptionsPanel extends JPanel {
 
     private JCheckBox sortAscendingCheckBox;
     private static JCheckBox muteCheckBox;
+
+    private JSlider volumeSlider;
+    private static double volume;
 
     private int maxBars;
 
@@ -39,6 +43,7 @@ public class OptionsPanel extends JPanel {
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
             c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected(), (double)endDelaySpinner.getValue());
+            volume = volumeSlider.getValue() / 100.0;
         });
 
         JButton stopButton = new JButton("Stop");
@@ -78,6 +83,8 @@ public class OptionsPanel extends JPanel {
         borderActiveCheckBox.addActionListener(e -> {
             Sound.muted = muteCheckBox.isSelected();
         });
+
+        volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
 
         setBackground(Color.GRAY);
         
@@ -122,6 +129,15 @@ public class OptionsPanel extends JPanel {
         container.setMaximumSize(container.getPreferredSize());
         add(container);
 
+        // set volume (with slider)
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        JLabel volumeLabel = new JLabel("Volume:");
+        container.add(volumeLabel);
+        container.add(volumeSlider);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
         // checkboxes
         container = new Container();
         container.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -139,6 +155,10 @@ public class OptionsPanel extends JPanel {
         container.add(shuffleButton);
         container.setMaximumSize(container.getPreferredSize());
         add(container);
+    }
+
+    public static double getVolume() {
+        return volume;
     }
 
     public void setMaximumBarCount(int count) {

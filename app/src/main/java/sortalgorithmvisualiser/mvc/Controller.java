@@ -204,10 +204,11 @@ public class Controller {
 			millis = 10;
 		}
 
+		double volume = OptionsPanel.getVolume();
 		try {
-			Sound.playTone(hz, millis, 1.0);
+			Sound.playTone(hz, millis, volume);
 		} catch (LineUnavailableException e) { }
 
-		nextSound = System.currentTimeMillis() + millis;
+		nextSound = System.currentTimeMillis() + millis - 2;
 	}
 }
