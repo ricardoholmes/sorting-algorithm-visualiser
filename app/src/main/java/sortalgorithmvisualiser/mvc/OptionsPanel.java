@@ -53,7 +53,7 @@ public class OptionsPanel extends JPanel {
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            if (!c.sortThread.isAlive()) {
+            if (c.sortThread == null || !c.sortThread.isAlive()) {
                 c.shuffle();
             }
         });
