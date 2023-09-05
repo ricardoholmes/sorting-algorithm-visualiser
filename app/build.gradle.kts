@@ -6,8 +6,9 @@
  * User Manual available at https://docs.gradle.org/8.1.1/userguide/building_java_projects.html
  */
 
+version = "1.0"
+
 plugins {
-    // Apply the application plugin to add support for building a CLI application in Java.
     application
 }
 
@@ -17,8 +18,6 @@ repositories {
 }
 
 dependencies {
-    // This dependency is used by the application.
-    implementation("com.google.guava:guava:31.1-jre")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -31,8 +30,17 @@ java {
 application {
     // Define the main class for the application.
     mainClass.set("sortalgorithmvisualiser.App")
+
+    applicationName = "sorting-algorithm-visualiser"
+    project.base.archivesBaseName = "sorting-algorithm-visualiser"
 }
 
 tasks.named<JavaExec>("run") {
     standardInput = System.`in`
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "sortalgorithmvisualiser.App"
+    }
 }

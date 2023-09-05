@@ -18,6 +18,8 @@ public class CLIView implements IView {
         }
         System.out.print("Choice (enter your desired algorithm's corresponding number): ");
 
+        // having multiple scanners can break things,
+        // this makes sure that that doesn't happen
         if (scanner == null) {
             scanner = new Scanner(System.in);
         }
@@ -29,8 +31,15 @@ public class CLIView implements IView {
             scanner = new Scanner(System.in);
             choice = scanner.nextLine();
         }
-
         c.selectSorter(Integer.parseInt(choice));
+
+        System.out.print("Size of the list of numbers that is to be sorted: ");
+        choice = scanner.nextLine();
+        while (!choice.matches("^[0-9]+$") || Integer.parseInt(choice) < 1) {
+            System.out.print("Invalid, choose again: ");
+            choice = scanner.nextLine();
+        }
+        int size = Integer.parseInt(choice);
 
         System.out.print("Delay between numbers moving position (milliseconds): ");
         choice = scanner.nextLine();
@@ -48,14 +57,15 @@ public class CLIView implements IView {
         }
         boolean sortAscending = (choice.compareTo("y") == 0);
 
-        System.out.println();
+        System.out.print("\033[2J\033[H\u001b[s"); // clear screen, go to start, and save cursor position
+        model.generateList(size);
         c.sort(delay, sortAscending);
     }
 
     @Override
     public void refreshView() {
         int[] nums = model.getList();
-        System.out.print("\r");
+        System.out.print("\u001b[u"); // reset cursor position to saved
         for (int i = 0; i < nums.length; i++) {
             System.out.print(nums[i] + (i == nums.length - 1 ? "" : ", "));
         }
@@ -63,7 +73,7 @@ public class CLIView implements IView {
 
     @Override
     public void doneSorting() {
-        System.out.print("\nRun again (y or n)? ");
+        System.out.print("\n\nRun again (y or n)? ");
         String choice = scanner.nextLine();
         while (!choice.matches("^[yn]$")) {
             System.out.print("Invalid, choose again: ");
@@ -72,6 +82,7 @@ public class CLIView implements IView {
 
         if (choice.compareTo("n") == 0) {
             scanner.close();
+            System.exit(0);
             return;
         }
 

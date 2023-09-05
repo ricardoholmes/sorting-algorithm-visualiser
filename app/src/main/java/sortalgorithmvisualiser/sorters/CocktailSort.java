@@ -13,7 +13,7 @@ public class CocktailSort extends Sorter {
         while (!sorted) {
             // sort forwards
             sorted = true;
-            for (int i = 0; i < model.getArrayLength() - 1; i++) {
+            for (int i = 0; i < sizeOfArray - 1; i++) {
                 if (shouldStop) {
                     return;
                 }
@@ -32,7 +32,7 @@ public class CocktailSort extends Sorter {
 
             // sort backwards
             sorted = true;
-            for (int i = model.getArrayLength() - 1; i > 0; i--) {
+            for (int i = sizeOfArray - 1; i > 0; i--) {
                 if (shouldStop) {
                     return;
                 }

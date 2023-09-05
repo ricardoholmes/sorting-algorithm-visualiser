@@ -67,11 +67,11 @@ public class Controller {
 	}
 
 	public void sort(double delay, boolean sortAscending) {
-		sort(delay, sortAscending, delay);
+		sort(delay, sortAscending, 0);
 	}
 	
 	public void sort(double delay, boolean sortAscending, double endDelay) {
-		if (delay < 0) {
+		if (delay < 0 || endDelay < 0) {
 			throw new IllegalArgumentException();
 		}
 
@@ -86,7 +86,7 @@ public class Controller {
 		BarPanel.resetBarColor();
 
 		sorter = sorters[chosenSorterIndex];
-		sorter.initialise(this, model);
+		sorter.initialise(this, model.getArrayLength());
 
 		try {
 			Sound.initialise();
@@ -118,7 +118,6 @@ public class Controller {
 	public void generateList(int length) {
 		stopSorting();
 		model.generateList(length);
-		BarPanel.resetBarSample();
 		BarPanel.resetBarColor();
 		view.refreshView();
 	}
@@ -189,13 +188,14 @@ public class Controller {
 		return isSorted;
 	}
 
-	// only supports GUI
+	// only plays in GUI mode
+	// will fail silently when called for CLI
 	public void playSoundForIndex(int index, int millis) {
-		if (System.currentTimeMillis() < nextSound || view.getClass() != GUIView.class || OptionsPanel.isMuted()) {
+		if (System.currentTimeMillis() < nextSound || view.getClass() != GUIView.class || Sound.muted) {
 			return;
 		}
 
-		double normalisedValue = (getNumAtIndex(index) - 1) / (double)(model.getArrayLength() - 1);
+		double normalisedValue = (getNumAtIndex(index) - 1) / (double)model.getMaxValueAtCreation();
 
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
 		int hz = 120 + (int)(1200 * normalisedValue);
@@ -204,10 +204,11 @@ public class Controller {
 			millis = 10;
 		}
 
+		double volume = OptionsPanel.getVolume();
 		try {
-			Sound.playTone(hz, millis);
+			Sound.playTone(hz, millis, volume);
 		} catch (LineUnavailableException e) { }
 
-		nextSound = System.currentTimeMillis() + millis;
+		nextSound = System.currentTimeMillis() + millis - 2;
 	}
 }

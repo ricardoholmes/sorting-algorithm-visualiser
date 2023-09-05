@@ -9,7 +9,7 @@ public class QuickSort extends Sorter {
     @Override
     public void sort(double delay, boolean sortAscending) {
         shouldStop = false;
-        recursiveSort(delay, sortAscending, 0, model.getArrayLength());
+        recursiveSort(delay, sortAscending, 0, sizeOfArray);
     }
 
     // inclusive start and exclusive end, ie. in interval [start, end)
