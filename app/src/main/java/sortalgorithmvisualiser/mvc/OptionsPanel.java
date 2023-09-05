@@ -148,7 +148,6 @@ public class OptionsPanel extends JPanel {
             numCountSpinner.setValue(maxBars);
             generateList();
         }
-
     }
 
     void generateList() {

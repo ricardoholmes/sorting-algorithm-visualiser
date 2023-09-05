@@ -12,8 +12,6 @@ public class BarPanel extends JPanel {
     private static OptionsPanel optionsPanel;
     private boolean hasBorder = true;
 
-    public static double maxValue;
-
     private static int sortedCount = 0;
     private static boolean stopDoneAnim = false;
 
@@ -21,12 +19,7 @@ public class BarPanel extends JPanel {
         model = m;
         controller = c;
         optionsPanel = options;
-        resetBarSample();
         resetBarColor();
-    }
-
-    public static void resetBarSample() {
-        maxValue = model.getArrayLength();
     }
 
     public static void resetBarColor() {
@@ -84,7 +77,7 @@ public class BarPanel extends JPanel {
 
         int[] nums = model.getList();
         for (int i = 0; i < model.getArrayLength(); i++) {
-            int barHeight = (int)(maxHeight * ((double)nums[i] / maxValue));
+            int barHeight = (int)(maxHeight * ((double)nums[i] / model.getMaxValueAtCreation()));
             int barWidth = baseBarWidth;
             if (barsWithExtraPixels.contains(nums[i])) {
                 barWidth++;

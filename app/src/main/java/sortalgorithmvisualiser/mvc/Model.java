@@ -4,6 +4,7 @@ import java.util.Random;
 
 public class Model {
     private int[] nums;
+    private static int maxValueAtCreation;
 
     public Model() {
 	}
@@ -20,6 +21,10 @@ public class Model {
         return nums.length;
     }
 
+    public int getMaxValueAtCreation() {
+        return maxValueAtCreation;
+    }
+
     public void generateList(int length) {
         nums = new int[length];
 
@@ -27,6 +32,7 @@ public class Model {
             nums[i] = i + 1;
         }
 
+        maxValueAtCreation = length;
         shuffle();
     }
 
