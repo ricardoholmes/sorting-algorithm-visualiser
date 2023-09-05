@@ -48,6 +48,10 @@ public class Sound {
 
     public static void playTone(int hz, int ms, double vol) throws LineUnavailableException 
     {
+        if (muted) {
+            return;
+        }
+
         int length = (int)(SAMPLE_RATE * ms / 1000.0);
         sdl.write(getDataToWrite(hz, length, vol), 0, length);
     }

@@ -80,7 +80,7 @@ public class OptionsPanel extends JPanel {
         sortAscendingCheckBox = new JCheckBox("Sort Ascending", true);
 
         muteCheckBox = new JCheckBox("Mute", false);
-        borderActiveCheckBox.addActionListener(e -> {
+        muteCheckBox.addActionListener(e -> {
             Sound.muted = muteCheckBox.isSelected();
         });
 
