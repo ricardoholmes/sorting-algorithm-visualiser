@@ -29,7 +29,7 @@ Welcome to the **Sorting Algorithm Visualiser**! This Java-based project allows 
 Before you proceed with installation, ensure you have the following prerequisites:
 
 - [Git](https://git-scm.com/downloads) (to download the project)
-- [JDK 20](https://www.oracle.com/java/technologies/downloads/#jdk20) (to build the software)
+- [JDK 21](https://www.oracle.com/java/technologies/downloads/#jdk21) (to build the software)
 
 Follow these steps to install the software:
 
@@ -76,9 +76,9 @@ Follow these steps to install the software:
 
 ### Running The Program
 
-To run the software, follow these instructions:
+[Java](https://www.java.com/en/download/) is required in order to run the software. After installing, follow these instructions:
 
-- **Batch File (Windows)**: If you are using Windows you can run the software through the Windows GUI or through terminal (CMD or Powershell, unless you've installed an alternative).
+- **Batch File (Windows)**: If you are using Windows, you can run the software by double clicking the file or through terminal (CMD or PowerShell).
 
     ```bash
     ./sorting-algorithm-visualiser.bat [OPTION]
@@ -90,7 +90,7 @@ To run the software, follow these instructions:
     ./sorting-algorithm-visualiser [OPTION]
     ```
 
-- **JAR File**: Platform independent, but requires [Java](https://www.oracle.com/java/technologies/downloads/#jdk20) to be installed on your system.
+- **JAR File**: Also platform independent, but all in one file.
 
     ```bash
     java -jar ./sorting-algorithm-visualiser.jar [OPTION]
