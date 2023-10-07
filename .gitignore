@@ -23,8 +23,9 @@
 hs_err_pid*
 replay_pid*
 
-# vscode folder
+# ide folders
 .vscode/
+.idea/
 
 # Ignore Gradle project-specific cache directory
 .gradle/
