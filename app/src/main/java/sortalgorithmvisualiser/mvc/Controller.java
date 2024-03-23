@@ -28,9 +28,6 @@ public class Controller {
 	public static double currentDelay;
 	public static double endAnimDelay;
 
-	static long nextSound = 0;
-
-
     /*
 	 * Initialise the controller
      * @param view The view to use
@@ -91,7 +88,6 @@ public class Controller {
 		try {
 			Sound.initialise();
 		} catch (LineUnavailableException e) {}
-		nextSound = 0;
 
 		sortThread = new Thread(() -> {
 			sorter.sort(delay, sortAscending);
@@ -191,24 +187,21 @@ public class Controller {
 	// only plays in GUI mode
 	// will fail silently when called for CLI
 	public void playSoundForIndex(int index, int millis) {
-		if (System.currentTimeMillis() < nextSound || view.getClass() != GUIView.class || Sound.muted) {
+		if (view.getClass() != GUIView.class || Sound.muted) {
 			return;
 		}
 
 		double normalisedValue = (getNumAtIndex(index) - 1) / (double)model.getMaxValueAtCreation();
 
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
-		int hz = 120 + (int)(1200 * normalisedValue);
+		int freq = 120 + (int)(1200 * normalisedValue);
 
-		if (millis < 10) {
-			millis = 10;
-		}
+		// if (millis < 10) {
+		// 	millis = 10;
+		// }
 
-		double volume = OptionsPanel.getVolume();
 		try {
-			Sound.playTone(hz, millis, volume);
+			Sound.playTone(freq, millis);
 		} catch (LineUnavailableException e) { }
-
-		nextSound = System.currentTimeMillis() + millis - 2;
 	}
 }
