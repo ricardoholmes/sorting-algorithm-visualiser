@@ -25,8 +25,7 @@ public class OptionsPanel extends JPanel {
     private JCheckBox sortAscendingCheckBox;
     private static JCheckBox muteCheckBox;
 
-    private JSlider volumeSlider;
-    private static double volume;
+    private static JSlider volumeSlider;
 
     private int maxBars;
 
@@ -43,7 +42,6 @@ public class OptionsPanel extends JPanel {
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
             c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected(), (double)endDelaySpinner.getValue());
-            volume = volumeSlider.getValue() / 100.0;
         });
 
         JButton stopButton = new JButton("Stop");
@@ -158,7 +156,7 @@ public class OptionsPanel extends JPanel {
     }
 
     public static double getVolume() {
-        return volume;
+        return volumeSlider.getValue() / 100.0;
     }
 
     public void setMaximumBarCount(int count) {
