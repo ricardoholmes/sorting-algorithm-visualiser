@@ -107,7 +107,8 @@ public class Sound {
 
         int waveCount = 0;
 
-        for (Oscillator oscillator : oscillators) {
+        for (int i = 0; i < oscillators.size(); i++) {
+            Oscillator oscillator = oscillators.get(i);
             if (!oscillator.isDone(time)) {
                 oscillator.mix(wave, time);
                 waveCount++;
