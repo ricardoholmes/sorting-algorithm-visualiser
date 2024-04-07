@@ -119,26 +119,26 @@ public class Sound {
             return;
         }
         else {
-            double vol = OptionsPanel.getVolume();
+            double volSelected = OptionsPanel.getVolume();
 
-            double maxAmplitude = Arrays.stream(wave).max().getAsDouble();
-            if (maxAmplitude < 1) {
-                vol *= 0.9;
+            double vol = Arrays.stream(wave).max().getAsDouble(); // max amplitude
+            if (vol > volSelected) {
+                // will get ramped down in the loop
             }
-            else if (maxAmplitude > 1) {
-                vol *= 1.0 / maxAmplitude;
+            else {
+                vol = volSelected * 0.9;
             }
-
 
             byte[] stream = new byte[len];
             for (int i = 0; i < len; i++) {
-                short v = (short)(127.0 * wave[i] * vol);
+                short v = (short)(127.0 * wave[i]);
+                v /= volSelected + (vol - volSelected);
 
-                if (v > 32200) {
-                    v = 32200;
+                if (v > 127) {
+                    v = 127;
                 }
-                else if (v < -32200) {
-                    v = -32200;
+                else if (v < -127) {
+                    v = -127;
                 }
 
                 stream[i] = (byte)v;
