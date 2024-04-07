@@ -31,7 +31,7 @@ public class Sound {
         if (sdl == null) {
             AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
             sdl = AudioSystem.getSourceDataLine(af);
-            sdl.open(af, 8192);
+            sdl.open(af, 4096);
         }
         else {
             while (sdl.isRunning());
@@ -54,7 +54,6 @@ public class Sound {
 
     public static void playTone(double freq, int delay) throws LineUnavailableException 
     {
-        // System.out.println(freq + ", " + time + ", " + time + ", " + delay / 1000.0 * sustain * SAMPLE_RATE);
         addOscillator(
             freq,
             time,
@@ -92,11 +91,11 @@ public class Sound {
     }
 
     public static void update() {
-        if (sdl.available() < 4096) {
+        if (sdl.available() == 0) {
             return;
         }
 
-        int len = 4096;
+        int len = sdl.available();
 
         if (muted || !running) {
             sdl.write(new byte[len], 0, len);
@@ -116,7 +115,7 @@ public class Sound {
         }
 
         if (waveCount == 0) {
-            sdl.write(new byte[len], 0, len);
+            return;
         }
         else {
             double vol = OptionsPanel.getVolume();
