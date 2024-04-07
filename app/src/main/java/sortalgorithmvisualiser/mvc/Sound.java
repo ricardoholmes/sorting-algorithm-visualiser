@@ -26,17 +26,18 @@ public class Sound {
     public static void initialise() throws LineUnavailableException
     {
         time = 0;
-        running = false;
-        if (sdl != null) {
-            stopSound();
+        stopSound();
+
+        if (sdl == null) {
+            AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
+            sdl = AudioSystem.getSourceDataLine(af);
+            sdl.open(af, 8192);
+        }
+        else {
+            while (sdl.isRunning());
         }
 
-        AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, false);
-        sdl = AudioSystem.getSourceDataLine(af);
-        sdl.open(af, 8192);
-
         sdl.start();
-
         running = true;
         drainThread = new Thread(new Runnable() {
             @Override
@@ -44,10 +45,8 @@ public class Sound {
                 while (running) {
                     update();
                 }
-                while (sdl.available() > 0);
+                sdl.drain();
                 sdl.stop();
-                sdl.flush();
-                sdl.close();
             }
         });
         drainThread.start();
