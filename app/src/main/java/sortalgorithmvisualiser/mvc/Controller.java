@@ -16,7 +16,8 @@ public class Controller {
 		new QuickSort(),
 		new MergeSort(),
 		new BogoSort(),
-		new StalinSort()
+		new StalinSort(),
+		new BogobogoSort()
 	};
 
 	private Sorter sorter;
