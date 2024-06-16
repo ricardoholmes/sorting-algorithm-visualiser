@@ -64,12 +64,15 @@ public class Model {
     }
 
     public void shuffle() {
-        int index, temp;
+        shuffleRange(0, nums.length);
+    }
+
+    public void shuffleRange(int start, int end) {
         Random random = new Random();
-        for (int i = nums.length - 1; i > 0; i--)
+        for (int i = end - 1; i > start; i--)
         {
-            index = random.nextInt(i + 1);
-            temp = nums[index];
+            int index = random.nextInt(start, i + 1);
+            int temp = nums[index];
             nums[index] = nums[i];
             nums[i] = temp;
         }

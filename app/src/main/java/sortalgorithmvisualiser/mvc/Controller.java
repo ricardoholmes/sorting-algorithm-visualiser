@@ -16,7 +16,8 @@ public class Controller {
 		new QuickSort(),
 		new MergeSort(),
 		new BogoSort(),
-		new StalinSort()
+		new StalinSort(),
+		new BogobogoSort()
 	};
 
 	private Sorter sorter;
@@ -120,6 +121,12 @@ public class Controller {
 
 	public void shuffle() {
 		model.shuffle();
+		BarPanel.resetBarColor();
+		view.refreshView();
+	}
+
+	public void shuffleRange(int start, int end) {
+		model.shuffleRange(start, end);
 		BarPanel.resetBarColor();
 		view.refreshView();
 	}
