@@ -125,6 +125,12 @@ public class Controller {
 		view.refreshView();
 	}
 
+	public void shuffleRange(int start, int end) {
+		model.shuffleRange(start, end);
+		BarPanel.resetBarColor();
+		view.refreshView();
+	}
+
 	public int getNumAtIndex(int index) {
 		return model.getList()[index];
 	}
