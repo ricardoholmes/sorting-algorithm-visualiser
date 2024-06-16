@@ -132,7 +132,7 @@ public class Sound {
             byte[] stream = new byte[len];
             for (int i = 0; i < len; i++) {
                 short v = (short)(127.0 * wave[i]);
-                v /= volSelected + (vol - volSelected);
+                v *= volSelected / vol;
 
                 if (v > 127) {
                     v = 127;

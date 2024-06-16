@@ -131,6 +131,7 @@ public class Controller {
 	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
 		playSoundForIndex(i, (int)currentDelay);
+		playSoundForIndex(j, (int)currentDelay);
 
 		int[] nums = model.getList();
 		int temp = nums[j];
