@@ -32,7 +32,7 @@ application {
     mainClass.set("sortalgorithmvisualiser.App")
 
     applicationName = "sorting-algorithm-visualiser"
-    project.base.archivesBaseName = "sorting-algorithm-visualiser"
+    project.base.archivesName = "sorting-algorithm-visualiser"
 }
 
 tasks.named<JavaExec>("run") {
