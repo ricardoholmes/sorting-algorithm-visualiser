@@ -8,9 +8,10 @@ public class HeapSort extends Sorter {
 
     @Override
     public void sort(double delay, boolean sortAscending) {
+        shouldStop = false;
         int start = sizeOfArray / 2;
         int end = sizeOfArray;
-        while (end > 1) {
+        while (!shouldStop && end > 1) {
             if (start > 0) {
                 start--;
             }
@@ -21,12 +22,12 @@ public class HeapSort extends Sorter {
             }
 
             int root = start;
-            while (leftChild(root) < end) {
+            while (!shouldStop && leftChild(root) < end) {
                 int rootVal = controller.getNumAtIndex(root);
 
                 int child = leftChild(root);
                 int childVal = controller.getNumAtIndex(child);
-                
+
                 if (child+1 < end) {
                     int rightVal = controller.getNumAtIndex(child + 1);
                     if (inOrder(childVal, rightVal, sortAscending)) {
