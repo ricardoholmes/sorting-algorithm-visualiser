@@ -1,5 +1,9 @@
 package sortalgorithmvisualiser.mvc;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.sound.sampled.LineUnavailableException;
 
 import sortalgorithmvisualiser.sorters.*;
@@ -161,6 +165,7 @@ public class Controller {
 		}
 
 		playSoundForIndex(currentIndex, (int)currentDelay);
+		playSoundForIndex(newIndex, (int)currentDelay);
 
 		int[] nums = model.getList();
 		int currentNum = nums[currentIndex];
@@ -213,4 +218,19 @@ public class Controller {
 			Sound.playTone(freq, millis);
 		} catch (LineUnavailableException e) { }
 	}
+
+    public void setComparing(int a, int b) {
+		if (view.getClass() != GUIView.class) {
+			return;
+		}
+
+		List<Integer> nums = Arrays.stream(model.getList())
+									.boxed()
+									.collect(Collectors.toList());
+
+		int index1 = nums.indexOf(a);
+		int index2 = nums.indexOf(b);
+
+		BarPanel.comparingBars(index1, index2);
+    }
 }

@@ -50,6 +50,8 @@ public abstract class Sorter {
      *          the order given by {@code sortAscending}
      */
     protected final boolean inOrder(int a, int b, boolean sortAscending) {
+        controller.setComparing(a, b);
+
         // sortAscending AND !(a > b)
         // OR
         // !sortAscending AND (a > b)
