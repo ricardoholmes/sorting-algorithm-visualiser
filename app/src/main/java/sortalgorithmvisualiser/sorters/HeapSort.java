@@ -17,8 +17,8 @@ public class HeapSort extends Sorter {
             }
             else {
                 end--;
-                controller.swapIndexes(end, 0);
                 sleep(delay);
+                controller.swapIndexes(end, 0);
             }
 
             int root = start;
@@ -37,8 +37,8 @@ public class HeapSort extends Sorter {
                 }
 
                 if (inOrder(rootVal, childVal, sortAscending)) {
-                    controller.swapIndexes(root, child);
                     sleep(delay);
+                    controller.swapIndexes(root, child);
                     root = child;
                 }
                 else {

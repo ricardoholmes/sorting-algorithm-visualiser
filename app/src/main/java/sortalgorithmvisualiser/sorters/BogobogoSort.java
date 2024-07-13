@@ -18,12 +18,12 @@ public class BogobogoSort extends Sorter {
             int n = controller.getNumAtIndex(i);
 
             if (!inOrder(prev, n, sortAscending)) {
+                sleep(delay);
+
                 controller.shuffleRange(0, i+1);
 
                 controller.playSoundForIndex(i-1, (int)delay);
                 controller.playSoundForIndex(i, (int)delay);
-
-                sleep(delay);
 
                 i = 0; // loop will restart from 1 (since i++)
             }

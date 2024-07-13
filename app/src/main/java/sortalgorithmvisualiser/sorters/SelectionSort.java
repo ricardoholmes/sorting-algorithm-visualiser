@@ -27,8 +27,8 @@ public class SelectionSort extends Sorter {
                 }
             }
 
-            controller.moveNumber(smallestIndex, amountDone);
             sleep(delay);
+            controller.moveNumber(smallestIndex, amountDone);
         }
     }
 }

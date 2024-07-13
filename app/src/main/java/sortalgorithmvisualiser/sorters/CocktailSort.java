@@ -38,10 +38,10 @@ public class CocktailSort extends Sorter {
                 }
 
                 if (inOrder(controller.getNumAtIndex(i), controller.getNumAtIndex(i-1), sortAscending)) {
+                    sleep(delay);
+
                     controller.swapIndexes(i - 1, i);
                     sorted = false;
-
-                    sleep(delay);
                 }
             }
         }

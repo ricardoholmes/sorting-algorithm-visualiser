@@ -12,10 +12,10 @@ public class StalinSort extends Sorter {
         int i = 1;
         while (!shouldStop && i < sizeOfArray) {
             if (!inOrder(controller.getNumAtIndex(i-1), controller.getNumAtIndex(i), sortAscending)) {
+                sleep(delay);
                 controller.playSoundForIndex(i, (int)delay);
                 controller.removeIndex(i);
                 sizeOfArray--;
-                sleep(delay);
             }
             else {
                 i++;
