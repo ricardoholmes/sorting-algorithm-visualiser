@@ -3,6 +3,8 @@ package sortalgorithmvisualiser.mvc;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -15,6 +17,8 @@ public class BarPanel extends JPanel {
     private static int sortedCount = 0;
     private static boolean stopDoneAnim = false;
 
+    private static List<Integer> barsComparing = new ArrayList<>();
+
     public BarPanel(Model m, Controller c, OptionsPanel options) {
         model = m;
         controller = c;
@@ -25,6 +29,7 @@ public class BarPanel extends JPanel {
     public static void resetBarColor() {
         sortedCount = 0;
         stopDoneAnim = false;
+        barsComparing = new ArrayList<>();
     }
 
     public static void stopDoneAnimation() {
@@ -36,7 +41,7 @@ public class BarPanel extends JPanel {
     }
 
     public void doneSorting() {
-        sortedCount = 0;
+        resetBarColor();
         for (int i = 0; i < model.getArrayLength(); i++) {
             sortedCount++;
             repaint();
@@ -90,6 +95,9 @@ public class BarPanel extends JPanel {
                 g.setColor(Color.GREEN);
                 tempSortedCount--;
             }
+            else if (barsComparing.contains(i)) {
+                g.setColor(Color.RED);
+            }
             else {
                 g.setColor(Color.BLACK);
             }
@@ -102,5 +110,9 @@ public class BarPanel extends JPanel {
 
             x += barWidth;
         }
+    }
+
+    public static void comparingBars(int index1, int index2) {
+        barsComparing = Arrays.asList(index1, index2);
     }
 }

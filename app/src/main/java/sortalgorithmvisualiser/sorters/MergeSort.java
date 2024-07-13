@@ -34,11 +34,11 @@ public class MergeSort extends Sorter {
             int leftNum = controller.getNumAtIndex(leftIndex);
             int rightNum = controller.getNumAtIndex(rightIndex);
             if (inOrder(rightNum, leftNum, sortAscending)) {
+                sleep(delay);
+
                 controller.moveNumber(rightIndex, leftIndex);
                 rightIndex++;
                 leftIndex++;
-
-                sleep(delay);
             }
             else {
                 leftIndex++;

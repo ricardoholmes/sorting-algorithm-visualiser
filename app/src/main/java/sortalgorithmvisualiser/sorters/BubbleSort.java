@@ -19,10 +19,10 @@ public class BubbleSort extends Sorter {
                 }
 
                 if (inOrder(controller.getNumAtIndex(i+1), controller.getNumAtIndex(i), sortAscending)) {
+                    sleep(delay);
+
                     controller.swapIndexes(i, i+1);
                     sorted = false;
-
-                    sleep(delay);
                 }
             }
             iterations++;

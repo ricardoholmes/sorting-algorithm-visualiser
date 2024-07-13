@@ -17,10 +17,10 @@ public class InsertionSort extends Sorter {
                 if (shouldStop) {
                     return;
                 }
-                controller.swapIndexes(j, j + 1);
-                j--;
 
                 sleep(delay);
+                controller.swapIndexes(j, j + 1);
+                j--;
             }
         }
     }
