@@ -60,6 +60,7 @@ public class GUIView implements IView {
         frame.setVisible(true);
 
         refreshView();
+        setBackground(BarPanel.barBackgroundColor);
     }
 
     public void setBorderActive(boolean b) {
