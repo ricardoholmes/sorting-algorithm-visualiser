@@ -155,7 +155,9 @@ public class OptionsPanel extends JPanel {
         JComboBox<ColorOption> barBackgroundColorDropDown = new JComboBox<>(ColorOption.values());
         barBackgroundColorDropDown.setSelectedItem(ColorOption.White);
         barBackgroundColorDropDown.addItemListener(e -> {
-            BarPanel.barBackgroundColor = ((ColorOption)e.getItem()).toColor();
+            Color color = ((ColorOption)e.getItem()).toColor();
+            v.setBackground(color);
+            BarPanel.barBackgroundColor = color;
             BarPanel.refresh();
         });
 
