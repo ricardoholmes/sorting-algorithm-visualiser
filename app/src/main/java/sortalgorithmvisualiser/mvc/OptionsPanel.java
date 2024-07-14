@@ -175,12 +175,47 @@ public class OptionsPanel extends JPanel {
         add(container);
 
         // select colors
-        add(barColorDropDown);
-        add(barComparingColorDropDown);
-        add(barDoneColorDropDown);
-        add(barBorderColorDropDown);
-        add(barBackgroundColorDropDown);
-        add(optionsBackgroundColorDropDown);
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar color:"));
+        container.add(barColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar comparing color:"));
+        container.add(barComparingColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar done color:"));
+        container.add(barDoneColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar border color:"));
+        container.add(barBorderColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar background color:"));
+        container.add(barBackgroundColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Options background color:"));
+        container.add(optionsBackgroundColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
     }
 
     public static double getVolume() {
