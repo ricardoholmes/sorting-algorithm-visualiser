@@ -86,7 +86,7 @@ public class Controller {
 		Controller.currentDelay = delay;
 		Controller.endAnimDelay = endDelay;
 
-		BarPanel.resetBarColor();
+		BarPanel.resetBars();
 
 		sorter = sorters[chosenSorterIndex];
 		sorter.initialise(this, model.getArrayLength());
@@ -120,19 +120,19 @@ public class Controller {
 	public void generateList(int length) {
 		stopSorting();
 		model.generateList(length);
-		BarPanel.resetBarColor();
+		BarPanel.resetBars();
 		view.refreshView();
 	}
 
 	public void shuffle() {
 		model.shuffle();
-		BarPanel.resetBarColor();
+		BarPanel.resetBars();
 		view.refreshView();
 	}
 
 	public void shuffleRange(int start, int end) {
 		model.shuffleRange(start, end);
-		BarPanel.resetBarColor();
+		BarPanel.resetBars();
 		view.refreshView();
 	}
 
