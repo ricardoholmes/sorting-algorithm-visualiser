@@ -12,6 +12,8 @@ public class BarPanel extends JPanel {
     private static Model model;
     private static Controller controller;
     private static OptionsPanel optionsPanel;
+    private static BarPanel instance;
+
     private boolean hasBorder = true;
 
     private static int sortedCount = 0;
@@ -19,14 +21,21 @@ public class BarPanel extends JPanel {
 
     private static List<Integer> barsComparing = new ArrayList<>();
 
+    public static Color barColor = Color.BLACK;
+    public static Color barComparingColor = Color.RED;
+    public static Color barDoneColor = Color.GREEN;
+    public static Color barBorderColor = Color.WHITE;
+    public static Color barBackgroundColor = Color.WHITE;
+
     public BarPanel(Model m, Controller c, OptionsPanel options) {
         model = m;
         controller = c;
         optionsPanel = options;
-        resetBarColor();
+        instance = this;
+        resetBars();
     }
 
-    public static void resetBarColor() {
+    public static void resetBars() {
         sortedCount = 0;
         stopDoneAnim = false;
         barsComparing = new ArrayList<>();
@@ -40,8 +49,16 @@ public class BarPanel extends JPanel {
         hasBorder = b;
     }
 
+    public static void comparingBars(int index1, int index2) {
+        barsComparing = Arrays.asList(index1, index2);
+    }
+
+    public static void refresh() {
+        instance.repaint();
+    }
+
     public void doneSorting() {
-        resetBarColor();
+        resetBars();
         for (int i = 0; i < model.getArrayLength(); i++) {
             sortedCount++;
             repaint();
@@ -60,6 +77,8 @@ public class BarPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        setBackground(barBackgroundColor);
 
         int maxBars = getSize().width / (hasBorder ? 3 : 1);
         optionsPanel.setMaximumBarCount(maxBars);
@@ -92,27 +111,23 @@ public class BarPanel extends JPanel {
             int y = maxHeight - barHeight;
 
             if (tempSortedCount > 0) {
-                g.setColor(Color.GREEN);
+                g.setColor(barDoneColor);
                 tempSortedCount--;
             }
             else if (barsComparing.contains(i)) {
-                g.setColor(Color.RED);
+                g.setColor(barComparingColor);
             }
             else {
-                g.setColor(Color.BLACK);
+                g.setColor(barColor);
             }
             g.fillRect(x, y, barWidth, barHeight);
 
             if (hasBorder) {
-                g.setColor(Color.WHITE);
+                g.setColor(barBorderColor);
                 g.drawRect(x, y, barWidth, barHeight);
             }
 
             x += barWidth;
         }
-    }
-
-    public static void comparingBars(int index1, int index2) {
-        barsComparing = Arrays.asList(index1, index2);
     }
 }

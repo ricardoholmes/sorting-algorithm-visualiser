@@ -15,6 +15,46 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class OptionsPanel extends JPanel {
+    private enum ColorOption {
+        Red,
+        Yellow,
+        Green,
+        Blue,
+        Pink,
+        Magenta,
+        Cyan,
+        Gray,
+        Black,
+        White;
+
+        public Color toColor() {
+            switch (this) {
+                case Black:
+                    return Color.BLACK;
+                case Blue:
+                    return Color.BLUE;
+                case Cyan:
+                    return Color.CYAN;
+                case Gray:
+                    return Color.GRAY;
+                case Green:
+                    return Color.GREEN;
+                case Magenta:
+                    return Color.MAGENTA;
+                case Pink:
+                    return Color.PINK;
+                case Red:
+                    return Color.RED;
+                case White:
+                    return Color.WHITE;
+                case Yellow:
+                    return Color.YELLOW;
+                default:
+                    return null;
+            }
+        }
+    }
+
     private Controller controller;
     private Model model;
 
@@ -83,6 +123,43 @@ public class OptionsPanel extends JPanel {
         });
 
         volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+
+        JComboBox<ColorOption> barColorDropDown = new JComboBox<>(ColorOption.values());
+        barColorDropDown.setSelectedItem(ColorOption.Black);
+        barColorDropDown.addItemListener(e -> {
+            BarPanel.barColor = ((ColorOption)e.getItem()).toColor();
+            BarPanel.refresh();
+        });
+
+        JComboBox<ColorOption> barComparingColorDropDown = new JComboBox<>(ColorOption.values());
+        barComparingColorDropDown.setSelectedItem(ColorOption.Red);
+        barComparingColorDropDown.addItemListener(e -> {
+            BarPanel.barComparingColor = ((ColorOption)e.getItem()).toColor();
+            BarPanel.refresh();
+        });
+
+        JComboBox<ColorOption> barDoneColorDropDown = new JComboBox<>(ColorOption.values());
+        barDoneColorDropDown.setSelectedItem(ColorOption.Green);
+        barDoneColorDropDown.addItemListener(e -> {
+            BarPanel.barDoneColor = ((ColorOption)e.getItem()).toColor();
+            BarPanel.refresh();
+        });
+
+        JComboBox<ColorOption> barBorderColorDropDown = new JComboBox<>(ColorOption.values());
+        barBorderColorDropDown.setSelectedItem(ColorOption.White);
+        barBorderColorDropDown.addItemListener(e -> {
+            BarPanel.barBorderColor = ((ColorOption)e.getItem()).toColor();
+            BarPanel.refresh();
+        });
+
+        JComboBox<ColorOption> barBackgroundColorDropDown = new JComboBox<>(ColorOption.values());
+        barBackgroundColorDropDown.setSelectedItem(ColorOption.White);
+        barBackgroundColorDropDown.addItemListener(e -> {
+            Color color = ((ColorOption)e.getItem()).toColor();
+            v.setBackground(color);
+            BarPanel.barBackgroundColor = color;
+            BarPanel.refresh();
+        });
 
         setBackground(Color.GRAY);
         
@@ -153,6 +230,42 @@ public class OptionsPanel extends JPanel {
         container.add(shuffleButton);
         container.setMaximumSize(container.getPreferredSize());
         add(container);
+
+        // select colors
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar color:"));
+        container.add(barColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar comparing color:"));
+        container.add(barComparingColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar done color:"));
+        container.add(barDoneColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar border color:"));
+        container.add(barBorderColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
+
+        container = new Container();
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+        container.add(new JLabel("Bar background color:"));
+        container.add(barBackgroundColorDropDown);
+        container.setMaximumSize(container.getPreferredSize());
+        add(container);
     }
 
     public static double getVolume() {
@@ -168,7 +281,7 @@ public class OptionsPanel extends JPanel {
         }
     }
 
-    void generateList() {
+    private void generateList() {
         int count = (int)numCountSpinner.getValue();
         if (count > maxBars) {
             count = maxBars;

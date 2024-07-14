@@ -1,5 +1,6 @@
 package sortalgorithmvisualiser.mvc;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -59,11 +60,16 @@ public class GUIView implements IView {
         frame.setVisible(true);
 
         refreshView();
+        setBackground(BarPanel.barBackgroundColor);
     }
 
     public void setBorderActive(boolean b) {
         barsPanel.setBorderActive(b);
         refreshView();
+    }
+
+    public void setBackground(Color color) {
+        mainPanel.setBackground(color);
     }
 
     @Override
