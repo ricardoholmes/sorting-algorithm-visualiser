@@ -15,6 +15,19 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 public class OptionsPanel extends JPanel {
+    private enum ColorOption {
+        Red,
+        Yellow,
+        Green,
+        Blue,
+        Pink,
+        Magenta,
+        Cyan,
+        Gray,
+        Black,
+        White,
+    }
+
     private Controller controller;
     private Model model;
 
@@ -83,6 +96,13 @@ public class OptionsPanel extends JPanel {
         });
 
         volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
+
+        JComboBox<ColorOption> barColorDropDown = new JComboBox<>(ColorOption.values());
+        JComboBox<ColorOption> barComparingColorDropDown = new JComboBox<>(ColorOption.values());
+        JComboBox<ColorOption> barDoneColorDropDown = new JComboBox<>(ColorOption.values());
+        JComboBox<ColorOption> barBorderColorDropDown = new JComboBox<>(ColorOption.values());
+        JComboBox<ColorOption> barBackgroundColorDropDown = new JComboBox<>(ColorOption.values());
+        JComboBox<ColorOption> optionsBackgroundColorDropDown = new JComboBox<>(ColorOption.values());
 
         setBackground(Color.GRAY);
         
@@ -153,6 +173,14 @@ public class OptionsPanel extends JPanel {
         container.add(shuffleButton);
         container.setMaximumSize(container.getPreferredSize());
         add(container);
+
+        // select colors
+        add(barColorDropDown);
+        add(barComparingColorDropDown);
+        add(barDoneColorDropDown);
+        add(barBorderColorDropDown);
+        add(barBackgroundColorDropDown);
+        add(optionsBackgroundColorDropDown);
     }
 
     public static double getVolume() {
