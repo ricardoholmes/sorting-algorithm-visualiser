@@ -10,6 +10,7 @@ version = "1.0"
 
 plugins {
     application
+    id("org.beryx.jlink") version "3.0.1"
 }
 
 repositories {
@@ -31,6 +32,7 @@ application {
     // Define the main class for the application.
     mainClass.set("sortalgorithmvisualiser.App")
 
+    mainModule = "main";
     applicationName = "sorting-algorithm-visualiser"
     project.base.archivesName = "sorting-algorithm-visualiser"
 }
@@ -42,5 +44,19 @@ tasks.named<JavaExec>("run") {
 tasks.withType<Jar> {
     manifest {
         attributes["Main-Class"] = "sortalgorithmvisualiser.App"
+    }
+}
+
+// jlink config - for exporting to executable
+jlink {
+    options = listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
+    launcher {
+        name = "sorting-algorithm-visualiser"
+    }
+    jpackage {
+        if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+            installerOptions.addAll(listOf("--win-per-user-install", "--win-dir-chooser", "--win-menu", "--win-shortcut"))
+            imageOptions.addAll(listOf("--win-console"))
+        }
     }
 }
