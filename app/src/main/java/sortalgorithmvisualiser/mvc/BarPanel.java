@@ -43,6 +43,9 @@ public class BarPanel extends JPanel {
 
     public static void stopDoneAnimation() {
         stopDoneAnim = true;
+        sortedCount = 0;
+        barsComparing = new ArrayList<>();
+        refresh();
     }
 
     public void setBorderActive(boolean b) {

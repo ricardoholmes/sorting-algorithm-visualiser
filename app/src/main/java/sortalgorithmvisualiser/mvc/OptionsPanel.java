@@ -82,7 +82,10 @@ public class OptionsPanel extends JPanel {
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected(), (double)endDelaySpinner.getValue());
+            double delay = (double)delaySpinner.getValue();
+            boolean ascending = sortAscendingCheckBox.isSelected();
+            double endDelay = (double)endDelaySpinner.getValue();
+            c.sort(delay, ascending, endDelay);
         });
 
         JButton stopButton = new JButton("Stop");
