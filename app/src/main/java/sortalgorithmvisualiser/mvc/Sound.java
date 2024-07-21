@@ -10,7 +10,7 @@ import javax.sound.sampled.SourceDataLine;
 
 public class Sound {
     public static final int SAMPLE_RATE = 44100;
-    public static final int MIN_DELAY_MS = 5;
+    public static final double MIN_MILLIS = 5;
     public static final double SUSTAIN = 2;
 
     public static boolean muted = false;
@@ -53,14 +53,14 @@ public class Sound {
         drainThread.start();
     }
 
-    public static void playTone(double freq, int delay) throws LineUnavailableException 
+    public static void playTone(double freq, double millis) throws LineUnavailableException 
     {
-        delay = Integer.max(MIN_DELAY_MS, delay);
+        millis = Double.max(MIN_MILLIS, millis);
         addOscillator(
             freq,
             time,
             time,
-            (int)(delay / 1000.0 * SUSTAIN * SAMPLE_RATE)
+            (int)(millis / 1000.0 * SUSTAIN * SAMPLE_RATE)
         );
     }
 

@@ -66,9 +66,14 @@ public class BarPanel extends JPanel {
             sortedCount++;
             repaint();
 
-            controller.playSoundForIndex(i, (int)Controller.endAnimDelay);
+            double delay = Controller.currentDelay;
+
+            controller.playSoundForIndex(i, delay);
+
+            long millis = (long)delay;
+            int nanos = (int)((delay % 1) * 1_000_000);
             try {
-                Thread.sleep((int)Controller.endAnimDelay);
+                Thread.sleep(millis, nanos);
             } catch (InterruptedException e) { }
 
             if (stopDoneAnim) {

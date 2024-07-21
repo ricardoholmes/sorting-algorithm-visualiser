@@ -60,7 +60,6 @@ public class OptionsPanel extends JPanel {
     private Model model;
 
     private JSpinner delaySpinner;
-    private JSpinner endDelaySpinner;
     private JSpinner numCountSpinner;
 
     private JCheckBox sortAscendingCheckBox;
@@ -84,8 +83,7 @@ public class OptionsPanel extends JPanel {
         sortButton.addActionListener(e -> {
             double delay = (double)delaySpinner.getValue();
             boolean ascending = sortAscendingCheckBox.isSelected();
-            double endDelay = (double)endDelaySpinner.getValue();
-            c.sort(delay, ascending, endDelay);
+            c.sort(delay, ascending);
         });
 
         JButton stopButton = new JButton("Stop");
@@ -110,9 +108,6 @@ public class OptionsPanel extends JPanel {
 
         SpinnerModel delaySpinnerModel = new SpinnerNumberModel(25.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
-
-        SpinnerModel endDelaySpinnerModel = new SpinnerNumberModel(50.0, 0, Integer.MAX_VALUE, 1);
-        endDelaySpinner = new JSpinner(endDelaySpinnerModel);
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
         borderActiveCheckBox.addActionListener(e -> {
@@ -178,9 +173,6 @@ public class OptionsPanel extends JPanel {
 
         // choose main delay
         addComponents("Delay (ms):", delaySpinner);
-
-        // choose delay for end animation
-        addComponents("End Delay (ms):", endDelaySpinner);
 
         // set volume (with slider)
         addComponents("Volume:", volumeSlider);

@@ -32,7 +32,6 @@ public class Controller {
 	public Thread sortThread;
 
 	public static double currentDelay;
-	public static double endAnimDelay;
 
     /*
 	 * Initialise the controller
@@ -70,11 +69,7 @@ public class Controller {
 	}
 
 	public void sort(double delay, boolean sortAscending) {
-		sort(delay, sortAscending, 0);
-	}
-	
-	public void sort(double delay, boolean sortAscending, double endDelay) {
-		if (delay < 0 || endDelay < 0) {
+		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
 
@@ -84,7 +79,6 @@ public class Controller {
 		}
 
 		Controller.currentDelay = delay;
-		Controller.endAnimDelay = endDelay;
 
 		BarPanel.resetBars();
 
@@ -200,7 +194,7 @@ public class Controller {
 
 	// only plays in GUI mode
 	// will fail silently when called for CLI
-	public void playSoundForIndex(int index, int millis) {
+	public void playSoundForIndex(int index, double millis) {
 		if (view.getClass() != GUIView.class || Sound.muted) {
 			return;
 		}
