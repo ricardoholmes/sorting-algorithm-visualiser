@@ -21,13 +21,31 @@ public class Oscillator {
         _end = start + duration;
     }
 
+    private static double sineWave(double t) {
+        return Math.sin(2 * Math.PI * t);
+    }
+
     private static double triangleWave(double t) {
         double x = ((t - 0.25) % 1.0) - 0.5;
         return 4.0 * Math.abs(x) - 1.0;
     }
 
+    private static double sawtoothWave(double t) {
+        double out = 0;
+        for (int k = 1; k <= 100; k++) {
+            double v = Math.sin(2 * Math.PI * k * t) / k;
+            if (k % 2 == 1) {
+                v *= -1;
+            }
+            out += v;
+        }
+        return (-2/Math.PI) * out;
+    }
+
     public static double wave(double t) {
+        // return sineWave(t);
         return triangleWave(t);
+        // return sawtoothWave(t);
     }
 
     public double envelope(int i) {
