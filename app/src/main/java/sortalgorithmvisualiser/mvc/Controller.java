@@ -208,11 +208,7 @@ public class Controller {
 		double normalisedValue = (getNumAtIndex(index) - 1) / (double)model.getMaxValueAtCreation();
 
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
-		int freq = 120 + (int)(1200 * normalisedValue);
-
-		// if (millis < 10) {
-		// 	millis = 10;
-		// }
+		int freq = 200 + (int)(1000 * normalisedValue);
 
 		try {
 			Sound.playTone(freq, millis);

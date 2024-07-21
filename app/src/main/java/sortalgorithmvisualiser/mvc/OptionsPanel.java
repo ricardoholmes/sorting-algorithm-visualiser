@@ -1,6 +1,7 @@
 package sortalgorithmvisualiser.mvc;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 
@@ -81,7 +82,10 @@ public class OptionsPanel extends JPanel {
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
-            c.sort((double)delaySpinner.getValue(), sortAscendingCheckBox.isSelected(), (double)endDelaySpinner.getValue());
+            double delay = (double)delaySpinner.getValue();
+            boolean ascending = sortAscendingCheckBox.isSelected();
+            double endDelay = (double)endDelaySpinner.getValue();
+            c.sort(delay, ascending, endDelay);
         });
 
         JButton stopButton = new JButton("Stop");
@@ -164,109 +168,52 @@ public class OptionsPanel extends JPanel {
         setBackground(Color.GRAY);
         
         // Select sorter
-        Container container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(sorterDropDown);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents(sorterDropDown);
         
         // select number of bars
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JLabel numberOfBarsLabel = new JLabel("Number of bars:");
-        container.add(numberOfBarsLabel);
-        container.add(numCountSpinner);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents("Number of bars:", numCountSpinner);
 
         // generate array
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(generateArrayButton);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents(generateArrayButton);
 
-        // choose delay
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JLabel delayLabel = new JLabel("Delay (ms):");
-        container.add(delayLabel);
-        container.add(delaySpinner);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        // choose main delay
+        addComponents("Delay (ms):", delaySpinner);
 
         // choose delay for end animation
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JLabel endDelayLabel = new JLabel("End Delay (ms):");
-        container.add(endDelayLabel);
-        container.add(endDelaySpinner);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents("End Delay (ms):", endDelaySpinner);
 
         // set volume (with slider)
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        JLabel volumeLabel = new JLabel("Volume:");
-        container.add(volumeLabel);
-        container.add(volumeSlider);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents("Volume:", volumeSlider);
 
         // checkboxes
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(borderActiveCheckBox);
-        container.add(sortAscendingCheckBox);
-        container.add(muteCheckBox);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents(borderActiveCheckBox, sortAscendingCheckBox, muteCheckBox);
 
         // sort + stop
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(sortButton);
-        container.add(stopButton);
-        container.add(shuffleButton);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents(sortButton, stopButton, shuffleButton);
 
         // select colors
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(new JLabel("Bar color:"));
-        container.add(barColorDropDown);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        addComponents("Bar color:", barColorDropDown);
+        addComponents("Bar comparing color:", barComparingColorDropDown);
+        addComponents("Bar done color:", barDoneColorDropDown);
+        addComponents("Bar border color:", barBorderColorDropDown);
+        addComponents("Bar background color:", barBackgroundColorDropDown);
+    }
 
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(new JLabel("Bar comparing color:"));
-        container.add(barComparingColorDropDown);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
+    private void addComponents(String labelText, Component component) {
+        JLabel label = new JLabel(labelText);
+        addComponents(label, component);
+    }
 
-        container = new Container();
+    private void addComponents(Component... components) {
+        Container container = new Container();
         container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(new JLabel("Bar done color:"));
-        container.add(barDoneColorDropDown);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
-
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(new JLabel("Bar border color:"));
-        container.add(barBorderColorDropDown);
-        container.setMaximumSize(container.getPreferredSize());
-        add(container);
-
-        container = new Container();
-        container.setLayout(new FlowLayout(FlowLayout.CENTER));
-        container.add(new JLabel("Bar background color:"));
-        container.add(barBackgroundColorDropDown);
+        for (Component c : components) {
+            container.add(c);
+        }
         container.setMaximumSize(container.getPreferredSize());
         add(container);
     }
+
 
     public static double getVolume() {
         return volumeSlider.getValue() / 100.0;

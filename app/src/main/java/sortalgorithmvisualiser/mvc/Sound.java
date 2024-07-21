@@ -105,7 +105,6 @@ public class Sound {
         }
 
         double[] wave = new double[len];
-        Arrays.fill(wave, Oscillator.wave(0));
 
         int waveCount = 0;
 
@@ -118,18 +117,13 @@ public class Sound {
         }
 
         if (waveCount == 0) {
+            sdl.write(new byte[len], 0, len);
             return;
         }
         else {
             double volSelected = OptionsPanel.getVolume();
 
             double vol = Arrays.stream(wave).max().getAsDouble(); // max amplitude
-            if (vol > volSelected) {
-                // will get ramped down in the loop
-            }
-            else {
-                vol = volSelected * 0.9;
-            }
 
             byte[] stream = new byte[len];
             for (int i = 0; i < len; i++) {

@@ -21,16 +21,31 @@ public class Oscillator {
         _end = start + duration;
     }
 
-    private static double triangleWave(double t) {
-        t = t % 1;
+    private static double sineWave(double t) {
+        return Math.sin(2 * Math.PI * t);
+    }
 
-        if (t <= 0.25) return 4.0 * t;
-        if (t <= 0.75) return 2.0 - 4.0 * t;
-        return 4.0 * t - 4.0;
+    private static double triangleWave(double t) {
+        double x = ((t - 0.25) % 1.0) - 0.5;
+        return 4.0 * Math.abs(x) - 1.0;
+    }
+
+    private static double sawtoothWave(double t) {
+        double out = 0;
+        for (int k = 1; k <= 100; k++) {
+            double v = Math.sin(2 * Math.PI * k * t) / k;
+            if (k % 2 == 1) {
+                v *= -1;
+            }
+            out += v;
+        }
+        return (-2/Math.PI) * out;
     }
 
     public static double wave(double t) {
+        // return sineWave(t);
         return triangleWave(t);
+        // return sawtoothWave(t);
     }
 
     public double envelope(int i) {
@@ -42,7 +57,7 @@ public class Oscillator {
         double attack = 0.025; // percentage of duration
         double decay = 0.1;    // percentage of duration
         double sustain = 0.9;  // percentage of amplitude
-        double release = 0.3;  // percentage of duration
+        double release = 0.5;  // percentage of duration
 
         if (x < attack)
             return 1.0 / attack * x;
