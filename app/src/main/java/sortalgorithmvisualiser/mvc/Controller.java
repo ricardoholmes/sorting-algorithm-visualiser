@@ -136,8 +136,8 @@ public class Controller {
 
 	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
-		playSoundForIndex(i, (int)currentDelay);
-		playSoundForIndex(j, (int)currentDelay);
+		playSoundForIndex(i);
+		playSoundForIndex(j);
 
 		int[] nums = model.getList();
 		int temp = nums[j];
@@ -158,8 +158,8 @@ public class Controller {
 			return;
 		}
 
-		playSoundForIndex(currentIndex, (int)currentDelay);
-		playSoundForIndex(newIndex, (int)currentDelay);
+		playSoundForIndex(currentIndex);
+		playSoundForIndex(newIndex);
 
 		int[] nums = model.getList();
 		int currentNum = nums[currentIndex];
@@ -194,7 +194,7 @@ public class Controller {
 
 	// only plays in GUI mode
 	// will fail silently when called for CLI
-	public void playSoundForIndex(int index, double millis) {
+	public void playSoundForIndex(int index) {
 		if (view.getClass() != GUIView.class || Sound.muted) {
 			return;
 		}
@@ -205,7 +205,7 @@ public class Controller {
 		int freq = 200 + (int)(1000 * normalisedValue);
 
 		try {
-			Sound.playTone(freq, millis);
+			Sound.playTone(freq, currentDelay);
 		} catch (LineUnavailableException e) { }
 	}
 

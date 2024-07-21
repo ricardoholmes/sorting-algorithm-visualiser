@@ -22,8 +22,8 @@ public class BogobogoSort extends Sorter {
 
                 controller.shuffleRange(0, i+1);
 
-                controller.playSoundForIndex(i-1, (int)delay);
-                controller.playSoundForIndex(i, (int)delay);
+                controller.playSoundForIndex(i-1);
+                controller.playSoundForIndex(i);
 
                 i = 0; // loop will restart from 1 (since i++)
             }
