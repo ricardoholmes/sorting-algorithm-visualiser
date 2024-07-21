@@ -22,11 +22,8 @@ public class Oscillator {
     }
 
     private static double triangleWave(double t) {
-        t = t % 1;
-
-        if (t <= 0.25) return 4.0 * t;
-        if (t <= 0.75) return 2.0 - 4.0 * t;
-        return 4.0 * t - 4.0;
+        double x = ((t - 0.25) % 1.0) - 0.5;
+        return 4.0 * Math.abs(x) - 1.0;
     }
 
     public static double wave(double t) {
@@ -42,7 +39,7 @@ public class Oscillator {
         double attack = 0.025; // percentage of duration
         double decay = 0.1;    // percentage of duration
         double sustain = 0.9;  // percentage of amplitude
-        double release = 0.3;  // percentage of duration
+        double release = 0.5;  // percentage of duration
 
         if (x < attack)
             return 1.0 / attack * x;
