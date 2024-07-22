@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.swing.JPanel;
 
@@ -26,6 +29,8 @@ public class BarPanel extends JPanel {
     public static Color barDoneColor = Color.GREEN;
     public static Color barBorderColor = Color.WHITE;
     public static Color barBackgroundColor = Color.WHITE;
+
+    public static int barBorderWidth = 1;
 
     public BarPanel(Model m, Controller c, OptionsPanel options) {
         model = m;
@@ -102,8 +107,11 @@ public class BarPanel extends JPanel {
         int x = 0;
 
         ArrayList<Integer> barsWithExtraPixels = new ArrayList<>();
+
+        List<Integer> bars = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
+        Collections.shuffle(bars);
         for (int i = 0; i < spareWidthPixels; i++) {
-            barsWithExtraPixels.add(model.getValueAt(i));
+            barsWithExtraPixels.add(bars.get(i));
         }
 
         int maxHeight = getSize().height;
@@ -120,6 +128,12 @@ public class BarPanel extends JPanel {
 
             int y = maxHeight - barHeight;
 
+            boolean hasVisibleBorder = hasBorder && barBorderWidth > 0;
+            if (hasVisibleBorder) {
+                g.setColor(barBorderColor);
+                g.fillRect(x, y, barWidth, barHeight);
+            }
+
             if (tempSortedCount > 0) {
                 g.setColor(barDoneColor);
                 tempSortedCount--;
@@ -130,11 +144,20 @@ public class BarPanel extends JPanel {
             else {
                 g.setColor(barColor);
             }
-            g.fillRect(x, y, barWidth, barHeight);
 
-            if (hasBorder) {
-                g.setColor(barBorderColor);
-                g.drawRect(x, y, barWidth, barHeight);
+            if (hasVisibleBorder) {
+                // if the border doesnt cover the whole bar, paint the bar
+                if (barBorderWidth * 2 < Math.min(barWidth, barHeight)) {
+                    g.fillRect(
+                        x + barBorderWidth,
+                        y + barBorderWidth,
+                        barWidth - (barBorderWidth * 2),
+                        barHeight - (barBorderWidth * 2)
+                    );
+                }
+            }
+            else {
+                g.fillRect(x, y, barWidth, barHeight);
             }
 
             x += barWidth;

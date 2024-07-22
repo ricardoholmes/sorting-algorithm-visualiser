@@ -166,6 +166,21 @@ public class OptionsPanel extends JPanel {
             Oscillator.wave = (Oscillator.Wave)(e.getItem());
         });
 
+        SpinnerModel barBorderWidthSpinnerModel = new SpinnerNumberModel(
+            1,
+            0,
+            Integer.MAX_VALUE,
+            1
+        );
+
+        JSpinner barBorderWidthSpinner = new JSpinner(barBorderWidthSpinnerModel);
+        barBorderWidthSpinner.addChangeListener(e -> {
+            BarPanel.barBorderWidth = (int)barBorderWidthSpinner.getValue();
+            BarPanel.refresh();
+        });
+
+        barCountSpinner = new JSpinner(barCountSpinnerModel);
+
         setBackground(Color.GRAY);
         
         // Select sorter
@@ -195,9 +210,12 @@ public class OptionsPanel extends JPanel {
         addComponents("Bar done color:", barDoneColorDropDown);
         addComponents("Bar border color:", barBorderColorDropDown);
         addComponents("Bar background color:", barBackgroundColorDropDown);
-
+        
         // sound settings
         addComponents("Sound wave:", soundWaveDropDown);
+
+        // more customisation settings
+        addComponents("Bar border width:", barBorderWidthSpinner);
     }
 
     private void addComponents(String labelText, Component component) {
