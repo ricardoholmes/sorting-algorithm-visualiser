@@ -167,7 +167,7 @@ public class OptionsPanel extends JPanel {
         });
 
         SpinnerModel barBorderWidthSpinnerModel = new SpinnerNumberModel(
-            1,
+            2,
             0,
             Integer.MAX_VALUE,
             1

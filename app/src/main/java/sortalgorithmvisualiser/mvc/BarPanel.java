@@ -30,7 +30,7 @@ public class BarPanel extends JPanel {
     public static Color barBorderColor = Color.WHITE;
     public static Color barBackgroundColor = Color.WHITE;
 
-    public static int barBorderWidth = 1;
+    public static int barBorderWidth = 2;
     public static boolean mergeBorders = false;
 
     public BarPanel(Model m, Controller c, OptionsPanel options) {
@@ -135,7 +135,21 @@ public class BarPanel extends JPanel {
             boolean hasVisibleBorder = hasBorder && barBorderWidth > 0;
             if (hasVisibleBorder) {
                 g.setColor(barBorderColor);
-                g.fillRect(x, y, barWidth, barHeight);
+
+                if (mergeBorders) {
+                    int borderX = x;
+                    int width = barWidth + barBorderWidth;
+                    if (i > 0) {
+                        borderX -= barBorderWidth / 2;
+                    }
+                    if (i == 0 || i == barCount - 1) {
+                        width -= (barBorderWidth + 1) / 2;
+                    }
+                    g.fillRect(borderX, y, width, barHeight);
+                }
+                else {
+                    g.fillRect(x, y, barWidth, barHeight);
+                }
             }
 
             if (tempSortedCount > 0) {
@@ -156,23 +170,19 @@ public class BarPanel extends JPanel {
                     int barY = y + barBorderWidth;
                     int width = barWidth - (2 * barBorderWidth);
                     int height = barHeight - (2 * barBorderWidth);
+
                     if (mergeBorders) {
                         width += barBorderWidth;
                         if (i > 0) {
-                            barX -= barBorderWidth / 2;
+                            barX -= (barBorderWidth + 1) / 2;
                         }
 
                         if (i == 0 || i == barCount - 1) {
-                            width -= ((barBorderWidth + 1) / 2);
+                            width -= (barBorderWidth + 1) / 2;
                         }
                     }
 
-                    g.fillRect(
-                        barX,
-                        barY,
-                        width,
-                        height
-                    );
+                    g.fillRect(barX, barY, width, height);
                 }
             }
             else {
