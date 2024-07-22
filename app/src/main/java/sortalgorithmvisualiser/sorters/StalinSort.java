@@ -7,7 +7,7 @@ public class StalinSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         int i = 1;
         while (!shouldStop && i < sizeOfArray) {

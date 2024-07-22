@@ -7,7 +7,7 @@ public class InsertionSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         for (int i = 1; i < sizeOfArray; i++) {
             int currentValue = controller.getNumAtIndex(i);

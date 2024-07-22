@@ -7,7 +7,7 @@ public class QuickSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         recursiveSort(delay, sortAscending, 0, sizeOfArray);
     }

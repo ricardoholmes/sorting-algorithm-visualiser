@@ -7,7 +7,7 @@ public class MergeSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         recursiveSort(0, sizeOfArray, delay, sortAscending);
     }

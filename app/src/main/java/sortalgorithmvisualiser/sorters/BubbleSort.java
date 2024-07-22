@@ -7,7 +7,7 @@ public class BubbleSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         boolean sorted = false;
         int iterations = 0;

@@ -7,7 +7,7 @@ public class CocktailSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         boolean sorted = false;
         while (!sorted) {

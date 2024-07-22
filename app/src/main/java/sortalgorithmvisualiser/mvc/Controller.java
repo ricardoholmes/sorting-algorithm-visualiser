@@ -83,14 +83,14 @@ public class Controller {
 		BarPanel.resetBars();
 
 		sorter = sorters[chosenSorterIndex];
-		sorter.initialise(this, model.getArrayLength());
+		sorter.initialise(this, model.getArrayLength(), sortAscending, delay);
 
 		try {
 			Sound.initialise();
 		} catch (LineUnavailableException e) {}
 
 		sortThread = new Thread(() -> {
-			sorter.sort(delay, sortAscending);
+			sorter.sort();
 			if (isSorted(sortAscending)) {
 				view.doneSorting();
 			} else {
