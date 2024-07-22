@@ -44,16 +44,7 @@ public class Oscillator {
     }
 
     private static double sawtoothWave(double t) {
-        // approximate using fourier series
-        double out = 0;
-        for (int k = 1; k <= 100; k++) {
-            double v = Math.sin(2 * Math.PI * k * t) / k;
-            if (k % 2 == 1) {
-                v *= -1;
-            }
-            out += v;
-        }
-        return (-2/Math.PI) * out;
+        return 2 * (t - Math.floor(0.5 + t));
     }
 
     public static double wave(double t) {
