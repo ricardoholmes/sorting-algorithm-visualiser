@@ -68,7 +68,9 @@ public class BarPanel extends JPanel {
 
             double delay = Controller.currentDelay;
 
-            controller.playSoundForIndex(i);
+            if (i + 1 < model.getArrayLength()) {
+                controller.setComparing(i, i+1);
+            }
 
             long millis = (long)delay;
             int nanos = (int)((delay % 1) * 1_000_000);

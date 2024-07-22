@@ -9,11 +9,11 @@ public class QuickSort extends Sorter {
     @Override
     public void sort() {
         shouldStop = false;
-        recursiveSort(delay, sortAscending, 0, sizeOfArray);
+        recursiveSort(0, sizeOfArray);
     }
 
     // inclusive start and exclusive end, ie. in interval [start, end)
-    void recursiveSort(double delay, boolean sortAscending, int start, int end) {
+    void recursiveSort(int start, int end) {
         if (start == end) {
             return;
         }
@@ -25,14 +25,12 @@ public class QuickSort extends Sorter {
                 return;
             }
 
-            if (inOrder(controller.getNumAtIndex(i), pivotVal, sortAscending)) {
-                sleep(delay);
-
+            if (inOrder(controller.getNumAtIndex(i), pivotVal)) {
                 controller.moveNumber(i, start);
                 pivotPos++;
             }
         }
-        recursiveSort(delay, sortAscending, start, pivotPos);
-        recursiveSort(delay, sortAscending, pivotPos + 1, end);
+        recursiveSort(start, pivotPos);
+        recursiveSort(pivotPos + 1, end);
     }
 }

@@ -4,9 +4,9 @@ import sortalgorithmvisualiser.mvc.Controller;
 
 public abstract class Sorter {
     protected Controller controller;
-    protected double delay;
+    private double delay;
     protected int sizeOfArray;
-    protected boolean sortAscending;
+    private boolean sortAscending;
 
     protected boolean shouldStop;
 
@@ -14,7 +14,7 @@ public abstract class Sorter {
      * @param c
      *      the controller
      * 
-     * @param numberOfElements
+     * @param sizeOfArray
      *      the number of numbers in the list that is to be sorted
      * 
      * @param delay
@@ -55,8 +55,9 @@ public abstract class Sorter {
      * @return whether or not {@code a} should be followed by {@code b} if sorted in
      *          the order given by {@code sortAscending}
      */
-    protected final boolean inOrder(int a, int b, boolean sortAscending) {
+    protected final boolean inOrder(int a, int b) {
         controller.setComparing(a, b);
+        sleep();
 
         // sortAscending AND !(a > b)
         // OR
@@ -66,7 +67,18 @@ public abstract class Sorter {
         return sortAscending ^ (a > b);
     }
 
-    protected final void sleep(double delay) {
+    protected final boolean isSorted() {
+        for (int i = 0; i < sizeOfArray - 1; i++) {
+            int a = controller.getNumAtIndex(i);
+            int b = controller.getNumAtIndex(i + 1);
+            if (!inOrder(a, b)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private final void sleep() {
         long millis = (long)delay;
         int nanos = (int)((delay % 1) * 1_000_000);
 

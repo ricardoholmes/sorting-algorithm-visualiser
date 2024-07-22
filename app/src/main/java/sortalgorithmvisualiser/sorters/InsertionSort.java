@@ -13,12 +13,11 @@ public class InsertionSort extends Sorter {
             int currentValue = controller.getNumAtIndex(i);
             int j = i - 1;
 
-            while (j >= 0 && !inOrder(controller.getNumAtIndex(j), currentValue, sortAscending)) {
+            while (j >= 0 && !inOrder(controller.getNumAtIndex(j), currentValue)) {
                 if (shouldStop) {
                     return;
                 }
 
-                sleep(delay);
                 controller.swapIndexes(j, j + 1);
                 j--;
             }

@@ -136,9 +136,6 @@ public class Controller {
 
 	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
-		playSoundForIndex(i);
-		playSoundForIndex(j);
-
 		int[] nums = model.getList();
 		int temp = nums[j];
 		nums[j] = nums[i];
@@ -157,10 +154,6 @@ public class Controller {
 		if (currentIndex == newIndex) {
 			return;
 		}
-
-		playSoundForIndex(currentIndex);
-		playSoundForIndex(newIndex);
-
 		int[] nums = model.getList();
 		int currentNum = nums[currentIndex];
 
@@ -194,12 +187,12 @@ public class Controller {
 
 	// only plays in GUI mode
 	// will fail silently when called for CLI
-	public void playSoundForIndex(int index) {
+	public void playSoundForValue(int value) {
 		if (view.getClass() != GUIView.class || Sound.muted) {
 			return;
 		}
 
-		double normalisedValue = (getNumAtIndex(index) - 1) / (double)model.getMaxValueAtCreation();
+		double normalisedValue = value / (double)model.getMaxValueAtCreation();
 
 		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
 		int freq = 200 + (int)(1000 * normalisedValue);
@@ -213,6 +206,9 @@ public class Controller {
 		if (view.getClass() != GUIView.class) {
 			return;
 		}
+
+		playSoundForValue(a);
+		playSoundForValue(b);
 
 		List<Integer> nums = Arrays.stream(model.getList())
 									.boxed()

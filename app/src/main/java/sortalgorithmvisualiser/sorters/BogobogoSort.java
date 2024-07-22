@@ -17,13 +17,8 @@ public class BogobogoSort extends Sorter {
             int prev = controller.getNumAtIndex(i-1);
             int n = controller.getNumAtIndex(i);
 
-            if (!inOrder(prev, n, sortAscending)) {
-                sleep(delay);
-
+            if (!inOrder(prev, n)) {
                 controller.shuffleRange(0, i+1);
-
-                controller.playSoundForIndex(i-1);
-                controller.playSoundForIndex(i);
 
                 i = 0; // loop will restart from 1 (since i++)
             }

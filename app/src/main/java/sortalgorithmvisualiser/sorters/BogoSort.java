@@ -9,15 +9,12 @@ public class BogoSort extends Sorter {
     @Override
     public void sort() {
         shouldStop = false;
-        while (!controller.isSorted(sortAscending)) {
+        while (!isSorted()) {
             if (shouldStop) {
                 return;
             }
 
             controller.shuffle();
-
-            controller.playSoundForIndex(0);
-            sleep(delay);
         }
     }
 }

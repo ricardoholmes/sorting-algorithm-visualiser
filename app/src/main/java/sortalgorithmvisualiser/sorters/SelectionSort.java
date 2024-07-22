@@ -20,14 +20,12 @@ public class SelectionSort extends Sorter {
 
                 int num = controller.getNumAtIndex(i);
 
-                // in case of ascending, if num < smallest
-                if (inOrder(num, smallest, sortAscending)) {
+                if (inOrder(num, smallest)) {
                     smallest = num;
                     smallestIndex = i;
                 }
             }
 
-            sleep(delay);
             controller.moveNumber(smallestIndex, amountDone);
         }
     }
