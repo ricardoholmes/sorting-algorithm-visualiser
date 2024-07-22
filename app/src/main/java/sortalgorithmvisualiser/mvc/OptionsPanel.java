@@ -159,6 +159,12 @@ public class OptionsPanel extends JPanel {
             BarPanel.barBackgroundColor = color;
             BarPanel.refresh();
         });
+        
+        JComboBox<Oscillator.Wave> soundWaveDropDown = new JComboBox<>(Oscillator.Wave.values());
+        soundWaveDropDown.setSelectedItem(ColorOption.Black);
+        soundWaveDropDown.addItemListener(e -> {
+            Oscillator.wave = (Oscillator.Wave)(e.getItem());
+        });
 
         setBackground(Color.GRAY);
         
@@ -189,6 +195,9 @@ public class OptionsPanel extends JPanel {
         addComponents("Bar done color:", barDoneColorDropDown);
         addComponents("Bar border color:", barBorderColorDropDown);
         addComponents("Bar background color:", barBackgroundColorDropDown);
+
+        // sound settings
+        addComponents("Sound wave:", soundWaveDropDown);
     }
 
     private void addComponents(String labelText, Component component) {

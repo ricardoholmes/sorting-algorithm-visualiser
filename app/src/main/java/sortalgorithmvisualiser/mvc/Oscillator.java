@@ -1,6 +1,15 @@
 package sortalgorithmvisualiser.mvc;
 
 public class Oscillator {
+    public enum Wave {
+        Triangle,
+        Sine,
+        Square,
+        Sawtooth,
+    }
+
+    public static Wave wave = Wave.Triangle;
+
     private double _freq;
     private int _start;
     private int _end;
@@ -21,16 +30,21 @@ public class Oscillator {
         _end = start + duration;
     }
 
-    private static double sineWave(double t) {
-        return Math.sin(2 * Math.PI * t);
-    }
-
     private static double triangleWave(double t) {
         double x = ((t - 0.25) % 1.0) - 0.5;
         return 4.0 * Math.abs(x) - 1.0;
     }
 
+    private static double sineWave(double t) {
+        return Math.sin(2 * Math.PI * t);
+    }
+
+    private static double squareWave(double t) {
+        return Math.signum(sineWave(t));
+    }
+
     private static double sawtoothWave(double t) {
+        // approximate using fourier series
         double out = 0;
         for (int k = 1; k <= 100; k++) {
             double v = Math.sin(2 * Math.PI * k * t) / k;
@@ -43,9 +57,13 @@ public class Oscillator {
     }
 
     public static double wave(double t) {
-        // return sineWave(t);
-        return triangleWave(t);
-        // return sawtoothWave(t);
+        return switch (wave) {
+            case Triangle -> triangleWave(t);
+            case Sine -> sineWave(t);
+            case Square -> squareWave(t);
+            case Sawtooth -> sawtoothWave(t);
+            default -> 0;
+        };
     }
 
     public double envelope(int i) {
