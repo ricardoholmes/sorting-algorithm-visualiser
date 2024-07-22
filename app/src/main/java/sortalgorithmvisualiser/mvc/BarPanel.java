@@ -31,6 +31,7 @@ public class BarPanel extends JPanel {
     public static Color barBackgroundColor = Color.WHITE;
 
     public static int barBorderWidth = 1;
+    public static boolean mergeBorders = false;
 
     public BarPanel(Model m, Controller c, OptionsPanel options) {
         model = m;
@@ -69,13 +70,14 @@ public class BarPanel extends JPanel {
         resetBars();
         for (int i = 0; i < model.getArrayLength(); i++) {
             sortedCount++;
-            repaint();
 
             double delay = Controller.currentDelay;
 
             if (i + 1 < model.getArrayLength()) {
                 controller.setComparing(i, i+1);
             }
+
+            repaint();
 
             long millis = (long)delay;
             int nanos = (int)((delay % 1) * 1_000_000);
@@ -102,8 +104,10 @@ public class BarPanel extends JPanel {
             controller.generateList(maxBars);
         }
 
-        int baseBarWidth = getSize().width / model.getArrayLength();
-        int spareWidthPixels = getSize().width % model.getArrayLength();
+        int barCount = model.getArrayLength();
+
+        int baseBarWidth = getSize().width / barCount;
+        int spareWidthPixels = getSize().width % barCount;
         int x = 0;
 
         ArrayList<Integer> barsWithExtraPixels = new ArrayList<>();
@@ -119,7 +123,7 @@ public class BarPanel extends JPanel {
         int tempSortedCount = sortedCount;
 
         int[] nums = model.getList();
-        for (int i = 0; i < model.getArrayLength(); i++) {
+        for (int i = 0; i < barCount; i++) {
             int barHeight = (int)(maxHeight * ((double)nums[i] / model.getMaxValueAtCreation()));
             int barWidth = baseBarWidth;
             if (barsWithExtraPixels.contains(nums[i])) {
@@ -148,11 +152,26 @@ public class BarPanel extends JPanel {
             if (hasVisibleBorder) {
                 // if the border doesnt cover the whole bar, paint the bar
                 if (barBorderWidth * 2 < Math.min(barWidth, barHeight)) {
+                    int barX = x + barBorderWidth;
+                    int barY = y + barBorderWidth;
+                    int width = barWidth - (2 * barBorderWidth);
+                    int height = barHeight - (2 * barBorderWidth);
+                    if (mergeBorders) {
+                        width += barBorderWidth;
+                        if (i > 0) {
+                            barX -= barBorderWidth / 2;
+                        }
+
+                        if (i == 0 || i == barCount - 1) {
+                            width -= ((barBorderWidth + 1) / 2);
+                        }
+                    }
+
                     g.fillRect(
-                        x + barBorderWidth,
-                        y + barBorderWidth,
-                        barWidth - (barBorderWidth * 2),
-                        barHeight - (barBorderWidth * 2)
+                        barX,
+                        barY,
+                        width,
+                        height
                     );
                 }
             }

@@ -172,14 +172,17 @@ public class OptionsPanel extends JPanel {
             Integer.MAX_VALUE,
             1
         );
-
         JSpinner barBorderWidthSpinner = new JSpinner(barBorderWidthSpinnerModel);
         barBorderWidthSpinner.addChangeListener(e -> {
             BarPanel.barBorderWidth = (int)barBorderWidthSpinner.getValue();
             BarPanel.refresh();
         });
 
-        barCountSpinner = new JSpinner(barCountSpinnerModel);
+        JCheckBox mergeBordersCheckBox = new JCheckBox("Merge Borders", false);
+        mergeBordersCheckBox.addActionListener(e -> {
+            BarPanel.mergeBorders = mergeBordersCheckBox.isSelected();
+            BarPanel.refresh();
+        });
 
         setBackground(Color.GRAY);
         
@@ -216,6 +219,7 @@ public class OptionsPanel extends JPanel {
 
         // more customisation settings
         addComponents("Bar border width:", barBorderWidthSpinner);
+        addComponents(mergeBordersCheckBox);
     }
 
     private void addComponents(String labelText, Component component) {
