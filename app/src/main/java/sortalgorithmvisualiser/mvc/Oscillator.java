@@ -1,11 +1,14 @@
 package sortalgorithmvisualiser.mvc;
 
+import java.util.Random;
+
 public class Oscillator {
     public enum Wave {
         Triangle,
         Sine,
         Square,
         Sawtooth,
+        Random, // Random must be last in the enum
     }
 
     public static Wave wave = Wave.Triangle;
@@ -48,13 +51,26 @@ public class Oscillator {
     }
 
     public static double wave(double t) {
-        return switch (wave) {
+        boolean isRandom = (wave == Wave.Random);
+        if (isRandom) {
+            Wave[] waveTypes = Wave.values();
+            int waveIndex = new Random().nextInt(waveTypes.length - 1);
+            wave = waveTypes[waveIndex];
+        }
+
+        double value = switch (wave) {
             case Triangle -> triangleWave(t);
             case Sine -> sineWave(t);
             case Square -> squareWave(t);
             case Sawtooth -> sawtoothWave(t);
             default -> 0;
         };
+
+        if (isRandom) {
+            wave = Wave.Random; // reset it to random
+        }
+
+        return value;
     }
 
     public double envelope(int i) {
