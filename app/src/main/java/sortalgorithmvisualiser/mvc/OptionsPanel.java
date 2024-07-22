@@ -61,6 +61,7 @@ public class OptionsPanel extends JPanel {
 
     private JSpinner delaySpinner;
     private JSpinner barCountSpinner;
+    private JSpinner barBorderWidthSpinner;
 
     private JCheckBox sortAscendingCheckBox;
     private static JCheckBox muteCheckBox;
@@ -172,7 +173,7 @@ public class OptionsPanel extends JPanel {
             Integer.MAX_VALUE,
             1
         );
-        JSpinner barBorderWidthSpinner = new JSpinner(barBorderWidthSpinnerModel);
+        barBorderWidthSpinner = new JSpinner(barBorderWidthSpinnerModel);
         barBorderWidthSpinner.addChangeListener(e -> {
             BarPanel.barBorderWidth = (int)barBorderWidthSpinner.getValue();
             BarPanel.refresh();
@@ -242,8 +243,13 @@ public class OptionsPanel extends JPanel {
         return volumeSlider.getValue() / 100.0;
     }
 
-    public void setMaximumBarCount(int count) {
-        maxBars = count;
+    public void setMaximums(int barCount, int maxBorderWidth) {
+        maxBars = barCount;
+
+        int borderWidth = (int)barBorderWidthSpinner.getValue();
+        if (borderWidth > maxBorderWidth) {
+            barBorderWidthSpinner.setValue(maxBorderWidth);
+        }
 
         if (model.getArrayLength() > maxBars) {
             barCountSpinner.setValue(maxBars);

@@ -97,8 +97,15 @@ public class BarPanel extends JPanel {
 
         setBackground(barBackgroundColor);
 
-        int maxBars = getSize().width / (hasBorder ? 3 : 1);
-        optionsPanel.setMaximumBarCount(maxBars);
+        int panelWidth = getSize().width;
+
+        int maxBars = panelWidth / (1 + (hasBorder ? 2 * barBorderWidth : 0));
+        int maxBorderWidth = (panelWidth - 1) / 2;
+        optionsPanel.setMaximums(maxBars, maxBorderWidth);
+
+        if (barBorderWidth > maxBorderWidth) {
+            barBorderWidth = maxBorderWidth;
+        }
         
         if (model.getArrayLength() > maxBars) {
             controller.generateList(maxBars);
@@ -106,8 +113,8 @@ public class BarPanel extends JPanel {
 
         int barCount = model.getArrayLength();
 
-        int baseBarWidth = getSize().width / barCount;
-        int spareWidthPixels = getSize().width % barCount;
+        int baseBarWidth = panelWidth / barCount;
+        int spareWidthPixels = panelWidth % barCount;
         int x = 0;
 
         ArrayList<Integer> barsWithExtraPixels = new ArrayList<>();
