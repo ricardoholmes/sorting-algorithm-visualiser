@@ -119,7 +119,7 @@ public class BarPanel extends JPanel {
 
         ArrayList<Integer> barsWithExtraPixels = new ArrayList<>();
 
-        List<Integer> bars = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
+        List<Integer> bars = IntStream.rangeClosed(1, barCount).boxed().collect(Collectors.toList());
         Collections.shuffle(bars);
         for (int i = 0; i < spareWidthPixels; i++) {
             barsWithExtraPixels.add(bars.get(i));
