@@ -33,6 +33,8 @@ public class BarPanel extends JPanel {
     public static int barBorderWidth = 2;
     public static boolean mergeBorders = false;
 
+    private static List<Integer> shuffledIndices;
+
     public BarPanel(Model m, Controller c, OptionsPanel options) {
         model = m;
         controller = c;
@@ -45,6 +47,12 @@ public class BarPanel extends JPanel {
         sortedCount = 0;
         stopDoneAnim = false;
         barsComparing = new ArrayList<>();
+
+        shuffledIndices = IntStream
+                .rangeClosed(1, model.getArrayLength())
+                .boxed()
+                .collect(Collectors.toList());
+        Collections.shuffle(shuffledIndices);
     }
 
     public static void stopDoneAnimation() {
@@ -99,7 +107,14 @@ public class BarPanel extends JPanel {
 
         int panelWidth = getSize().width;
 
-        int maxBars = panelWidth / (1 + (hasBorder ? 2 * barBorderWidth : 0));
+        int maxBars = panelWidth;
+        if (hasBorder && mergeBorders) {
+            maxBars -= barBorderWidth;
+            maxBars /= 1 + barBorderWidth;
+        }
+        else if (hasBorder) {
+            maxBars /= 1 + (2 * barBorderWidth);
+        }
         int maxBorderWidth = (panelWidth - 1) / 2;
         optionsPanel.setMaximums(maxBars, maxBorderWidth);
 
@@ -119,10 +134,14 @@ public class BarPanel extends JPanel {
 
         ArrayList<Integer> barsWithExtraPixels = new ArrayList<>();
 
-        List<Integer> bars = IntStream.rangeClosed(1, barCount).boxed().collect(Collectors.toList());
-        Collections.shuffle(bars);
         for (int i = 0; i < spareWidthPixels; i++) {
-            barsWithExtraPixels.add(bars.get(i));
+            int barIndex = shuffledIndices.get(i);
+            if (barIndex >= barCount) {
+                spareWidthPixels++; // skip the index, otherwise would throw an error
+            }
+            else {
+                barsWithExtraPixels.add(barIndex);
+            }
         }
 
         int maxHeight = getSize().height;
@@ -171,26 +190,23 @@ public class BarPanel extends JPanel {
             }
 
             if (hasVisibleBorder) {
-                // if the border doesnt cover the whole bar, paint the bar
-                if (barBorderWidth * 2 < Math.min(barWidth, barHeight)) {
-                    int barX = x + barBorderWidth;
-                    int barY = y + barBorderWidth;
-                    int width = barWidth - (2 * barBorderWidth);
-                    int height = barHeight - (2 * barBorderWidth);
+                int barX = x + barBorderWidth;
+                int barY = y + barBorderWidth;
+                int width = barWidth - (2 * barBorderWidth);
+                int height = barHeight - (2 * barBorderWidth);
 
-                    if (mergeBorders) {
-                        width += barBorderWidth;
-                        if (i > 0) {
-                            barX -= (barBorderWidth + 1) / 2;
-                        }
-
-                        if (i == 0 || i == barCount - 1) {
-                            width -= (barBorderWidth + 1) / 2;
-                        }
+                if (mergeBorders) {
+                    width += barBorderWidth;
+                    if (i > 0) {
+                        barX -= (barBorderWidth + 1) / 2;
                     }
 
-                    g.fillRect(barX, barY, width, height);
+                    if (i == 0 || i == barCount - 1) {
+                        width -= (barBorderWidth + 1) / 2;
+                    }
                 }
+
+                g.fillRect(barX, barY, width, height);
             }
             else {
                 g.fillRect(x, y, barWidth, barHeight);
