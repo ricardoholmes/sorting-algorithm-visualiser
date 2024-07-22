@@ -60,7 +60,7 @@ public class OptionsPanel extends JPanel {
     private Model model;
 
     private JSpinner delaySpinner;
-    private JSpinner numCountSpinner;
+    private JSpinner barCountSpinner;
 
     private JCheckBox sortAscendingCheckBox;
     private static JCheckBox muteCheckBox;
@@ -98,15 +98,15 @@ public class OptionsPanel extends JPanel {
             }
         });
 
-        SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
-        numCountSpinner = new JSpinner(numCountSpinnerModel);
+        SpinnerModel barCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+        barCountSpinner = new JSpinner(barCountSpinnerModel);
 
         JButton generateArrayButton = new JButton("Generate");
         generateArrayButton.addActionListener(e -> {
             generateList();
         });
 
-        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(25.0, 0, Integer.MAX_VALUE, 1);
+        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(5.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
@@ -172,7 +172,7 @@ public class OptionsPanel extends JPanel {
         addComponents(sorterDropDown);
         
         // select number of bars
-        addComponents("Number of bars:", numCountSpinner);
+        addComponents("Number of bars:", barCountSpinner);
 
         // generate array
         addComponents(generateArrayButton);
@@ -224,13 +224,13 @@ public class OptionsPanel extends JPanel {
         maxBars = count;
 
         if (model.getArrayLength() > maxBars) {
-            numCountSpinner.setValue(maxBars);
+            barCountSpinner.setValue(maxBars);
             generateList();
         }
     }
 
     private void generateList() {
-        int count = (int)numCountSpinner.getValue();
+        int count = (int)barCountSpinner.getValue();
         if (count > maxBars) {
             count = maxBars;
         }
@@ -238,7 +238,7 @@ public class OptionsPanel extends JPanel {
             count = 1;
         }
 
-        numCountSpinner.setValue(count);
+        barCountSpinner.setValue(count);
         controller.generateList(count);
     }
 }
