@@ -166,12 +166,7 @@ public class OptionsPanel extends JPanel {
             Oscillator.wave = (Oscillator.Wave)(e.getItem());
         });
 
-        SpinnerModel barBorderWidthSpinnerModel = new SpinnerNumberModel(
-            2,
-            0,
-            Integer.MAX_VALUE,
-            1
-        );
+        SpinnerModel barBorderWidthSpinnerModel = new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1);
         barBorderWidthSpinner = new JSpinner(barBorderWidthSpinnerModel);
         barBorderWidthSpinner.addChangeListener(e -> {
             BarPanel.barBorderWidth = (int)barBorderWidthSpinner.getValue();
@@ -184,12 +179,7 @@ public class OptionsPanel extends JPanel {
             BarPanel.refresh();
         });
 
-        SpinnerModel marginSizeSpinnerModel = new SpinnerNumberModel(
-            10,
-            0,
-            Integer.MAX_VALUE,
-            1
-        );
+        SpinnerModel marginSizeSpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
         JSpinner marginSizeSpinner = new JSpinner(marginSizeSpinnerModel);
         marginSizeSpinner.addChangeListener(e -> {
             BarPanel.marginSize = (int)marginSizeSpinner.getValue();
@@ -206,6 +196,29 @@ public class OptionsPanel extends JPanel {
         doneAnimationCheckBox.addActionListener(e -> {
             BarPanel.doneAnimation = doneAnimationCheckBox.isSelected();
             BarPanel.stopDoneAnimation();
+        });
+
+        SpinnerModel minFreqSpinnerModel = new SpinnerNumberModel(200, 200, 1600, 1);
+        SpinnerModel maxFreqSpinnerModel = new SpinnerNumberModel(1200, 200, 1600, 1);
+        JSpinner maxFreqSpinner = new JSpinner(maxFreqSpinnerModel);
+        JSpinner minFreqSpinner = new JSpinner(minFreqSpinnerModel);
+        minFreqSpinner.addChangeListener(e -> {
+            int newMinFreq = (int)minFreqSpinner.getValue();
+            int maxFreq = (int)maxFreqSpinner.getValue();
+            if (newMinFreq > maxFreq) {
+                minFreqSpinner.setValue(maxFreq);
+                newMinFreq = maxFreq;
+            }
+            controller.minFrequency = newMinFreq;
+        });
+        maxFreqSpinner.addChangeListener(e -> {
+            int minFreq = (int)minFreqSpinner.getValue();
+            int newMaxFreq = (int)maxFreqSpinner.getValue();
+            if (newMaxFreq < minFreq) {
+                maxFreqSpinner.setValue(minFreq);
+                newMaxFreq = minFreq;
+            }
+            controller.maxFrequency = newMaxFreq;
         });
 
         setBackground(Color.GRAY);
@@ -239,6 +252,8 @@ public class OptionsPanel extends JPanel {
         addComponents("Bar background color:", barBackgroundColorDropDown);
         
         // sound settings
+        addComponents("Minimum Frequency:", minFreqSpinner);
+        addComponents("Maximum Frequency:", maxFreqSpinner);
         addComponents("Sound wave:", soundWaveDropDown);
 
         // more customisation settings

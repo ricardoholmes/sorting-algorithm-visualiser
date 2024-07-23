@@ -31,6 +31,9 @@ public class Controller {
 
 	public Thread sortThread;
 
+	public int minFrequency = 200;
+    public int maxFrequency = 1200;
+
 	public static double currentDelay;
 
     /*
@@ -194,8 +197,8 @@ public class Controller {
 
 		double normalisedValue = value / (double)model.getMaxValueAtCreation();
 
-		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
-		int freq = 200 + (int)(1000 * normalisedValue);
+		double freqRange = maxFrequency - minFrequency;
+		int freq = minFrequency + (int)(normalisedValue * freqRange);
 
 		try {
 			Sound.playTone(freq, currentDelay);
