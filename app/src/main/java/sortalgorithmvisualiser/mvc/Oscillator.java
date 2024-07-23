@@ -13,6 +13,12 @@ public class Oscillator {
 
     public static Wave wave = Wave.Triangle;
 
+    public static double attack = 0.05; // percentage of duration
+    public static double hold = 0.45; // percentage of duration
+    public static double decay = 0.1;    // percentage of duration
+    public static double sustain = 0.9;  // percentage of amplitude
+    public static double release = 0.5;  // percentage of duration
+
     private double _freq;
     private int _start;
     private int _end;
@@ -76,24 +82,26 @@ public class Oscillator {
     public double envelope(int i) {
         double x = ((double)i) / _duration;
 
-        if (x > 1)
+        if (x > 1) {
             x = 1;
+        }
 
-        double attack = 0.025; // percentage of duration
-        double decay = 0.1;    // percentage of duration
-        double sustain = 0.9;  // percentage of amplitude
-        double release = 0.5;  // percentage of duration
-
-        if (x < attack)
+        if (x < attack) {
             return 1.0 / attack * x;
+        }
+        x -= attack;
 
-        if (x < attack + decay)
-            return 1.0 - (x - attack) / decay * (1.0 - sustain);
+        if (x < decay) {
+            return 1.0 - x / decay * (1.0 - sustain);
+        }
+        x -= decay;
 
-        if (x < 1.0 - release)
+        if (x < hold) {
             return sustain;
+        }
+        x -= hold;
 
-        return sustain / release * (1.0 - x);
+        return sustain / release * (release - x);
     }
 
     public void mix(double[] data, int p) {

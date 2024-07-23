@@ -216,6 +216,21 @@ public class OptionsPanel extends JPanel {
             Sound.frequencyScaler = (NormalisedScaler)e.getItem();
         });
 
+        JSlider attackSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 5);
+        attackSlider.addChangeListener(e -> { Oscillator.attack = attackSlider.getValue() / 100.0; });
+
+        JSlider holdSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 45);
+        holdSlider.addChangeListener(e -> { Oscillator.hold = holdSlider.getValue() / 100.0; });
+
+        JSlider decaySlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 10);
+        decaySlider.addChangeListener(e -> { Oscillator.decay = decaySlider.getValue() / 100.0; });
+
+        JSlider sustainSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 90);
+        sustainSlider.addChangeListener(e -> { Oscillator.sustain = sustainSlider.getValue() / 100.0; });
+
+        JSlider releaseSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        releaseSlider.addChangeListener(e -> { Oscillator.release = releaseSlider.getValue() / 100.0; });
+
         setBackground(Color.GRAY);
         
         // Select sorter
@@ -251,6 +266,12 @@ public class OptionsPanel extends JPanel {
         addComponents("Maximum Frequency:", maxFreqSpinner);
         addComponents("Frequency scaler:", freqScalingDropDown);
         addComponents("Sound wave:", soundWaveDropDown);
+
+        addComponents("Attack:", attackSlider);
+        addComponents("Hold:", holdSlider);
+        addComponents("Decay:", decaySlider);
+        addComponents("Sustain:", sustainSlider);
+        addComponents("Release:", releaseSlider);
 
         // more customisation settings
         addComponents("Bar border width:", barBorderWidthSpinner);
