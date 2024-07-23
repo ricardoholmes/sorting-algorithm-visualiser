@@ -32,6 +32,8 @@ public class BarPanel extends JPanel {
 
     public static int barBorderWidth = 2;
     public static boolean mergeBorders = false;
+    
+    public static int marginSize = 10;
 
     private static List<Integer> shuffledIndices;
 
@@ -105,7 +107,7 @@ public class BarPanel extends JPanel {
 
         setBackground(barBackgroundColor);
 
-        int panelWidth = getSize().width;
+        int panelWidth = getSize().width - (marginSize * 2);
 
         int maxBars = panelWidth;
         if (hasBorder && mergeBorders) {
@@ -130,7 +132,7 @@ public class BarPanel extends JPanel {
 
         int baseBarWidth = panelWidth / barCount;
         int spareWidthPixels = panelWidth % barCount;
-        int x = 0;
+        int x = marginSize;
 
         ArrayList<Integer> barsWithExtraPixels = new ArrayList<>();
 
@@ -144,7 +146,7 @@ public class BarPanel extends JPanel {
             }
         }
 
-        int maxHeight = getSize().height;
+        int maxHeight = getSize().height - (marginSize * 2);
 
         int tempSortedCount = sortedCount;
 
@@ -156,7 +158,7 @@ public class BarPanel extends JPanel {
                 barWidth++;
             }
 
-            int y = maxHeight - barHeight;
+            int y = marginSize + (maxHeight - barHeight);
 
             boolean hasVisibleBorder = hasBorder && barBorderWidth > 0;
             if (hasVisibleBorder) {

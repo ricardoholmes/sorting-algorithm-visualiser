@@ -156,7 +156,6 @@ public class OptionsPanel extends JPanel {
         barBackgroundColorDropDown.setSelectedItem(ColorOption.White);
         barBackgroundColorDropDown.addItemListener(e -> {
             Color color = ((ColorOption)e.getItem()).toColor();
-            v.setBackground(color);
             BarPanel.barBackgroundColor = color;
             BarPanel.refresh();
         });
@@ -182,6 +181,18 @@ public class OptionsPanel extends JPanel {
         JCheckBox mergeBordersCheckBox = new JCheckBox("Merge Borders", false);
         mergeBordersCheckBox.addActionListener(e -> {
             BarPanel.mergeBorders = mergeBordersCheckBox.isSelected();
+            BarPanel.refresh();
+        });
+
+        SpinnerModel marginSizeSpinnerModel = new SpinnerNumberModel(
+            10,
+            0,
+            Integer.MAX_VALUE,
+            1
+        );
+        JSpinner marginSizeSpinner = new JSpinner(marginSizeSpinnerModel);
+        marginSizeSpinner.addChangeListener(e -> {
+            BarPanel.marginSize = (int)marginSizeSpinner.getValue();
             BarPanel.refresh();
         });
 
@@ -221,6 +232,7 @@ public class OptionsPanel extends JPanel {
         // more customisation settings
         addComponents("Bar border width:", barBorderWidthSpinner);
         addComponents(mergeBordersCheckBox);
+        addComponents("Margin size:", marginSizeSpinner);
     }
 
     private void addComponents(String labelText, Component component) {

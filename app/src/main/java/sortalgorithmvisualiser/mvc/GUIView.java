@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -49,7 +48,6 @@ public class GUIView implements IView {
         barsPanel.setPreferredSize(new Dimension(960, 720));
 
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.insets = new Insets(10, 10, 10, 10);
         constraints.weightx = 0.75;
         constraints.weighty = 1;
         constraints.gridx = 1;
