@@ -29,30 +29,19 @@ public class OptionsPanel extends JPanel {
         White;
 
         public Color toColor() {
-            switch (this) {
-                case Black:
-                    return Color.BLACK;
-                case Blue:
-                    return Color.BLUE;
-                case Cyan:
-                    return Color.CYAN;
-                case Gray:
-                    return Color.GRAY;
-                case Green:
-                    return Color.GREEN;
-                case Magenta:
-                    return Color.MAGENTA;
-                case Pink:
-                    return Color.PINK;
-                case Red:
-                    return Color.RED;
-                case White:
-                    return Color.WHITE;
-                case Yellow:
-                    return Color.YELLOW;
-                default:
-                    return null;
-            }
+            return switch (this) {
+                case Black -> Color.BLACK;
+                case Blue -> Color.BLUE;
+                case Cyan -> Color.CYAN;
+                case Gray -> Color.GRAY;
+                case Green -> Color.GREEN;
+                case Magenta -> Color.MAGENTA;
+                case Pink -> Color.PINK;
+                case Red -> Color.RED;
+                case White -> Color.WHITE;
+                case Yellow -> Color.YELLOW;
+                default -> null;
+            };
         }
     }
 
@@ -221,6 +210,12 @@ public class OptionsPanel extends JPanel {
             Sound.maxFrequency = newMaxFreq;
         });
 
+        JComboBox<NormalisedScaler> freqScalingDropDown = new JComboBox<>(NormalisedScaler.values());
+        freqScalingDropDown.setSelectedItem(NormalisedScaler.Linear);
+        freqScalingDropDown.addItemListener(e -> {
+            Sound.frequencyScaler = (NormalisedScaler)e.getItem();
+        });
+
         setBackground(Color.GRAY);
         
         // Select sorter
@@ -254,6 +249,7 @@ public class OptionsPanel extends JPanel {
         // sound settings
         addComponents("Minimum Frequency:", minFreqSpinner);
         addComponents("Maximum Frequency:", maxFreqSpinner);
+        addComponents("Frequency scaler:", freqScalingDropDown);
         addComponents("Sound wave:", soundWaveDropDown);
 
         // more customisation settings

@@ -17,6 +17,7 @@ public class Sound {
 
 	public static int minFrequency = 200;
     public static int maxFrequency = 1200;
+    public static NormalisedScaler frequencyScaler = NormalisedScaler.Linear;
 
     public static int maxOscillators = 256;
     private static ArrayList<Oscillator> oscillators = new ArrayList<>();
@@ -56,8 +57,9 @@ public class Sound {
     }
 
     public static void playCorrespondingSound(double normalisedValue, double millis) throws LineUnavailableException {
+        double scaledValue = frequencyScaler.applyScaler(normalisedValue);
 		double freqRange = maxFrequency - minFrequency;
-		int freq = minFrequency + (int)(normalisedValue * freqRange);
+		int freq = minFrequency + (int)(scaledValue * freqRange);
 
         millis = Double.max(MIN_MILLIS, millis);
         addOscillator(
