@@ -260,6 +260,14 @@ public class OptionsPanel extends JPanel {
         addComponents("Bar done color:", barDoneColorDropDown);
         addComponents("Bar border color:", barBorderColorDropDown);
         addComponents("Bar background color:", barBackgroundColorDropDown);
+
+        // more visual customisation settings
+        addComponents("Bar border width:", barBorderWidthSpinner);
+        addComponents(mergeBordersCheckBox);
+
+        addComponents("Margin size:", marginSizeSpinner);
+
+        addComponents(highlightCompareCheckBox, doneAnimationCheckBox);
         
         // sound settings
         addComponents("Minimum Frequency:", minFreqSpinner);
@@ -272,14 +280,6 @@ public class OptionsPanel extends JPanel {
         addComponents("Decay:", decaySlider);
         addComponents("Sustain:", sustainSlider);
         addComponents("Release:", releaseSlider);
-
-        // more customisation settings
-        addComponents("Bar border width:", barBorderWidthSpinner);
-        addComponents(mergeBordersCheckBox);
-
-        addComponents("Margin size:", marginSizeSpinner);
-
-        addComponents(highlightCompareCheckBox, doneAnimationCheckBox);
     }
 
     private void addComponents(String labelText, Component component) {
