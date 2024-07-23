@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 public class GUIView implements IView {
     Model model;
@@ -36,12 +38,18 @@ public class GUIView implements IView {
         optionsPanel.setPreferredSize(new Dimension(320, 720));
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
+        JScrollPane scrollableOptions = new JScrollPane(
+            optionsPanel,
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
+        );
+
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.25;
         constraints.weighty = 1;
         constraints.gridx = 0;
         constraints.gridy = 0;
-        mainPanel.add(optionsPanel, constraints);
+        mainPanel.add(scrollableOptions, constraints);
 
         barsPanel = new BarPanel(model, controller, optionsPanel);
         barsPanel.setPreferredSize(new Dimension(1024, 720));
