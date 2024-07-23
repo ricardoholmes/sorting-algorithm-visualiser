@@ -7,7 +7,7 @@ public class CocktailSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         boolean sorted = false;
         while (!sorted) {
@@ -18,11 +18,9 @@ public class CocktailSort extends Sorter {
                     return;
                 }
 
-                if (inOrder(controller.getNumAtIndex(i+1), controller.getNumAtIndex(i), sortAscending)) {
+                if (inOrder(controller.getNumAtIndex(i+1), controller.getNumAtIndex(i))) {
                     controller.swapIndexes(i, i + 1);
                     sorted = false;
-
-                    sleep(delay);
                 }
             }
 
@@ -37,9 +35,7 @@ public class CocktailSort extends Sorter {
                     return;
                 }
 
-                if (inOrder(controller.getNumAtIndex(i), controller.getNumAtIndex(i-1), sortAscending)) {
-                    sleep(delay);
-
+                if (inOrder(controller.getNumAtIndex(i), controller.getNumAtIndex(i-1))) {
                     controller.swapIndexes(i - 1, i);
                     sorted = false;
                 }

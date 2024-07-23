@@ -7,13 +7,11 @@ public class StalinSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         int i = 1;
         while (!shouldStop && i < sizeOfArray) {
-            if (!inOrder(controller.getNumAtIndex(i-1), controller.getNumAtIndex(i), sortAscending)) {
-                sleep(delay);
-                controller.playSoundForIndex(i, (int)delay);
+            if (!inOrder(controller.getNumAtIndex(i-1), controller.getNumAtIndex(i))) {
                 controller.removeIndex(i);
                 sizeOfArray--;
             }

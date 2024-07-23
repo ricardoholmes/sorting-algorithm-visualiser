@@ -4,11 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class GUIView implements IView {
     Model model;
@@ -33,23 +33,22 @@ public class GUIView implements IView {
         frame.add(mainPanel);
 
         optionsPanel = new OptionsPanel(controller, this, model);
-        optionsPanel.setMinimumSize(new Dimension(0, 0));
-        optionsPanel.setPreferredSize(new Dimension(320, 720));
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
+
+        JScrollPane scrollableOptions = new JScrollPane(optionsPanel);
 
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 0.25;
         constraints.weighty = 1;
         constraints.gridx = 0;
         constraints.gridy = 0;
-        mainPanel.add(optionsPanel, constraints);
+        mainPanel.add(scrollableOptions, constraints);
 
         barsPanel = new BarPanel(model, controller, optionsPanel);
         barsPanel.setPreferredSize(new Dimension(1024, 720));
         barsPanel.setPreferredSize(new Dimension(960, 720));
 
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.insets = new Insets(10, 10, 10, 10);
         constraints.weightx = 0.75;
         constraints.weighty = 1;
         constraints.gridx = 1;

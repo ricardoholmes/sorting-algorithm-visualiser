@@ -32,7 +32,6 @@ public class Controller {
 	public Thread sortThread;
 
 	public static double currentDelay;
-	public static double endAnimDelay;
 
     /*
 	 * Initialise the controller
@@ -70,11 +69,7 @@ public class Controller {
 	}
 
 	public void sort(double delay, boolean sortAscending) {
-		sort(delay, sortAscending, 0);
-	}
-	
-	public void sort(double delay, boolean sortAscending, double endDelay) {
-		if (delay < 0 || endDelay < 0) {
+		if (delay < 0) {
 			throw new IllegalArgumentException();
 		}
 
@@ -84,19 +79,18 @@ public class Controller {
 		}
 
 		Controller.currentDelay = delay;
-		Controller.endAnimDelay = endDelay;
 
 		BarPanel.resetBars();
 
 		sorter = sorters[chosenSorterIndex];
-		sorter.initialise(this, model.getArrayLength());
+		sorter.initialise(this, model.getArrayLength(), sortAscending, delay);
 
 		try {
 			Sound.initialise();
 		} catch (LineUnavailableException e) {}
 
 		sortThread = new Thread(() -> {
-			sorter.sort(delay, sortAscending);
+			sorter.sort();
 			if (isSorted(sortAscending)) {
 				view.doneSorting();
 			} else {
@@ -142,9 +136,6 @@ public class Controller {
 
 	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
-		playSoundForIndex(i, (int)currentDelay);
-		playSoundForIndex(j, (int)currentDelay);
-
 		int[] nums = model.getList();
 		int temp = nums[j];
 		nums[j] = nums[i];
@@ -163,10 +154,6 @@ public class Controller {
 		if (currentIndex == newIndex) {
 			return;
 		}
-
-		playSoundForIndex(currentIndex, (int)currentDelay);
-		playSoundForIndex(newIndex, (int)currentDelay);
-
 		int[] nums = model.getList();
 		int currentNum = nums[currentIndex];
 
@@ -200,18 +187,15 @@ public class Controller {
 
 	// only plays in GUI mode
 	// will fail silently when called for CLI
-	public void playSoundForIndex(int index, int millis) {
+	public void playSoundForValue(int value) {
 		if (view.getClass() != GUIView.class || Sound.muted) {
 			return;
 		}
 
-		double normalisedValue = (getNumAtIndex(index) - 1) / (double)model.getMaxValueAtCreation();
-
-		// took this from https://panthema.net/2013/sound-of-sorting/sound-of-sorting-0.6.5/src/SortSound.cpp.html
-		int freq = 200 + (int)(1000 * normalisedValue);
+		double normalisedValue = value / (double)model.getMaxValueAtCreation();
 
 		try {
-			Sound.playTone(freq, millis);
+			Sound.playCorrespondingSound(normalisedValue, currentDelay);
 		} catch (LineUnavailableException e) { }
 	}
 
@@ -219,6 +203,9 @@ public class Controller {
 		if (view.getClass() != GUIView.class) {
 			return;
 		}
+
+		playSoundForValue(a);
+		playSoundForValue(b);
 
 		List<Integer> nums = Arrays.stream(model.getList())
 									.boxed()

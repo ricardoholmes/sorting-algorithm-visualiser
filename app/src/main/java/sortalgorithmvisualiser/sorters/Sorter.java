@@ -4,16 +4,31 @@ import sortalgorithmvisualiser.mvc.Controller;
 
 public abstract class Sorter {
     protected Controller controller;
+    private double delay;
     protected int sizeOfArray;
+    private boolean sortAscending;
+
     protected boolean shouldStop;
 
     /**
-     * @param c the controller
-     * @param numberOfElements the number of numbers in the list that is to be sorted
+     * @param c
+     *      the controller
+     * 
+     * @param sizeOfArray
+     *      the number of numbers in the list that is to be sorted
+     * 
+     * @param delay
+     *      the length of time to sleep after moving a value, in milliseconds
+     * 
+     * @param sortAscending
+     *      whether the list is being sorted in ascending order (true) or in
+     *      descending order (false)
      */
-    public final void initialise(Controller c, int numberOfElements) {
+    public final void initialise(Controller c, int sizeOfArray, boolean sortAscending, double delay) {
         controller = c;
-        sizeOfArray = numberOfElements;
+        this.sizeOfArray = sizeOfArray;
+        this.delay = delay;
+        this.sortAscending = sortAscending;
     }
 
     /**
@@ -22,25 +37,16 @@ public abstract class Sorter {
     public abstract String getName();
 
     /**
-     * @param delay
-     *      the length of time to sleep after moving a value, in milliseconds
-     * 
-     * @param sortAscending
-     *      whether the list should be sorted in ascending order (true) or in
-     *      descending order (false)
+     * Sorts the list
      */
-    public abstract void sort(double delay, boolean sortAscending);
+    public abstract void sort();
 
-    /*
-     * Returns whether if placed in order "a, b", the numbers would be in the correct order,
-     * as stated by sortAscending
-     */
     /**
      * @param a
-     *      a value in the list
+     *      a value from the list
      * 
      * @param b
-     *      the value that directly follows {@code a}
+     *      a value from the list, different to {@code a}
      * 
      * @param sortAscending
      *      whether the list is being sorted in ascending order (true) or in
@@ -49,8 +55,9 @@ public abstract class Sorter {
      * @return whether or not {@code a} should be followed by {@code b} if sorted in
      *          the order given by {@code sortAscending}
      */
-    protected final boolean inOrder(int a, int b, boolean sortAscending) {
+    protected final boolean inOrder(int a, int b) {
         controller.setComparing(a, b);
+        sleep();
 
         // sortAscending AND !(a > b)
         // OR
@@ -60,7 +67,18 @@ public abstract class Sorter {
         return sortAscending ^ (a > b);
     }
 
-    protected final void sleep(double delay) {
+    protected final boolean isSorted() {
+        for (int i = 0; i < sizeOfArray - 1; i++) {
+            int a = controller.getNumAtIndex(i);
+            int b = controller.getNumAtIndex(i + 1);
+            if (!inOrder(a, b)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private final void sleep() {
         long millis = (long)delay;
         int nanos = (int)((delay % 1) * 1_000_000);
 

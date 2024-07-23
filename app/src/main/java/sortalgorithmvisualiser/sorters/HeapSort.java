@@ -7,7 +7,7 @@ public class HeapSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         int start = sizeOfArray / 2;
         int end = sizeOfArray;
@@ -17,7 +17,6 @@ public class HeapSort extends Sorter {
             }
             else {
                 end--;
-                sleep(delay);
                 controller.swapIndexes(end, 0);
             }
 
@@ -30,14 +29,13 @@ public class HeapSort extends Sorter {
 
                 if (child+1 < end) {
                     int rightVal = controller.getNumAtIndex(child + 1);
-                    if (inOrder(childVal, rightVal, sortAscending)) {
+                    if (inOrder(childVal, rightVal)) {
                         child++;
                         childVal = rightVal;
                     }
                 }
 
-                if (inOrder(rootVal, childVal, sortAscending)) {
-                    sleep(delay);
+                if (inOrder(rootVal, childVal)) {
                     controller.swapIndexes(root, child);
                     root = child;
                 }

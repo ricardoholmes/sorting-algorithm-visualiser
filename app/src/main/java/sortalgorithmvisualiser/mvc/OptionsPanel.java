@@ -29,30 +29,19 @@ public class OptionsPanel extends JPanel {
         White;
 
         public Color toColor() {
-            switch (this) {
-                case Black:
-                    return Color.BLACK;
-                case Blue:
-                    return Color.BLUE;
-                case Cyan:
-                    return Color.CYAN;
-                case Gray:
-                    return Color.GRAY;
-                case Green:
-                    return Color.GREEN;
-                case Magenta:
-                    return Color.MAGENTA;
-                case Pink:
-                    return Color.PINK;
-                case Red:
-                    return Color.RED;
-                case White:
-                    return Color.WHITE;
-                case Yellow:
-                    return Color.YELLOW;
-                default:
-                    return null;
-            }
+            return switch (this) {
+                case Black -> Color.BLACK;
+                case Blue -> Color.BLUE;
+                case Cyan -> Color.CYAN;
+                case Gray -> Color.GRAY;
+                case Green -> Color.GREEN;
+                case Magenta -> Color.MAGENTA;
+                case Pink -> Color.PINK;
+                case Red -> Color.RED;
+                case White -> Color.WHITE;
+                case Yellow -> Color.YELLOW;
+                default -> null;
+            };
         }
     }
 
@@ -60,8 +49,8 @@ public class OptionsPanel extends JPanel {
     private Model model;
 
     private JSpinner delaySpinner;
-    private JSpinner endDelaySpinner;
-    private JSpinner numCountSpinner;
+    private JSpinner barCountSpinner;
+    private JSpinner barBorderWidthSpinner;
 
     private JCheckBox sortAscendingCheckBox;
     private static JCheckBox muteCheckBox;
@@ -84,8 +73,7 @@ public class OptionsPanel extends JPanel {
         sortButton.addActionListener(e -> {
             double delay = (double)delaySpinner.getValue();
             boolean ascending = sortAscendingCheckBox.isSelected();
-            double endDelay = (double)endDelaySpinner.getValue();
-            c.sort(delay, ascending, endDelay);
+            c.sort(delay, ascending);
         });
 
         JButton stopButton = new JButton("Stop");
@@ -100,19 +88,16 @@ public class OptionsPanel extends JPanel {
             }
         });
 
-        SpinnerModel numCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
-        numCountSpinner = new JSpinner(numCountSpinnerModel);
+        SpinnerModel barCountSpinnerModel = new SpinnerNumberModel(10, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+        barCountSpinner = new JSpinner(barCountSpinnerModel);
 
         JButton generateArrayButton = new JButton("Generate");
         generateArrayButton.addActionListener(e -> {
             generateList();
         });
 
-        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(25.0, 0, Integer.MAX_VALUE, 1);
+        SpinnerModel delaySpinnerModel = new SpinnerNumberModel(5.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
-
-        SpinnerModel endDelaySpinnerModel = new SpinnerNumberModel(50.0, 0, Integer.MAX_VALUE, 1);
-        endDelaySpinner = new JSpinner(endDelaySpinnerModel);
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
         borderActiveCheckBox.addActionListener(e -> {
@@ -160,10 +145,91 @@ public class OptionsPanel extends JPanel {
         barBackgroundColorDropDown.setSelectedItem(ColorOption.White);
         barBackgroundColorDropDown.addItemListener(e -> {
             Color color = ((ColorOption)e.getItem()).toColor();
-            v.setBackground(color);
             BarPanel.barBackgroundColor = color;
             BarPanel.refresh();
         });
+        
+        JComboBox<Oscillator.Wave> soundWaveDropDown = new JComboBox<>(Oscillator.Wave.values());
+        soundWaveDropDown.setSelectedItem(ColorOption.Black);
+        soundWaveDropDown.addItemListener(e -> {
+            Oscillator.wave = (Oscillator.Wave)(e.getItem());
+        });
+
+        SpinnerModel barBorderWidthSpinnerModel = new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1);
+        barBorderWidthSpinner = new JSpinner(barBorderWidthSpinnerModel);
+        barBorderWidthSpinner.addChangeListener(e -> {
+            BarPanel.barBorderWidth = (int)barBorderWidthSpinner.getValue();
+            BarPanel.refresh();
+        });
+
+        JCheckBox mergeBordersCheckBox = new JCheckBox("Merge Borders", false);
+        mergeBordersCheckBox.addActionListener(e -> {
+            BarPanel.mergeBorders = mergeBordersCheckBox.isSelected();
+            BarPanel.refresh();
+        });
+
+        SpinnerModel marginSizeSpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
+        JSpinner marginSizeSpinner = new JSpinner(marginSizeSpinnerModel);
+        marginSizeSpinner.addChangeListener(e -> {
+            BarPanel.marginSize = (int)marginSizeSpinner.getValue();
+            BarPanel.refresh();
+        });
+
+        JCheckBox highlightCompareCheckBox = new JCheckBox("Highlight Comparing", true);
+        highlightCompareCheckBox.addActionListener(e -> {
+            BarPanel.highlightCompare = highlightCompareCheckBox.isSelected();
+            BarPanel.refresh();
+        });
+
+        JCheckBox doneAnimationCheckBox = new JCheckBox("Done Animation", true);
+        doneAnimationCheckBox.addActionListener(e -> {
+            BarPanel.doneAnimation = doneAnimationCheckBox.isSelected();
+            BarPanel.stopDoneAnimation();
+        });
+
+        SpinnerModel minFreqSpinnerModel = new SpinnerNumberModel(200, 200, 1600, 1);
+        SpinnerModel maxFreqSpinnerModel = new SpinnerNumberModel(1200, 200, 1600, 1);
+        JSpinner maxFreqSpinner = new JSpinner(maxFreqSpinnerModel);
+        JSpinner minFreqSpinner = new JSpinner(minFreqSpinnerModel);
+        minFreqSpinner.addChangeListener(e -> {
+            int newMinFreq = (int)minFreqSpinner.getValue();
+            int maxFreq = (int)maxFreqSpinner.getValue();
+            if (newMinFreq > maxFreq) {
+                minFreqSpinner.setValue(maxFreq);
+                newMinFreq = maxFreq;
+            }
+            Sound.minFrequency = newMinFreq;
+        });
+        maxFreqSpinner.addChangeListener(e -> {
+            int minFreq = (int)minFreqSpinner.getValue();
+            int newMaxFreq = (int)maxFreqSpinner.getValue();
+            if (newMaxFreq < minFreq) {
+                maxFreqSpinner.setValue(minFreq);
+                newMaxFreq = minFreq;
+            }
+            Sound.maxFrequency = newMaxFreq;
+        });
+
+        JComboBox<NormalisedScaler> freqScalingDropDown = new JComboBox<>(NormalisedScaler.values());
+        freqScalingDropDown.setSelectedItem(NormalisedScaler.Linear);
+        freqScalingDropDown.addItemListener(e -> {
+            Sound.frequencyScaler = (NormalisedScaler)e.getItem();
+        });
+
+        JSlider attackSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 5);
+        attackSlider.addChangeListener(e -> { Oscillator.attack = attackSlider.getValue() / 100.0; });
+
+        JSlider holdSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 45);
+        holdSlider.addChangeListener(e -> { Oscillator.hold = holdSlider.getValue() / 100.0; });
+
+        JSlider decaySlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 10);
+        decaySlider.addChangeListener(e -> { Oscillator.decay = decaySlider.getValue() / 100.0; });
+
+        JSlider sustainSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 90);
+        sustainSlider.addChangeListener(e -> { Oscillator.sustain = sustainSlider.getValue() / 100.0; });
+
+        JSlider releaseSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        releaseSlider.addChangeListener(e -> { Oscillator.release = releaseSlider.getValue() / 100.0; });
 
         setBackground(Color.GRAY);
         
@@ -171,16 +237,13 @@ public class OptionsPanel extends JPanel {
         addComponents(sorterDropDown);
         
         // select number of bars
-        addComponents("Number of bars:", numCountSpinner);
+        addComponents("Number of bars:", barCountSpinner);
 
         // generate array
         addComponents(generateArrayButton);
 
         // choose main delay
         addComponents("Delay (ms):", delaySpinner);
-
-        // choose delay for end animation
-        addComponents("End Delay (ms):", endDelaySpinner);
 
         // set volume (with slider)
         addComponents("Volume:", volumeSlider);
@@ -197,6 +260,26 @@ public class OptionsPanel extends JPanel {
         addComponents("Bar done color:", barDoneColorDropDown);
         addComponents("Bar border color:", barBorderColorDropDown);
         addComponents("Bar background color:", barBackgroundColorDropDown);
+
+        // more visual customisation settings
+        addComponents("Bar border width:", barBorderWidthSpinner);
+        addComponents(mergeBordersCheckBox);
+
+        addComponents("Margin size:", marginSizeSpinner);
+
+        addComponents(highlightCompareCheckBox, doneAnimationCheckBox);
+        
+        // sound settings
+        addComponents("Minimum Frequency:", minFreqSpinner);
+        addComponents("Maximum Frequency:", maxFreqSpinner);
+        addComponents("Frequency scaler:", freqScalingDropDown);
+        addComponents("Sound wave:", soundWaveDropDown);
+
+        addComponents("Attack:", attackSlider);
+        addComponents("Hold:", holdSlider);
+        addComponents("Decay:", decaySlider);
+        addComponents("Sustain:", sustainSlider);
+        addComponents("Release:", releaseSlider);
     }
 
     private void addComponents(String labelText, Component component) {
@@ -219,17 +302,22 @@ public class OptionsPanel extends JPanel {
         return volumeSlider.getValue() / 100.0;
     }
 
-    public void setMaximumBarCount(int count) {
-        maxBars = count;
+    public void setMaximums(int barCount, int maxBorderWidth) {
+        maxBars = barCount;
+
+        int borderWidth = (int)barBorderWidthSpinner.getValue();
+        if (borderWidth > maxBorderWidth) {
+            barBorderWidthSpinner.setValue(maxBorderWidth);
+        }
 
         if (model.getArrayLength() > maxBars) {
-            numCountSpinner.setValue(maxBars);
+            barCountSpinner.setValue(maxBars);
             generateList();
         }
     }
 
     private void generateList() {
-        int count = (int)numCountSpinner.getValue();
+        int count = (int)barCountSpinner.getValue();
         if (count > maxBars) {
             count = maxBars;
         }
@@ -237,7 +325,7 @@ public class OptionsPanel extends JPanel {
             count = 1;
         }
 
-        numCountSpinner.setValue(count);
+        barCountSpinner.setValue(count);
         controller.generateList(count);
     }
 }

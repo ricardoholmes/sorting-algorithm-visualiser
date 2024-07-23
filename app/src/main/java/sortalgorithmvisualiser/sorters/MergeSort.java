@@ -7,21 +7,21 @@ public class MergeSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
-        recursiveSort(0, sizeOfArray, delay, sortAscending);
+        recursiveSort(0, sizeOfArray);
     }
 
     // interval [start, end)
-    void recursiveSort(int start, int end, double delay, boolean sortAscending) {
+    void recursiveSort(int start, int end) {
         if (start + 1 == end) {
             return;
         }
 
         int middle = start + ((end - start) / 2);
 
-        recursiveSort(start, middle, delay, sortAscending);
-        recursiveSort(middle, end, delay, sortAscending);
+        recursiveSort(start, middle);
+        recursiveSort(middle, end);
 
         int leftIndex = start;
         int rightIndex = middle;
@@ -33,9 +33,7 @@ public class MergeSort extends Sorter {
 
             int leftNum = controller.getNumAtIndex(leftIndex);
             int rightNum = controller.getNumAtIndex(rightIndex);
-            if (inOrder(rightNum, leftNum, sortAscending)) {
-                sleep(delay);
-
+            if (inOrder(rightNum, leftNum)) {
                 controller.moveNumber(rightIndex, leftIndex);
                 rightIndex++;
                 leftIndex++;

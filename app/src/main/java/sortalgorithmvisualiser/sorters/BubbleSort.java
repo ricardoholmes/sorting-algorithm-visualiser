@@ -7,7 +7,7 @@ public class BubbleSort extends Sorter {
     }
 
     @Override
-    public void sort(double delay, boolean sortAscending) {
+    public void sort() {
         shouldStop = false;
         boolean sorted = false;
         int iterations = 0;
@@ -18,9 +18,7 @@ public class BubbleSort extends Sorter {
                     return;
                 }
 
-                if (inOrder(controller.getNumAtIndex(i+1), controller.getNumAtIndex(i), sortAscending)) {
-                    sleep(delay);
-
+                if (inOrder(controller.getNumAtIndex(i+1), controller.getNumAtIndex(i))) {
                     controller.swapIndexes(i, i+1);
                     sorted = false;
                 }
