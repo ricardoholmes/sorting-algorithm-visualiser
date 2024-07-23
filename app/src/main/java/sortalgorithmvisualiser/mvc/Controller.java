@@ -31,9 +31,6 @@ public class Controller {
 
 	public Thread sortThread;
 
-	public int minFrequency = 200;
-    public int maxFrequency = 1200;
-
 	public static double currentDelay;
 
     /*
@@ -197,11 +194,8 @@ public class Controller {
 
 		double normalisedValue = value / (double)model.getMaxValueAtCreation();
 
-		double freqRange = maxFrequency - minFrequency;
-		int freq = minFrequency + (int)(normalisedValue * freqRange);
-
 		try {
-			Sound.playTone(freq, currentDelay);
+			Sound.playCorrespondingSound(normalisedValue, currentDelay);
 		} catch (LineUnavailableException e) { }
 	}
 

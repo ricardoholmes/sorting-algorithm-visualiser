@@ -15,6 +15,9 @@ public class Sound {
 
     public static boolean muted = false;
 
+	public static int minFrequency = 200;
+    public static int maxFrequency = 1200;
+
     public static int maxOscillators = 256;
     private static ArrayList<Oscillator> oscillators = new ArrayList<>();
 
@@ -24,8 +27,7 @@ public class Sound {
     private static SourceDataLine sdl;
     private static Thread drainThread;
 
-    public static void initialise() throws LineUnavailableException
-    {
+    public static void initialise() throws LineUnavailableException {
         time = 0;
         stopSound();
 
@@ -53,8 +55,10 @@ public class Sound {
         drainThread.start();
     }
 
-    public static void playTone(double freq, double millis) throws LineUnavailableException 
-    {
+    public static void playCorrespondingSound(double normalisedValue, double millis) throws LineUnavailableException {
+		double freqRange = maxFrequency - minFrequency;
+		int freq = minFrequency + (int)(normalisedValue * freqRange);
+
         millis = Double.max(MIN_MILLIS, millis);
         addOscillator(
             freq,

@@ -209,7 +209,7 @@ public class OptionsPanel extends JPanel {
                 minFreqSpinner.setValue(maxFreq);
                 newMinFreq = maxFreq;
             }
-            controller.minFrequency = newMinFreq;
+            Sound.minFrequency = newMinFreq;
         });
         maxFreqSpinner.addChangeListener(e -> {
             int minFreq = (int)minFreqSpinner.getValue();
@@ -218,7 +218,7 @@ public class OptionsPanel extends JPanel {
                 maxFreqSpinner.setValue(minFreq);
                 newMaxFreq = minFreq;
             }
-            controller.maxFrequency = newMaxFreq;
+            Sound.maxFrequency = newMaxFreq;
         });
 
         setBackground(Color.GRAY);
