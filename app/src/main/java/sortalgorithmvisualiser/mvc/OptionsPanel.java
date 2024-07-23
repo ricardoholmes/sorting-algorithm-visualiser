@@ -196,6 +196,18 @@ public class OptionsPanel extends JPanel {
             BarPanel.refresh();
         });
 
+        JCheckBox highlightCompareCheckBox = new JCheckBox("Highlight Comparing", true);
+        highlightCompareCheckBox.addActionListener(e -> {
+            BarPanel.highlightCompare = highlightCompareCheckBox.isSelected();
+            BarPanel.refresh();
+        });
+
+        JCheckBox doneAnimationCheckBox = new JCheckBox("Done Animation", true);
+        doneAnimationCheckBox.addActionListener(e -> {
+            BarPanel.doneAnimation = doneAnimationCheckBox.isSelected();
+            BarPanel.stopDoneAnimation();
+        });
+
         setBackground(Color.GRAY);
         
         // Select sorter
@@ -232,7 +244,10 @@ public class OptionsPanel extends JPanel {
         // more customisation settings
         addComponents("Bar border width:", barBorderWidthSpinner);
         addComponents(mergeBordersCheckBox);
+
         addComponents("Margin size:", marginSizeSpinner);
+
+        addComponents(highlightCompareCheckBox, doneAnimationCheckBox);
     }
 
     private void addComponents(String labelText, Component component) {

@@ -32,6 +32,9 @@ public class BarPanel extends JPanel {
 
     public static int barBorderWidth = 2;
     public static boolean mergeBorders = false;
+
+    public static boolean doneAnimation = true;
+    public static boolean highlightCompare = true;
     
     public static int marginSize = 10;
 
@@ -55,6 +58,8 @@ public class BarPanel extends JPanel {
                 .boxed()
                 .collect(Collectors.toList());
         Collections.shuffle(shuffledIndices);
+
+        refresh();
     }
 
     public static void stopDoneAnimation() {
@@ -78,6 +83,11 @@ public class BarPanel extends JPanel {
 
     public void doneSorting() {
         resetBars();
+
+        if (!doneAnimation) {
+            return;
+        }
+
         for (int i = 0; i < model.getArrayLength(); i++) {
             sortedCount++;
 
@@ -91,12 +101,21 @@ public class BarPanel extends JPanel {
 
             long millis = (long)delay;
             int nanos = (int)((delay % 1) * 1_000_000);
+
             try {
-                Thread.sleep(millis, nanos);
+                Thread.sleep(0, nanos);
             } catch (InterruptedException e) { }
 
-            if (stopDoneAnim) {
-                return;
+            for (int t = 0; t < millis; t++) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) { }
+
+                if (stopDoneAnim || !doneAnimation) {
+                    sortedCount = 0;
+                    repaint();
+                    return;
+                }
             }
         }
     }
@@ -180,11 +199,11 @@ public class BarPanel extends JPanel {
                 }
             }
 
-            if (tempSortedCount > 0) {
+            if (doneAnimation && tempSortedCount > 0) {
                 g.setColor(barDoneColor);
                 tempSortedCount--;
             }
-            else if (barsComparing.contains(i)) {
+            else if (highlightCompare && barsComparing.contains(i)) {
                 g.setColor(barComparingColor);
             }
             else {
