@@ -2,8 +2,6 @@ package sortalgorithmvisualiser.mvc;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -32,19 +30,23 @@ public class GUIView implements IView {
         controller = c;
 
         mainFrame = new JFrame("Sorting Algorithm Visualiser");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setPreferredSize(new Dimension(1280, 720));
         mainFrame.setMinimumSize(new Dimension(640, 360));
-        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        mainPanel = new JPanel();
-        mainFrame.add(mainPanel);
-        
+        mainPanel = new JPanel(new BorderLayout());
+        mainFrame.setContentPane(mainPanel);
+
         optionsPanel = new OptionsPanel(controller, this, model);
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
         scrollableOptionsPane = new JScrollPane(optionsPanel);
 
+        double optionsWidth = optionsPanel.getPreferredSize().getWidth() + 20;
+        double optionsHeight = optionsPanel.getPreferredSize().getHeight();
+        scrollableOptionsPane.setPreferredSize(new Dimension((int)optionsWidth, (int)optionsHeight));
+        scrollableOptionsPane.setMinimumSize(new Dimension((int)optionsWidth, 280));
+
         barsPanel = new BarPanel(model, controller, optionsPanel);
-        barsPanel.setPreferredSize(new Dimension(960, 720));
 
         initialiseMainPanel();
 
@@ -57,25 +59,8 @@ public class GUIView implements IView {
     }
 
     private void initialiseMainPanel() {
-        mainPanel.setLayout(new GridBagLayout());
-
-        GridBagConstraints constraints = new GridBagConstraints();
-
-        // options panel
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.25;
-        constraints.weighty = 1;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        mainPanel.add(scrollableOptionsPane, constraints);
-
-        // bars panel
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.75;
-        constraints.weighty = 1;
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        mainPanel.add(barsPanel, constraints);
+        mainPanel.add(scrollableOptionsPane, BorderLayout.WEST);
+        mainPanel.add(barsPanel, BorderLayout.CENTER);
     }
 
     public void setBorderActive(boolean b) {
@@ -100,17 +85,15 @@ public class GUIView implements IView {
             return;
         }
 
-        int width = scrollableOptionsPane.getWidth();
-        int height = scrollableOptionsPane.getHeight();
+        int width = (int)scrollableOptionsPane.getPreferredSize().getWidth();
+        int height = mainFrame.getHeight();
 
         mainPanel.remove(scrollableOptionsPane);
         mainPanel.remove(barsPanel);
 
-        mainPanel.setLayout(new BorderLayout());
         mainPanel.add(barsPanel, BorderLayout.CENTER);
 
         optionsFrame = new JFrame("Options");
-        optionsFrame.setMinimumSize(new Dimension(160, 360));
         optionsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         optionsFrame.addWindowListener(new WindowAdapter() {
@@ -120,8 +103,7 @@ public class GUIView implements IView {
             }
         });
 
-        optionsFrame.add(scrollableOptionsPane);
-
+        optionsFrame.setContentPane(scrollableOptionsPane);
         scrollableOptionsPane.setPreferredSize(new Dimension(width, height));
 
         optionsFrame.pack();
@@ -131,6 +113,7 @@ public class GUIView implements IView {
         mainFrame.repaint();
 
         refreshView();
+        optionsFrame.setMinimumSize(new Dimension(optionsFrame.getWidth(), 360));
 
         optionsPoppedOut = true;
     }
