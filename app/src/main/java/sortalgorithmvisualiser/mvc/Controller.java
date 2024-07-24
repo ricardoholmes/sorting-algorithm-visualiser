@@ -90,7 +90,12 @@ public class Controller {
 		} catch (LineUnavailableException e) {}
 
 		sortThread = new Thread(() -> {
-			sorter.sort();
+			try {
+				sorter.sort();
+			} catch (Exception e) {
+				return;
+			}
+
 			if (isSorted(sortAscending)) {
 				view.doneSorting();
 			} else {
