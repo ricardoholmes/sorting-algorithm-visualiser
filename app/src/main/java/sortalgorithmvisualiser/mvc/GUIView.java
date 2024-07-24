@@ -127,7 +127,8 @@ public class GUIView implements IView {
         optionsFrame.pack();
         optionsFrame.setVisible(true);
 
-        mainFrame.pack();
+        mainFrame.revalidate();
+        mainFrame.repaint();
 
         refreshView();
 
@@ -148,7 +149,8 @@ public class GUIView implements IView {
 
         initialiseMainPanel();
 
-        mainFrame.pack();
+        mainFrame.revalidate();
+        mainFrame.repaint();
 
         refreshView();
 
