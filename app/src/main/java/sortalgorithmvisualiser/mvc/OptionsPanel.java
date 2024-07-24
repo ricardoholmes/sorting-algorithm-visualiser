@@ -237,6 +237,17 @@ public class OptionsPanel extends JPanel {
         JSlider releaseSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         releaseSlider.addChangeListener(e -> { Oscillator.release = releaseSlider.getValue() / 100.0; });
 
+        JButton popOutButton = new JButton("Pop Out");
+        popOutButton.addActionListener(e -> {
+            if (v.optionsPoppedOut) {
+                popOutButton.setText("Pop Out");
+                v.popInOptions();
+            } else {
+                popOutButton.setText("Pop In");
+                v.popOutOptions();
+            }
+        });
+
         setBackground(Color.GRAY);
         
         // Select sorter
@@ -288,6 +299,9 @@ public class OptionsPanel extends JPanel {
         addComponents("Decay:", decaySlider);
         addComponents("Sustain:", sustainSlider);
         addComponents("Release:", releaseSlider);
+
+        // pop out options
+        addComponents(popOutButton);
     }
 
     private void addComponents(String labelText, Component component) {
