@@ -216,6 +216,12 @@ public class OptionsPanel extends JPanel {
             Sound.frequencyScaler = (NormalisedScaler)e.getItem();
         });
 
+        SpinnerModel lengthMultiplierSpinnerModel = new SpinnerNumberModel(2.0, 0.0, 10.0, 0.1);
+        JSpinner soundLengthMultiplierSpinner = new JSpinner(lengthMultiplierSpinnerModel);
+        soundLengthMultiplierSpinner.addChangeListener(e -> {
+            Sound.sustain = (double)soundLengthMultiplierSpinner.getValue();
+        });
+
         JSlider attackSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 5);
         attackSlider.addChangeListener(e -> { Oscillator.attack = attackSlider.getValue() / 100.0; });
 
@@ -270,10 +276,12 @@ public class OptionsPanel extends JPanel {
         addComponents(highlightCompareCheckBox, doneAnimationCheckBox);
         
         // sound settings
-        addComponents("Minimum Frequency:", minFreqSpinner);
-        addComponents("Maximum Frequency:", maxFreqSpinner);
+        addComponents("Minimum frequency:", minFreqSpinner);
+        addComponents("Maximum frequency:", maxFreqSpinner);
         addComponents("Frequency scaler:", freqScalingDropDown);
         addComponents("Sound wave:", soundWaveDropDown);
+
+        addComponents("Sound length multiplier:", soundLengthMultiplierSpinner);
 
         addComponents("Attack:", attackSlider);
         addComponents("Hold:", holdSlider);
@@ -296,7 +304,6 @@ public class OptionsPanel extends JPanel {
         container.setMaximumSize(container.getPreferredSize());
         add(container);
     }
-
 
     public static double getVolume() {
         return volumeSlider.getValue() / 100.0;
