@@ -215,5 +215,6 @@ public class Controller {
 		int index2 = nums.indexOf(b);
 
 		BarPanel.comparingBars(index1, index2);
+		BarPanel.refresh();
     }
 }
