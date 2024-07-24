@@ -16,7 +16,7 @@ public class GUIView implements IView {
     private Model model;
     private Controller controller;
 
-    private JFrame frame;
+    private JFrame mainFrame;
     private JPanel mainPanel;
     private JScrollPane scrollableOptionsPane;
     private OptionsPanel optionsPanel;
@@ -31,13 +31,13 @@ public class GUIView implements IView {
         model = m;
         controller = c;
 
-        frame = new JFrame("Sorting Algorithm Visualiser");
-        frame.setPreferredSize(new Dimension(1280, 720));
-        frame.setMinimumSize(new Dimension(640, 360));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame = new JFrame("Sorting Algorithm Visualiser");
+        mainFrame.setPreferredSize(new Dimension(1280, 720));
+        mainFrame.setMinimumSize(new Dimension(640, 360));
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel();
-        frame.add(mainPanel);
+        mainFrame.add(mainPanel);
         
         optionsPanel = new OptionsPanel(controller, this, model);
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
@@ -48,8 +48,8 @@ public class GUIView implements IView {
 
         initialiseMainPanel();
 
-        frame.pack();
-        frame.setVisible(true);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
 
         refreshView();
 
@@ -85,7 +85,6 @@ public class GUIView implements IView {
 
     @Override
     public void refreshView() {
-        mainPanel.repaint();
         barsPanel.repaint();
     }
 
@@ -101,6 +100,9 @@ public class GUIView implements IView {
             return;
         }
 
+        int width = scrollableOptionsPane.getWidth();
+        int height = scrollableOptionsPane.getHeight();
+
         mainPanel.remove(scrollableOptionsPane);
         mainPanel.remove(barsPanel);
 
@@ -108,7 +110,6 @@ public class GUIView implements IView {
         mainPanel.add(barsPanel, BorderLayout.CENTER);
 
         optionsFrame = new JFrame("Options");
-        optionsFrame.setPreferredSize(new Dimension(frame.getWidth() / 4, frame.getHeight()));
         optionsFrame.setMinimumSize(new Dimension(160, 360));
         optionsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -121,8 +122,12 @@ public class GUIView implements IView {
 
         optionsFrame.add(scrollableOptionsPane);
 
+        scrollableOptionsPane.setPreferredSize(new Dimension(width, height));
+
         optionsFrame.pack();
         optionsFrame.setVisible(true);
+
+        mainFrame.pack();
 
         refreshView();
 
@@ -142,6 +147,8 @@ public class GUIView implements IView {
         mainPanel.remove(barsPanel);
 
         initialiseMainPanel();
+
+        mainFrame.pack();
 
         refreshView();
 
