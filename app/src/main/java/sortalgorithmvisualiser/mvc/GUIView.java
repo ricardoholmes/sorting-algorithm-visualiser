@@ -95,6 +95,10 @@ public class GUIView implements IView {
         optionsFrame.setContentPane(optionsPanel);
         optionsPanel.setPreferredSize(optionsPanel.getSize());
 
+        if (mainFrame.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
+            optionsFrame.setLocation(mainFrame.getLocation());
+        }
+
         optionsFrame.pack();
         optionsFrame.setVisible(true);
 
