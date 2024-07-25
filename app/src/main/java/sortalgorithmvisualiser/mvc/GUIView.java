@@ -75,6 +75,8 @@ public class GUIView implements IView {
             optionsPoppedOut = true;
             return;
         }
+        
+        optionsPanel.popOutButton.setText("Pop In");
 
         mainPanel.remove(barsPanel);
 
@@ -110,6 +112,8 @@ public class GUIView implements IView {
             optionsPoppedOut = false;
             return;
         }
+
+        optionsPanel.popOutButton.setText("Pop Out");
 
         optionsFrame.remove(optionsPanel);
         optionsFrame.dispose();

@@ -69,6 +69,8 @@ public class OptionsPanel extends JPanel {
 
     private static JSlider volumeSlider;
 
+    public JButton popOutButton;
+
     private int maxBars;
 
     public OptionsPanel(Controller c, Model m, GUIView v) {
@@ -76,13 +78,11 @@ public class OptionsPanel extends JPanel {
         model = m;
         view = v;
 
-        JButton popOutButton = new JButton("Pop Out");
+        popOutButton = new JButton("Pop Out");
         popOutButton.addActionListener(e -> {
             if (v.optionsPoppedOut) {
-                popOutButton.setText("Pop Out");
                 v.popInOptions();
             } else {
-                popOutButton.setText("Pop In");
                 v.popOutOptions();
             }
         });
@@ -132,10 +132,6 @@ public class OptionsPanel extends JPanel {
         add(mainScrollPane, BorderLayout.CENTER);
 
         // pop in/out
-        // JPanel x = new JPanel(new BorderLayout());
-        // x.setSize(new Dimension(navBarWidth, navBarHeight));
-        // x.add(popOutButton, BorderLayout.CENTER);
-        // add(x, BorderLayout.SOUTH);
         popOutButton.setPreferredSize(new Dimension(navBarWidth, navBarHeight));
         add(popOutButton, BorderLayout.PAGE_END);
 
