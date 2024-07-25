@@ -5,10 +5,8 @@ import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class GUIView implements IView {
     private Model model;
@@ -16,7 +14,7 @@ public class GUIView implements IView {
 
     private JFrame mainFrame;
     private JPanel mainPanel;
-    private JScrollPane scrollableOptionsPane;
+    // private JScrollPane scrollableOptionsPane;
     private OptionsPanel optionsPanel;
     private BarPanel barsPanel;
 
@@ -37,14 +35,7 @@ public class GUIView implements IView {
         mainPanel = new JPanel(new BorderLayout());
         mainFrame.setContentPane(mainPanel);
 
-        optionsPanel = new OptionsPanel(controller, this, model);
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-        scrollableOptionsPane = new JScrollPane(optionsPanel);
-
-        double optionsWidth = optionsPanel.getPreferredSize().getWidth() + 20;
-        double optionsHeight = optionsPanel.getPreferredSize().getHeight();
-        scrollableOptionsPane.setPreferredSize(new Dimension((int)optionsWidth, (int)optionsHeight));
-        scrollableOptionsPane.setMinimumSize(new Dimension((int)optionsWidth, 280));
+        optionsPanel = new OptionsPanel(controller, model, this);
 
         barsPanel = new BarPanel(model, controller, optionsPanel);
 
@@ -59,7 +50,7 @@ public class GUIView implements IView {
     }
 
     private void initialiseMainPanel() {
-        mainPanel.add(scrollableOptionsPane, BorderLayout.WEST);
+        mainPanel.add(optionsPanel, BorderLayout.WEST);
         mainPanel.add(barsPanel, BorderLayout.CENTER);
     }
 
@@ -85,10 +76,6 @@ public class GUIView implements IView {
             return;
         }
 
-        int width = (int)scrollableOptionsPane.getPreferredSize().getWidth();
-        int height = mainFrame.getHeight();
-
-        mainPanel.remove(scrollableOptionsPane);
         mainPanel.remove(barsPanel);
 
         mainPanel.add(barsPanel, BorderLayout.CENTER);
@@ -103,8 +90,8 @@ public class GUIView implements IView {
             }
         });
 
-        optionsFrame.setContentPane(scrollableOptionsPane);
-        scrollableOptionsPane.setPreferredSize(new Dimension(width, height));
+        optionsFrame.setContentPane(optionsPanel);
+        optionsPanel.setPreferredSize(optionsPanel.getSize());
 
         optionsFrame.pack();
         optionsFrame.setVisible(true);
@@ -124,7 +111,7 @@ public class GUIView implements IView {
             return;
         }
 
-        optionsFrame.remove(scrollableOptionsPane);
+        optionsFrame.remove(optionsPanel);
         optionsFrame.dispose();
         optionsFrame = null;
 

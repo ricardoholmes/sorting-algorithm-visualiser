@@ -1,15 +1,20 @@
 package sortalgorithmvisualiser.mvc;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
@@ -45,8 +50,15 @@ public class OptionsPanel extends JPanel {
         }
     }
 
-    private Controller controller;
     private Model model;
+    private GUIView view;
+    private Controller controller;
+
+    private JScrollPane mainScrollPane;
+
+    private JPanel homePanel;
+    private JPanel soundPanel;
+    private JPanel graphicsPanel;
 
     private JSpinner delaySpinner;
     private JSpinner barCountSpinner;
@@ -59,32 +71,100 @@ public class OptionsPanel extends JPanel {
 
     private int maxBars;
 
-    public OptionsPanel(Controller c, GUIView v, Model m) {
+    public OptionsPanel(Controller c, Model m, GUIView v) {
         controller = c;
         model = m;
+        view = v;
 
-        String[] sortingAlgorithmNames = c.getSorterNames();
+        JButton popOutButton = new JButton("Pop Out");
+        popOutButton.addActionListener(e -> {
+            if (v.optionsPoppedOut) {
+                popOutButton.setText("Pop Out");
+                v.popInOptions();
+            } else {
+                popOutButton.setText("Pop In");
+                v.popOutOptions();
+            }
+        });
+
+        JButton homeButton = new JButton("Home");
+        homeButton.addActionListener(e -> {
+            mainScrollPane.setViewportView(homePanel);
+        });
+
+        JButton soundButton = new JButton("Sound");
+        soundButton.addActionListener(e -> {
+            mainScrollPane.setViewportView(soundPanel);
+        });
+
+        JButton graphicsButton = new JButton("Graphics");
+        graphicsButton.addActionListener(e -> {
+            mainScrollPane.setViewportView(graphicsPanel);
+        });
+        
+        setLayout(new BorderLayout());
+
+        // navigation bar
+        JPanel navBar = new JPanel();
+        navBar.setLayout(new GridLayout(1, 3));
+        navBar.add(homeButton);
+        navBar.add(graphicsButton);
+        navBar.add(soundButton);
+        int navBarWidth = getPreferredSize().width;
+        int navBarHeight = homeButton.getPreferredSize().width;
+        navBar.setPreferredSize(new Dimension(navBarWidth, navBarHeight));
+        add(navBar, BorderLayout.PAGE_START);
+
+        // menus
+        homePanel = new JPanel();
+        homePanel.setLayout(new BoxLayout(homePanel, BoxLayout.Y_AXIS));
+        initialiseHomePanel();
+
+        soundPanel = new JPanel();
+        soundPanel.setLayout(new BoxLayout(soundPanel, BoxLayout.Y_AXIS));
+        initialiseSoundPanel();
+
+        graphicsPanel = new JPanel();
+        graphicsPanel.setLayout(new BoxLayout(graphicsPanel, BoxLayout.Y_AXIS));
+        initialiseGraphicsPanel();
+
+        mainScrollPane = new JScrollPane(homePanel);
+        add(mainScrollPane, BorderLayout.CENTER);
+
+        // pop in/out
+        // JPanel x = new JPanel(new BorderLayout());
+        // x.setSize(new Dimension(navBarWidth, navBarHeight));
+        // x.add(popOutButton, BorderLayout.CENTER);
+        // add(x, BorderLayout.SOUTH);
+        popOutButton.setPreferredSize(new Dimension(navBarWidth, navBarHeight));
+        add(popOutButton, BorderLayout.PAGE_END);
+
+        setBackground(Color.GRAY);
+    }
+
+    private void initialiseHomePanel() {
+        String[] sortingAlgorithmNames = controller.getSorterNames();
         JComboBox<String> sorterDropDown = new JComboBox<>(sortingAlgorithmNames);
         sorterDropDown.addItemListener(e -> {
-            c.selectSorter(sorterDropDown.getSelectedIndex());
+            controller.selectSorter(sorterDropDown.getSelectedIndex());
         });
 
         JButton sortButton = new JButton("Sort");
         sortButton.addActionListener(e -> {
             double delay = (double)delaySpinner.getValue();
             boolean ascending = sortAscendingCheckBox.isSelected();
-            c.sort(delay, ascending);
+            controller.sort(delay, ascending);
         });
 
         JButton stopButton = new JButton("Stop");
         stopButton.addActionListener(e -> {
-            c.stopSorting();
+            controller.stopSorting();
         });
 
         JButton shuffleButton = new JButton("Shuffle");
         shuffleButton.addActionListener(e -> {
-            if (c.sortThread == null || !c.sortThread.isAlive()) {
-                c.shuffle();
+            if (controller.sortThread == null || !controller.sortThread.isAlive()) {
+                controller.shuffle();
             }
         });
 
@@ -101,7 +181,7 @@ public class OptionsPanel extends JPanel {
 
         JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
         borderActiveCheckBox.addActionListener(e -> {
-            v.setBorderActive(borderActiveCheckBox.isSelected());
+            view.setBorderActive(borderActiveCheckBox.isSelected());
         });
 
         sortAscendingCheckBox = new JCheckBox("Sort Ascending", true);
@@ -113,6 +193,29 @@ public class OptionsPanel extends JPanel {
 
         volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
 
+        // Select sorter
+        addComponents(homePanel, sorterDropDown);
+        
+        // select number of bars
+        addComponents(homePanel, "Number of bars:", barCountSpinner);
+
+        // generate array
+        addComponents(homePanel, generateArrayButton);
+
+        // choose main delay
+        addComponents(homePanel, "Delay (ms):", delaySpinner);
+
+        // set volume (with slider)
+        addComponents(homePanel, "Volume:", volumeSlider);
+
+        // checkboxes
+        addComponents(homePanel, borderActiveCheckBox, sortAscendingCheckBox, muteCheckBox);
+
+        // sort + stop
+        addComponents(homePanel, sortButton, stopButton, shuffleButton);
+    }
+
+    private void initialiseGraphicsPanel() {
         JComboBox<ColorOption> barColorDropDown = new JComboBox<>(ColorOption.values());
         barColorDropDown.setSelectedItem(ColorOption.Black);
         barColorDropDown.addItemListener(e -> {
@@ -148,12 +251,6 @@ public class OptionsPanel extends JPanel {
             BarPanel.barBackgroundColor = color;
             BarPanel.refresh();
         });
-        
-        JComboBox<Oscillator.Wave> soundWaveDropDown = new JComboBox<>(Oscillator.Wave.values());
-        soundWaveDropDown.setSelectedItem(ColorOption.Black);
-        soundWaveDropDown.addItemListener(e -> {
-            Oscillator.wave = (Oscillator.Wave)(e.getItem());
-        });
 
         SpinnerModel barBorderWidthSpinnerModel = new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1);
         barBorderWidthSpinner = new JSpinner(barBorderWidthSpinnerModel);
@@ -185,6 +282,29 @@ public class OptionsPanel extends JPanel {
         doneAnimationCheckBox.addActionListener(e -> {
             BarPanel.doneAnimation = doneAnimationCheckBox.isSelected();
             BarPanel.stopDoneAnimation();
+        });
+
+        // select colors
+        addComponents(graphicsPanel, "Bar color:", barColorDropDown);
+        addComponents(graphicsPanel, "Bar comparing color:", barComparingColorDropDown);
+        addComponents(graphicsPanel, "Bar done color:", barDoneColorDropDown);
+        addComponents(graphicsPanel, "Bar border color:", barBorderColorDropDown);
+        addComponents(graphicsPanel, "Bar background color:", barBackgroundColorDropDown);
+
+        // more visual customisation settings
+        addComponents(graphicsPanel, "Bar border width:", barBorderWidthSpinner);
+        addComponents(graphicsPanel, mergeBordersCheckBox);
+
+        addComponents(graphicsPanel, "Margin size:", marginSizeSpinner);
+
+        addComponents(graphicsPanel, highlightCompareCheckBox, doneAnimationCheckBox);
+    }
+
+    private void initialiseSoundPanel() {
+        JComboBox<Oscillator.Wave> soundWaveDropDown = new JComboBox<>(Oscillator.Wave.values());
+        soundWaveDropDown.setSelectedItem(ColorOption.Black);
+        soundWaveDropDown.addItemListener(e -> {
+            Oscillator.wave = (Oscillator.Wave)(e.getItem());
         });
 
         SpinnerModel minFreqSpinnerModel = new SpinnerNumberModel(200, 200, 1600, 1);
@@ -237,86 +357,34 @@ public class OptionsPanel extends JPanel {
         JSlider releaseSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         releaseSlider.addChangeListener(e -> { Oscillator.release = releaseSlider.getValue() / 100.0; });
 
-        JButton popOutButton = new JButton("Pop Out");
-        popOutButton.addActionListener(e -> {
-            if (v.optionsPoppedOut) {
-                popOutButton.setText("Pop Out");
-                v.popInOptions();
-            } else {
-                popOutButton.setText("Pop In");
-                v.popOutOptions();
-            }
-        });
-
-        setBackground(Color.GRAY);
-        
-        // Select sorter
-        addComponents(sorterDropDown);
-        
-        // select number of bars
-        addComponents("Number of bars:", barCountSpinner);
-
-        // generate array
-        addComponents(generateArrayButton);
-
-        // choose main delay
-        addComponents("Delay (ms):", delaySpinner);
-
-        // set volume (with slider)
-        addComponents("Volume:", volumeSlider);
-
-        // checkboxes
-        addComponents(borderActiveCheckBox, sortAscendingCheckBox, muteCheckBox);
-
-        // sort + stop
-        addComponents(sortButton, stopButton, shuffleButton);
-
-        // select colors
-        addComponents("Bar color:", barColorDropDown);
-        addComponents("Bar comparing color:", barComparingColorDropDown);
-        addComponents("Bar done color:", barDoneColorDropDown);
-        addComponents("Bar border color:", barBorderColorDropDown);
-        addComponents("Bar background color:", barBackgroundColorDropDown);
-
-        // more visual customisation settings
-        addComponents("Bar border width:", barBorderWidthSpinner);
-        addComponents(mergeBordersCheckBox);
-
-        addComponents("Margin size:", marginSizeSpinner);
-
-        addComponents(highlightCompareCheckBox, doneAnimationCheckBox);
-        
         // sound settings
-        addComponents("Minimum frequency:", minFreqSpinner);
-        addComponents("Maximum frequency:", maxFreqSpinner);
-        addComponents("Frequency scaler:", freqScalingDropDown);
-        addComponents("Sound wave:", soundWaveDropDown);
+        addComponents(soundPanel, "Minimum frequency:", minFreqSpinner);
+        addComponents(soundPanel, "Maximum frequency:", maxFreqSpinner);
+        addComponents(soundPanel, "Frequency scaler:", freqScalingDropDown);
+        addComponents(soundPanel, "Sound wave:", soundWaveDropDown);
 
-        addComponents("Sound length multiplier:", soundLengthMultiplierSpinner);
+        addComponents(soundPanel, "Sound length multiplier:", soundLengthMultiplierSpinner);
 
-        addComponents("Attack:", attackSlider);
-        addComponents("Hold:", holdSlider);
-        addComponents("Decay:", decaySlider);
-        addComponents("Sustain:", sustainSlider);
-        addComponents("Release:", releaseSlider);
-
-        // pop out options
-        addComponents(popOutButton);
+        addComponents(soundPanel, "Attack:", attackSlider);
+        addComponents(soundPanel, "Hold:", holdSlider);
+        addComponents(soundPanel, "Decay:", decaySlider);
+        addComponents(soundPanel, "Sustain:", sustainSlider);
+        addComponents(soundPanel, "Release:", releaseSlider);
     }
 
-    private void addComponents(String labelText, Component component) {
+    private void addComponents(JPanel panel, String labelText, Component component) {
         JLabel label = new JLabel(labelText);
-        addComponents(label, component);
+        addComponents(panel, label, component);
     }
 
-    private void addComponents(Component... components) {
+    private void addComponents(JPanel panel, Component... components) {
         Container container = new Container();
         container.setLayout(new FlowLayout(FlowLayout.CENTER));
         for (Component c : components) {
             container.add(c);
         }
         container.setMaximumSize(container.getPreferredSize());
-        add(container);
+        panel.add(container);
     }
 
     public static double getVolume() {
