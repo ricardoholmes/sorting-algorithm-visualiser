@@ -1,74 +1,62 @@
 package sortalgorithmvisualiser.mvc;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class GUIView implements IView {
-    Model model;
-    Controller controller;
+    private Model model;
+    private Controller controller;
 
-    JPanel mainPanel;
-    OptionsPanel optionsPanel;
-    BarPanel barsPanel;
+    private JFrame mainFrame;
+    private JPanel mainPanel;
+    // private JScrollPane scrollableOptionsPane;
+    private OptionsPanel optionsPanel;
+    private BarPanel barsPanel;
+
+    private JFrame optionsFrame;
+
+    public boolean optionsPoppedOut;
 
     @Override
     public void initialise(Model m, Controller c) {
         model = m;
         controller = c;
 
-        JFrame frame = new JFrame("Sorting Algorithm Visualiser");
-        frame.setPreferredSize(new Dimension(1280, 720));
-        frame.setMinimumSize(new Dimension(854, 480));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame = new JFrame("Sorting Algorithm Visualiser");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setPreferredSize(new Dimension(1280, 720));
+        mainFrame.setMinimumSize(new Dimension(640, 360));
 
-        mainPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints constraints = new GridBagConstraints();
-        frame.add(mainPanel);
+        mainPanel = new JPanel(new BorderLayout());
+        mainFrame.setContentPane(mainPanel);
 
-        optionsPanel = new OptionsPanel(controller, this, model);
-        optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
-
-        JScrollPane scrollableOptions = new JScrollPane(optionsPanel);
-
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.25;
-        constraints.weighty = 1;
-        constraints.gridx = 0;
-        constraints.gridy = 0;
-        mainPanel.add(scrollableOptions, constraints);
+        optionsPanel = new OptionsPanel(controller, model, this);
 
         barsPanel = new BarPanel(model, controller, optionsPanel);
-        barsPanel.setPreferredSize(new Dimension(1024, 720));
-        barsPanel.setPreferredSize(new Dimension(960, 720));
 
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 0.75;
-        constraints.weighty = 1;
-        constraints.gridx = 1;
-        constraints.gridy = 0;
-        mainPanel.add(barsPanel, constraints);
+        initialiseMainPanel();
 
-        frame.pack();
-        frame.setVisible(true);
+        mainFrame.pack();
+        mainFrame.setVisible(true);
 
         refreshView();
-        setBackground(BarPanel.barBackgroundColor);
+
+        optionsPoppedOut = false;
+    }
+
+    private void initialiseMainPanel() {
+        mainPanel.add(optionsPanel, BorderLayout.WEST);
+        mainPanel.add(barsPanel, BorderLayout.CENTER);
     }
 
     public void setBorderActive(boolean b) {
         barsPanel.setBorderActive(b);
         refreshView();
-    }
-
-    public void setBackground(Color color) {
-        mainPanel.setBackground(color);
     }
 
     @Override
@@ -80,5 +68,70 @@ public class GUIView implements IView {
     public void doneSorting() {
         barsPanel.doneSorting();
         Sound.stopSound();
+    }
+
+    public void popOutOptions() {
+        if (optionsFrame != null) {
+            optionsPoppedOut = true;
+            return;
+        }
+        
+        optionsPanel.popOutButton.setText("Pop In");
+
+        mainPanel.remove(barsPanel);
+
+        mainPanel.add(barsPanel, BorderLayout.CENTER);
+
+        optionsFrame = new JFrame("Options");
+        optionsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        optionsFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent event) {
+                popInOptions();
+            }
+        });
+
+        optionsFrame.setContentPane(optionsPanel);
+        optionsPanel.setPreferredSize(optionsPanel.getSize());
+
+        if (mainFrame.getExtendedState() != JFrame.MAXIMIZED_BOTH) {
+            optionsFrame.setLocation(mainFrame.getLocation());
+        }
+
+        optionsFrame.pack();
+        optionsFrame.setVisible(true);
+
+        mainFrame.revalidate();
+        mainFrame.repaint();
+
+        refreshView();
+        optionsFrame.setMinimumSize(new Dimension(optionsFrame.getWidth(), 360));
+
+        optionsPoppedOut = true;
+    }
+
+    public void popInOptions() {
+        if (optionsFrame == null) {
+            optionsPoppedOut = false;
+            return;
+        }
+
+        optionsPanel.popOutButton.setText("Pop Out");
+
+        optionsFrame.remove(optionsPanel);
+        optionsFrame.dispose();
+        optionsFrame = null;
+
+        mainPanel.remove(barsPanel);
+
+        initialiseMainPanel();
+
+        mainFrame.revalidate();
+        mainFrame.repaint();
+
+        refreshView();
+
+        optionsPoppedOut = false;
     }
 }

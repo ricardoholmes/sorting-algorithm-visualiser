@@ -90,7 +90,12 @@ public class Controller {
 		} catch (LineUnavailableException e) {}
 
 		sortThread = new Thread(() -> {
-			sorter.sort();
+			try {
+				sorter.sort();
+			} catch (Exception e) {
+				return;
+			}
+
 			if (isSorted(sortAscending)) {
 				view.doneSorting();
 			} else {
@@ -215,5 +220,6 @@ public class Controller {
 		int index2 = nums.indexOf(b);
 
 		BarPanel.comparingBars(index1, index2);
+		BarPanel.refresh();
     }
 }
