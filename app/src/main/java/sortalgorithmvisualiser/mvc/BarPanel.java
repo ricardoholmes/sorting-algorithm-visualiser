@@ -94,7 +94,9 @@ public class BarPanel extends JPanel {
             double delay = Controller.currentDelay;
 
             if (i + 1 < model.getArrayLength()) {
-                controller.setComparing(i, i+1);
+                int a = model.getValueAt(i);
+                int b = model.getValueAt(i + 1);
+                controller.setComparing(a, b);
             }
 
             repaint();
