@@ -135,7 +135,7 @@ public class OptionsPanel extends JPanel {
         popOutButton.setPreferredSize(new Dimension(navBarWidth, navBarHeight));
         add(popOutButton, BorderLayout.PAGE_END);
 
-        setBackground(Color.GRAY);
+        mainScrollPane.setBackground(Color.GRAY);
     }
 
     private void initialiseHomePanel() {
@@ -175,11 +175,6 @@ public class OptionsPanel extends JPanel {
         SpinnerModel delaySpinnerModel = new SpinnerNumberModel(5.0, 0, Integer.MAX_VALUE, 1);
         delaySpinner = new JSpinner(delaySpinnerModel);
 
-        JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
-        borderActiveCheckBox.addActionListener(e -> {
-            view.setBorderActive(borderActiveCheckBox.isSelected());
-        });
-
         sortAscendingCheckBox = new JCheckBox("Sort Ascending", true);
 
         muteCheckBox = new JCheckBox("Mute", false);
@@ -205,7 +200,7 @@ public class OptionsPanel extends JPanel {
         addComponents(homePanel, "Volume:", volumeSlider);
 
         // checkboxes
-        addComponents(homePanel, borderActiveCheckBox, sortAscendingCheckBox, muteCheckBox);
+        addComponents(homePanel, sortAscendingCheckBox, muteCheckBox);
 
         // sort + stop
         addComponents(homePanel, sortButton, stopButton, shuffleButton);
@@ -255,6 +250,11 @@ public class OptionsPanel extends JPanel {
             BarPanel.refresh();
         });
 
+        JCheckBox borderActiveCheckBox = new JCheckBox("Border", true);
+        borderActiveCheckBox.addActionListener(e -> {
+            view.setBorderActive(borderActiveCheckBox.isSelected());
+        });
+
         JCheckBox mergeBordersCheckBox = new JCheckBox("Merge Borders", false);
         mergeBordersCheckBox.addActionListener(e -> {
             BarPanel.mergeBorders = mergeBordersCheckBox.isSelected();
@@ -280,19 +280,21 @@ public class OptionsPanel extends JPanel {
             BarPanel.stopDoneAnimation();
         });
 
+        // margin
+        addComponents(graphicsPanel, "Margin size:", marginSizeSpinner);
+
         // select colors
         addComponents(graphicsPanel, "Bar color:", barColorDropDown);
         addComponents(graphicsPanel, "Bar comparing color:", barComparingColorDropDown);
         addComponents(graphicsPanel, "Bar done color:", barDoneColorDropDown);
         addComponents(graphicsPanel, "Bar border color:", barBorderColorDropDown);
         addComponents(graphicsPanel, "Bar background color:", barBackgroundColorDropDown);
-
-        // more visual customisation settings
+        
+        // border settings
         addComponents(graphicsPanel, "Bar border width:", barBorderWidthSpinner);
-        addComponents(graphicsPanel, mergeBordersCheckBox);
+        addComponents(graphicsPanel, borderActiveCheckBox, mergeBordersCheckBox);
 
-        addComponents(graphicsPanel, "Margin size:", marginSizeSpinner);
-
+        // toggle animations
         addComponents(graphicsPanel, highlightCompareCheckBox, doneAnimationCheckBox);
     }
 
