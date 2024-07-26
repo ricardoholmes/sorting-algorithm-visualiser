@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import sortalgorithmvisualiser.sorters.Sorter;
+
 public class StatsPanel extends JPanel {
     private Model model;
 
@@ -13,7 +15,6 @@ public class StatsPanel extends JPanel {
     private JLabel delayLabel;
     private JLabel accessesLabel;
     private JLabel comparisonsLabel;
-    private JLabel assignmentsLabel;
 
     public StatsPanel(Model m) {
         model = m;
@@ -35,10 +36,6 @@ public class StatsPanel extends JPanel {
         add(new JLabel("Comparisons:", JLabel.LEFT));
         comparisonsLabel = new JLabel("", JLabel.RIGHT);
         add(comparisonsLabel);
-
-        add(new JLabel("Assignments:", JLabel.LEFT));
-        assignmentsLabel = new JLabel("", JLabel.RIGHT);
-        add(assignmentsLabel);
     }
 
     @Override
@@ -50,6 +47,12 @@ public class StatsPanel extends JPanel {
 
         String delayText = getDelayText();
         delayLabel.setText(delayText);
+
+        int accesses = model.getAccessesCount();
+        accessesLabel.setText(Integer.toString(accesses));
+
+        int comparisons = Sorter.getComparisonsCount();
+        comparisonsLabel.setText(Integer.toString(comparisons));
     }
 
     private String getDelayText() {

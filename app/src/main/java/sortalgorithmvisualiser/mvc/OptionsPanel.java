@@ -90,11 +90,13 @@ public class OptionsPanel extends JPanel {
         });
 
         JButton homeButton = new JButton("Home");
+        homeButton.setMargin(new Insets(0, 0, 0, 0));
         homeButton.addActionListener(e -> {
             mainScrollPane.setViewportView(homePanel);
         });
 
         JButton soundButton = new JButton("Sound");
+        soundButton.setMargin(new Insets(0, 0, 0, 0));
         soundButton.addActionListener(e -> {
             mainScrollPane.setViewportView(soundPanel);
         });
@@ -106,6 +108,7 @@ public class OptionsPanel extends JPanel {
         });
 
         JButton statsButton = new JButton("Stats");
+        statsButton.setMargin(new Insets(0, 0, 0, 0));
         statsButton.addActionListener(e -> {
             mainScrollPane.setViewportView(statsPanel);
         });

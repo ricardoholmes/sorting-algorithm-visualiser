@@ -7,9 +7,11 @@ public abstract class Sorter {
     private double delay;
     protected int sizeOfArray;
     private boolean sortAscending;
-
+    
     protected boolean shouldStop;
-
+    
+    private static int comparisons = 0;
+    
     /**
      * @param c
      *      the controller
@@ -29,12 +31,20 @@ public abstract class Sorter {
         this.sizeOfArray = sizeOfArray;
         this.delay = delay;
         this.sortAscending = sortAscending;
+        comparisons = 0;
     }
 
     /**
      * @return the name of the sorting algorithm
      */
     public abstract String getName();
+
+    /**
+     * @return The number of comparisons made during the sorting so far
+     */
+    public static final int getComparisonsCount() {
+        return comparisons;
+    }
 
     /**
      * Sorts the list
@@ -56,6 +66,7 @@ public abstract class Sorter {
      *          the order given by {@code sortAscending}
      */
     protected final boolean inOrder(int a, int b) {
+        comparisons++;
         controller.setComparing(a, b);
         sleep();
 
