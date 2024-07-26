@@ -14,7 +14,7 @@ public class GUIView implements IView {
 
     private JFrame mainFrame;
     private JPanel mainPanel;
-    // private JScrollPane scrollableOptionsPane;
+
     private OptionsPanel optionsPanel;
     private BarPanel barsPanel;
 
@@ -62,6 +62,7 @@ public class GUIView implements IView {
     @Override
     public void refreshView() {
         barsPanel.repaint();
+        optionsPanel.repaint();
     }
 
     @Override
