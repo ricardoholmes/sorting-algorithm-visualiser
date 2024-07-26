@@ -1,10 +1,12 @@
 package sortalgorithmvisualiser.mvc;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import sortalgorithmvisualiser.sorters.Sorter;
 
@@ -19,23 +21,27 @@ public class StatsPanel extends JPanel {
     public StatsPanel(Model m) {
         model = m;
 
-        setLayout(new GridLayout(0, 2));
+        setLayout(new BorderLayout());
+        setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        add(new JLabel("Bar count:", JLabel.LEFT));
+        JPanel container = new JPanel(new GridLayout(0, 2, 0, 5));
+        add(container, BorderLayout.PAGE_START);
+
+        container.add(new JLabel("Bar count:", JLabel.LEFT));
         barCountLabel = new JLabel("", JLabel.RIGHT);
-        add(barCountLabel);
+        container.add(barCountLabel);
 
-        add(new JLabel("Delay:", JLabel.LEFT));
+        container.add(new JLabel("Delay:", JLabel.LEFT));
         delayLabel = new JLabel("", JLabel.RIGHT);
-        add(delayLabel);
+        container.add(delayLabel);
 
-        add(new JLabel("Array accesses:", JLabel.LEFT));
+        container.add(new JLabel("Array accesses:", JLabel.LEFT));
         accessesLabel = new JLabel("", JLabel.RIGHT);
-        add(accessesLabel);
+        container.add(accessesLabel);
 
-        add(new JLabel("Comparisons:", JLabel.LEFT));
+        container.add(new JLabel("Comparisons:", JLabel.LEFT));
         comparisonsLabel = new JLabel("", JLabel.RIGHT);
-        add(comparisonsLabel);
+        container.add(comparisonsLabel);
     }
 
     @Override
