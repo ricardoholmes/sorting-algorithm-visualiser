@@ -137,9 +137,7 @@ public class OptionsPanel extends JPanel {
         graphicsPanel.setLayout(new BoxLayout(graphicsPanel, BoxLayout.Y_AXIS));
         initialiseGraphicsPanel();
 
-        statsPanel = new JPanel();
-        statsPanel.setLayout(new BoxLayout(statsPanel, BoxLayout.Y_AXIS));
-        initialiseStatsPanel();
+        statsPanel = new StatsPanel();
 
         mainScrollPane = new JScrollPane(homePanel);
         add(mainScrollPane, BorderLayout.CENTER);
@@ -381,9 +379,6 @@ public class OptionsPanel extends JPanel {
         addComponents(soundPanel, "Decay:", decaySlider);
         addComponents(soundPanel, "Sustain:", sustainSlider);
         addComponents(soundPanel, "Release:", releaseSlider);
-    }
-
-    private void initialiseStatsPanel() {
     }
 
     private void addComponents(JPanel panel, String labelText, Component component) {
