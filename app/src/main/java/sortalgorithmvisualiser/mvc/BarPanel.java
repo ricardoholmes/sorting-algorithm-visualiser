@@ -77,6 +77,18 @@ public class BarPanel extends JPanel {
         barsComparing = Arrays.asList(index1, index2);
     }
 
+    public static double getBarWidth() {
+        double count = model.getArrayLength();
+        double totalWidth = instance.getWidth() - (marginSize * 2);
+        return totalWidth / count;
+    }
+
+    public static double getBarsPerHeight() {
+        double count = model.getArrayLength();
+        double totalHeight = instance.getHeight() - (marginSize * 2);
+        return count <= totalHeight ? 1 : count / totalHeight;
+    }
+
     public static void refresh() {
         instance.repaint();
     }
@@ -128,7 +140,7 @@ public class BarPanel extends JPanel {
 
         setBackground(barBackgroundColor);
 
-        int panelWidth = getSize().width - (marginSize * 2);
+        int panelWidth = getWidth() - (marginSize * 2);
 
         int maxBars = panelWidth;
         if (hasBorder && mergeBorders) {

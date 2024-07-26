@@ -80,6 +80,7 @@ public class Controller {
 
 		Controller.currentDelay = delay;
 
+		model.resetStats();
 		BarPanel.resetBars();
 
 		sorter = sorters[chosenSorterIndex];
@@ -136,7 +137,7 @@ public class Controller {
 	}
 
 	public int getNumAtIndex(int index) {
-		return model.getList()[index];
+		return model.getValueAt(index);
 	}
 
 	// the variable originally in position `i` will make the sound

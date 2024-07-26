@@ -6,6 +6,8 @@ public class Model {
     private int[] nums;
     private static int maxValueAtCreation;
 
+    public int accesses;
+
     public Model() {
 	}
 
@@ -14,6 +16,7 @@ public class Model {
     }
 
     public int getValueAt(int index) {
+        accesses++;
         return nums[index];
     }
 
@@ -63,6 +66,10 @@ public class Model {
         nums = newNumList;
     }
 
+    public void resetStats() {
+        accesses = 0;
+    }
+
     public void shuffle() {
         shuffleRange(0, nums.length);
     }
@@ -76,5 +83,9 @@ public class Model {
             nums[index] = nums[i];
             nums[i] = temp;
         }
+    }
+
+    public int getAccessesCount() {
+        return accesses;
     }
 }

@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -59,6 +60,7 @@ public class OptionsPanel extends JPanel {
     private JPanel homePanel;
     private JPanel soundPanel;
     private JPanel graphicsPanel;
+    private JPanel statsPanel;
 
     private JSpinner delaySpinner;
     private JSpinner barCountSpinner;
@@ -88,18 +90,27 @@ public class OptionsPanel extends JPanel {
         });
 
         JButton homeButton = new JButton("Home");
+        homeButton.setMargin(new Insets(0, 0, 0, 0));
         homeButton.addActionListener(e -> {
             mainScrollPane.setViewportView(homePanel);
         });
 
         JButton soundButton = new JButton("Sound");
+        soundButton.setMargin(new Insets(0, 0, 0, 0));
         soundButton.addActionListener(e -> {
             mainScrollPane.setViewportView(soundPanel);
         });
 
         JButton graphicsButton = new JButton("Graphics");
+        graphicsButton.setMargin(new Insets(0, 0, 0, 0));
         graphicsButton.addActionListener(e -> {
             mainScrollPane.setViewportView(graphicsPanel);
+        });
+
+        JButton statsButton = new JButton("Stats");
+        statsButton.setMargin(new Insets(0, 0, 0, 0));
+        statsButton.addActionListener(e -> {
+            mainScrollPane.setViewportView(statsPanel);
         });
         
         setLayout(new BorderLayout());
@@ -110,6 +121,7 @@ public class OptionsPanel extends JPanel {
         navBar.add(homeButton);
         navBar.add(graphicsButton);
         navBar.add(soundButton);
+        navBar.add(statsButton);
         int navBarWidth = getPreferredSize().width;
         int navBarHeight = homeButton.getPreferredSize().width;
         navBar.setPreferredSize(new Dimension(navBarWidth, navBarHeight));
@@ -127,6 +139,8 @@ public class OptionsPanel extends JPanel {
         graphicsPanel = new JPanel();
         graphicsPanel.setLayout(new BoxLayout(graphicsPanel, BoxLayout.Y_AXIS));
         initialiseGraphicsPanel();
+
+        statsPanel = new StatsPanel(model, view);
 
         mainScrollPane = new JScrollPane(homePanel);
         add(mainScrollPane, BorderLayout.CENTER);
