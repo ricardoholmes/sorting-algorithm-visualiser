@@ -12,14 +12,22 @@ import sortalgorithmvisualiser.sorters.Sorter;
 
 public class StatsPanel extends JPanel {
     private Model model;
+    private GUIView view;
 
     private JLabel barCountLabel;
     private JLabel delayLabel;
     private JLabel accessesLabel;
     private JLabel comparisonsLabel;
 
-    public StatsPanel(Model m) {
+    private JLabel barWidthLabel;
+    private JLabel barsPerHeightLabel;
+    private JLabel mainWindowDimensionsLabel;
+    private JLabel barPanelDimensionsLabel;
+    private JLabel optionsPanelDimensionsLabel;
+
+    public StatsPanel(Model m, GUIView v) {
         model = m;
+        view = v;
 
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -27,21 +35,41 @@ public class StatsPanel extends JPanel {
         JPanel container = new JPanel(new GridLayout(0, 2, 0, 5));
         add(container, BorderLayout.PAGE_START);
 
+        barCountLabel = new JLabel("\n", JLabel.RIGHT);
         container.add(new JLabel("Bar count:", JLabel.LEFT));
-        barCountLabel = new JLabel("", JLabel.RIGHT);
         container.add(barCountLabel);
 
+        delayLabel = new JLabel("\n", JLabel.RIGHT);
         container.add(new JLabel("Delay:", JLabel.LEFT));
-        delayLabel = new JLabel("", JLabel.RIGHT);
         container.add(delayLabel);
 
+        accessesLabel = new JLabel("\n", JLabel.RIGHT);
         container.add(new JLabel("Array accesses:", JLabel.LEFT));
-        accessesLabel = new JLabel("", JLabel.RIGHT);
         container.add(accessesLabel);
 
+        comparisonsLabel = new JLabel("\n", JLabel.RIGHT);
         container.add(new JLabel("Comparisons:", JLabel.LEFT));
-        comparisonsLabel = new JLabel("", JLabel.RIGHT);
         container.add(comparisonsLabel);
+
+        barWidthLabel = new JLabel("\n", JLabel.RIGHT);
+        container.add(new JLabel("Bar width:", JLabel.LEFT));
+        container.add(barWidthLabel);
+
+        barsPerHeightLabel = new JLabel("\n", JLabel.RIGHT);
+        container.add(new JLabel("Bars per height:", JLabel.LEFT));
+        container.add(barsPerHeightLabel);
+
+        mainWindowDimensionsLabel = new JLabel("\n", JLabel.RIGHT);
+        container.add(new JLabel("Main window:", JLabel.LEFT));
+        container.add(mainWindowDimensionsLabel);
+
+        barPanelDimensionsLabel = new JLabel("\n", JLabel.RIGHT);
+        container.add(new JLabel("Bar panel:", JLabel.LEFT));
+        container.add(barPanelDimensionsLabel);
+
+        optionsPanelDimensionsLabel = new JLabel("\n", JLabel.RIGHT);
+        container.add(new JLabel("Options panel:", JLabel.LEFT));
+        container.add(optionsPanelDimensionsLabel);
     }
 
     @Override
@@ -59,6 +87,23 @@ public class StatsPanel extends JPanel {
 
         int comparisons = Sorter.getComparisonsCount();
         comparisonsLabel.setText(Integer.toString(comparisons));
+
+        // graphics/visuals stats
+
+        Double barWidth = BarPanel.getBarWidth();
+        barWidthLabel.setText(String.format("%.2f pixels", barWidth));
+
+        Double barsPerHeight = BarPanel.getBarsPerHeight();
+        barsPerHeightLabel.setText(String.format("%.2f", barsPerHeight));
+
+        String mainWindowDimensions = view.getMainWindowDimensions();
+        mainWindowDimensionsLabel.setText(mainWindowDimensions);
+
+        String barPanelDimensions = view.getBarPanelDimensions();
+        barPanelDimensionsLabel.setText(barPanelDimensions);
+
+        String optionsPanelDimensions = view.getOptionsPanelDimensions();
+        optionsPanelDimensionsLabel.setText(optionsPanelDimensions);
     }
 
     private String getDelayText() {

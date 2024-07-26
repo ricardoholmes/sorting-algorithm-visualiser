@@ -16,7 +16,7 @@ public class GUIView implements IView {
     private JPanel mainPanel;
 
     private OptionsPanel optionsPanel;
-    private BarPanel barsPanel;
+    private BarPanel barPanel;
 
     private JFrame optionsFrame;
 
@@ -37,7 +37,7 @@ public class GUIView implements IView {
 
         optionsPanel = new OptionsPanel(controller, model, this);
 
-        barsPanel = new BarPanel(model, controller, optionsPanel);
+        barPanel = new BarPanel(model, controller, optionsPanel);
 
         initialiseMainPanel();
 
@@ -51,23 +51,23 @@ public class GUIView implements IView {
 
     private void initialiseMainPanel() {
         mainPanel.add(optionsPanel, BorderLayout.WEST);
-        mainPanel.add(barsPanel, BorderLayout.CENTER);
+        mainPanel.add(barPanel, BorderLayout.CENTER);
     }
 
     public void setBorderActive(boolean b) {
-        barsPanel.setBorderActive(b);
+        barPanel.setBorderActive(b);
         refreshView();
     }
 
     @Override
     public void refreshView() {
-        barsPanel.repaint();
+        barPanel.repaint();
         optionsPanel.repaint();
     }
 
     @Override
     public void doneSorting() {
-        barsPanel.doneSorting();
+        barPanel.doneSorting();
         Sound.stopSound();
     }
 
@@ -79,9 +79,9 @@ public class GUIView implements IView {
         
         optionsPanel.popOutButton.setText("Pop In");
 
-        mainPanel.remove(barsPanel);
+        mainPanel.remove(barPanel);
 
-        mainPanel.add(barsPanel, BorderLayout.CENTER);
+        mainPanel.add(barPanel, BorderLayout.CENTER);
 
         optionsFrame = new JFrame("Options");
         optionsFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -124,7 +124,7 @@ public class GUIView implements IView {
         optionsFrame.dispose();
         optionsFrame = null;
 
-        mainPanel.remove(barsPanel);
+        mainPanel.remove(barPanel);
 
         initialiseMainPanel();
 
@@ -134,5 +134,23 @@ public class GUIView implements IView {
         refreshView();
 
         optionsPoppedOut = false;
+    }
+
+    public String getMainWindowDimensions() {
+        int w = mainPanel.getWidth();
+        int h = mainPanel.getHeight();
+        return w + "x" + h;
+    }
+
+    public String getBarPanelDimensions() {
+        int w = barPanel.getWidth() - (BarPanel.marginSize * 2);
+        int h = barPanel.getHeight() - (BarPanel.marginSize * 2);
+        return w + "x" + h;
+    }
+
+    public String getOptionsPanelDimensions() {
+        int w = optionsPanel.getWidth();
+        int h = optionsPanel.getHeight();
+        return w + "x" + h;
     }
 }

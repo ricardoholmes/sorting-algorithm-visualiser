@@ -140,7 +140,7 @@ public class OptionsPanel extends JPanel {
         graphicsPanel.setLayout(new BoxLayout(graphicsPanel, BoxLayout.Y_AXIS));
         initialiseGraphicsPanel();
 
-        statsPanel = new StatsPanel(model);
+        statsPanel = new StatsPanel(model, view);
 
         mainScrollPane = new JScrollPane(homePanel);
         add(mainScrollPane, BorderLayout.CENTER);
