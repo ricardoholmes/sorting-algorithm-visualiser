@@ -142,12 +142,7 @@ public class Controller {
 
 	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
-		int[] nums = model.getList();
-		int temp = nums[j];
-		nums[j] = nums[i];
-		nums[i] = temp;
-		
-		model.updateList(nums);
+		model.swapIndexes(i, j);
 		view.refreshView();
 	}
 
@@ -157,25 +152,7 @@ public class Controller {
     }
 
 	public void moveNumber(int currentIndex, int newIndex) {
-		if (currentIndex == newIndex) {
-			return;
-		}
-		int[] nums = model.getList();
-		int currentNum = nums[currentIndex];
-
-		if (newIndex > currentIndex) {
-			for (int i = currentIndex; i < newIndex; i++) {
-				nums[i] = nums[i + 1];
-			}
-		}
-		else if (newIndex < currentIndex) {
-			for (int i = currentIndex; i > newIndex; i--) {
-				nums[i] = nums[i - 1];
-			}
-		}
-
-		nums[newIndex] = currentNum;
-		model.updateList(nums);
+		model.moveNumber(currentIndex, newIndex);
 		view.refreshView();
 	}
 

@@ -17,6 +17,7 @@ public class StatsPanel extends JPanel {
     private JLabel barCountLabel;
     private JLabel delayLabel;
     private JLabel accessesLabel;
+    private JLabel assignmentsLabel;
     private JLabel comparisonsLabel;
 
     private JLabel barWidthLabel;
@@ -35,39 +36,43 @@ public class StatsPanel extends JPanel {
         JPanel container = new JPanel(new GridLayout(0, 2, 0, 5));
         add(container, BorderLayout.PAGE_START);
 
-        barCountLabel = new JLabel("\n", JLabel.RIGHT);
+        barCountLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Bar count:", JLabel.LEFT));
         container.add(barCountLabel);
 
-        delayLabel = new JLabel("\n", JLabel.RIGHT);
+        delayLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Delay:", JLabel.LEFT));
         container.add(delayLabel);
 
-        accessesLabel = new JLabel("\n", JLabel.RIGHT);
+        accessesLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Array accesses:", JLabel.LEFT));
         container.add(accessesLabel);
 
-        comparisonsLabel = new JLabel("\n", JLabel.RIGHT);
+        comparisonsLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Comparisons:", JLabel.LEFT));
         container.add(comparisonsLabel);
 
-        barWidthLabel = new JLabel("\n", JLabel.RIGHT);
+        assignmentsLabel = new JLabel("", JLabel.RIGHT);
+        container.add(new JLabel("Assignments:", JLabel.LEFT));
+        container.add(assignmentsLabel);
+
+        barWidthLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Bar width:", JLabel.LEFT));
         container.add(barWidthLabel);
 
-        barsPerHeightLabel = new JLabel("\n", JLabel.RIGHT);
+        barsPerHeightLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Bars per height:", JLabel.LEFT));
         container.add(barsPerHeightLabel);
 
-        mainWindowDimensionsLabel = new JLabel("\n", JLabel.RIGHT);
+        mainWindowDimensionsLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Main window:", JLabel.LEFT));
         container.add(mainWindowDimensionsLabel);
 
-        barPanelDimensionsLabel = new JLabel("\n", JLabel.RIGHT);
+        barPanelDimensionsLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Bar panel:", JLabel.LEFT));
         container.add(barPanelDimensionsLabel);
 
-        optionsPanelDimensionsLabel = new JLabel("\n", JLabel.RIGHT);
+        optionsPanelDimensionsLabel = new JLabel("", JLabel.RIGHT);
         container.add(new JLabel("Options panel:", JLabel.LEFT));
         container.add(optionsPanelDimensionsLabel);
     }
@@ -87,6 +92,9 @@ public class StatsPanel extends JPanel {
 
         int comparisons = Sorter.getComparisonsCount();
         comparisonsLabel.setText(Integer.toString(comparisons));
+
+        int assignments = model.getAssignmentsCount();
+        assignmentsLabel.setText(Integer.toString(assignments));
 
         // graphics/visuals stats
 
