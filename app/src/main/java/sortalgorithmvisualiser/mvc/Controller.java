@@ -111,7 +111,6 @@ public class Controller {
 			return;
 		}
 
-		// Sound.stopSound();
 		Sound.stopSound();
 		sorter.stop();
 		BarPanel.stopDoneAnimation();
