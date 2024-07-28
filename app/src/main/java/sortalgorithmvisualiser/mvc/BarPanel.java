@@ -84,9 +84,11 @@ public class BarPanel extends JPanel {
     }
 
     public static double getBarsPerHeight() {
+        int minHeight = 1 + (2 * barBorderWidth);
+        int maxHeight = instance.getSize().height - (marginSize * 2);
+        double heightRange = maxHeight - minHeight;
         double count = model.getArrayLength();
-        double totalHeight = instance.getHeight() - (marginSize * 2);
-        return count <= totalHeight ? 1 : count / totalHeight;
+        return count / heightRange;
     }
 
     public static void refresh() {
@@ -141,9 +143,10 @@ public class BarPanel extends JPanel {
         setBackground(barBackgroundColor);
 
         int panelWidth = getWidth() - (marginSize * 2);
+        int panelHeight = getHeight() - (marginSize * 2);
 
         int maxBars = panelWidth;
-        int maxBorderWidth = (panelWidth - 1) / 2;
+        int maxBorderWidth = Math.min((panelWidth - 1) / 2, (panelHeight - 1) / 2);
         if (barBorderWidth > maxBorderWidth) {
             barBorderWidth = maxBorderWidth;
         }
@@ -179,13 +182,15 @@ public class BarPanel extends JPanel {
             }
         }
 
+        int minHeight = 1 + (2 * barBorderWidth);
         int maxHeight = getSize().height - (marginSize * 2);
+        int heightRange = maxHeight - minHeight;
 
         int tempSortedCount = sortedCount;
 
         int[] nums = model.getList();
         for (int i = 0; i < barCount; i++) {
-            int barHeight = (int)(maxHeight * ((double)nums[i] / model.getMaxValueAtCreation()));
+            int barHeight = (int)(heightRange * ((double)nums[i] / model.getMaxValueAtCreation())) + minHeight;
             int barWidth = baseBarWidth;
             if (barsWithExtraPixels.contains(nums[i])) {
                 barWidth++;
