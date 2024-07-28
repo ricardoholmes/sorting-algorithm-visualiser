@@ -73,6 +73,8 @@ public class OptionsPanel extends JPanel {
 
     public JButton popOutButton;
 
+    private JButton sortButton;
+
     private int maxBars;
 
     public OptionsPanel(Controller c, Model m, GUIView v) {
@@ -80,12 +82,17 @@ public class OptionsPanel extends JPanel {
         model = m;
         view = v;
 
-        popOutButton = new JButton("Pop Out");
-        popOutButton.addActionListener(e -> {
-            if (v.optionsPoppedOut) {
-                v.popInOptions();
-            } else {
-                v.popOutOptions();
+        sortButton = new JButton("Sort");
+        sortButton.addActionListener(e -> {
+            if (sortButton.getText().equals("Sort")) {
+                sortButton.setText("Stop");
+                double delay = (double)delaySpinner.getValue();
+                boolean ascending = sortAscendingCheckBox.isSelected();
+                controller.sort(delay, ascending);
+            }
+            else {
+                sortButton.setText("Sort");
+                controller.stopSorting();
             }
         });
 
@@ -145,9 +152,9 @@ public class OptionsPanel extends JPanel {
         mainScrollPane = new JScrollPane(homePanel);
         add(mainScrollPane, BorderLayout.CENTER);
 
-        // pop in/out
-        popOutButton.setPreferredSize(new Dimension(navBarWidth, navBarHeight));
-        add(popOutButton, BorderLayout.PAGE_END);
+        // sort + stop
+        sortButton.setPreferredSize(new Dimension(navBarWidth, navBarHeight));
+        add(sortButton, BorderLayout.PAGE_END);
 
         mainScrollPane.setBackground(Color.GRAY);
     }
@@ -157,18 +164,6 @@ public class OptionsPanel extends JPanel {
         JComboBox<String> sorterDropDown = new JComboBox<>(sortingAlgorithmNames);
         sorterDropDown.addItemListener(e -> {
             controller.selectSorter(sorterDropDown.getSelectedIndex());
-        });
-
-        JButton sortButton = new JButton("Sort");
-        sortButton.addActionListener(e -> {
-            double delay = (double)delaySpinner.getValue();
-            boolean ascending = sortAscendingCheckBox.isSelected();
-            controller.sort(delay, ascending);
-        });
-
-        JButton stopButton = new JButton("Stop");
-        stopButton.addActionListener(e -> {
-            controller.stopSorting();
         });
 
         JButton shuffleButton = new JButton("Shuffle");
@@ -198,14 +193,23 @@ public class OptionsPanel extends JPanel {
 
         volumeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 100);
 
+        popOutButton = new JButton("Pop Out");
+        popOutButton.addActionListener(e -> {
+            if (view.optionsPoppedOut) {
+                view.popInOptions();
+            } else {
+                view.popOutOptions();
+            }
+        });
+
         // Select sorter
         addComponents(homePanel, sorterDropDown);
         
         // select number of bars
         addComponents(homePanel, "Number of bars:", barCountSpinner);
 
-        // generate array
-        addComponents(homePanel, generateArrayButton);
+        // generate + shuffle array
+        addComponents(homePanel, generateArrayButton, shuffleButton);
 
         // choose main delay
         addComponents(homePanel, "Delay (ms):", delaySpinner);
@@ -216,8 +220,8 @@ public class OptionsPanel extends JPanel {
         // checkboxes
         addComponents(homePanel, sortAscendingCheckBox, muteCheckBox);
 
-        // sort + stop
-        addComponents(homePanel, sortButton, stopButton, shuffleButton);
+        // pop out
+        addComponents(homePanel, popOutButton);
     }
 
     private void initialiseGraphicsPanel() {
@@ -428,5 +432,9 @@ public class OptionsPanel extends JPanel {
 
         barCountSpinner.setValue(count);
         controller.generateList(count);
+    }
+
+    public void doneSorting() {
+        sortButton.setText("Sort");
     }
 }

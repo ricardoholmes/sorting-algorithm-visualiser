@@ -4,11 +4,13 @@ import java.util.Random;
 
 public class Model {
     private int[] nums;
-    private static int maxValueAtCreation;
+    private int maxValueAtCreation;
 
-    public int accesses;
+    private int accesses;
+    private int assignments;
 
     public Model() {
+        resetStats();
 	}
 
     public int[] getList() {
@@ -39,12 +41,37 @@ public class Model {
         shuffle();
     }
 
-    public void updateList(int[] newList) {
-        if (nums.length != newList.length) {
-            throw new IllegalArgumentException();
-        }
+    public void swapIndexes(int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+        accesses += 2;
+        assignments += 2;
+    }
 
-        nums = newList;
+    public void moveNumber(int currentIndex, int newIndex) {
+		if (currentIndex == newIndex) {
+			return;
+		}
+
+        int n = nums[currentIndex];
+        accesses++;
+		if (newIndex > currentIndex) {
+			for (int i = currentIndex; i < newIndex; i++) {
+				nums[i] = nums[i + 1];
+                accesses++;
+                assignments++;
+			}
+		}
+		else if (newIndex < currentIndex) {
+			for (int i = currentIndex; i > newIndex; i--) {
+				nums[i] = nums[i - 1];
+                accesses++;
+                assignments++;
+			}
+		}
+        nums[newIndex] = n;
+        assignments++;
     }
 
     public void removeValueAt(int index) {
@@ -68,6 +95,7 @@ public class Model {
 
     public void resetStats() {
         accesses = 0;
+        assignments = 0;
     }
 
     public void shuffle() {
@@ -87,5 +115,9 @@ public class Model {
 
     public int getAccessesCount() {
         return accesses;
+    }
+
+    public int getAssignmentsCount() {
+        return assignments;
     }
 }

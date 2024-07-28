@@ -1,5 +1,7 @@
 package sortalgorithmvisualiser.sorters;
 
+import org.w3c.dom.events.EventException;
+
 import sortalgorithmvisualiser.mvc.Controller;
 
 public abstract class Sorter {
@@ -8,7 +10,7 @@ public abstract class Sorter {
     protected int sizeOfArray;
     private boolean sortAscending;
     
-    protected boolean shouldStop;
+    private boolean shouldStop;
     
     private static int comparisons = 0;
     
@@ -32,6 +34,7 @@ public abstract class Sorter {
         this.delay = delay;
         this.sortAscending = sortAscending;
         comparisons = 0;
+        shouldStop = false;
     }
 
     /**
@@ -78,6 +81,28 @@ public abstract class Sorter {
         return sortAscending ^ (a > b);
     }
 
+    /**
+     * @param i
+     *      the index of a value from the list
+     * 
+     * @param j
+     *      the index of a value from the list, different to {@code i}
+     * 
+     * @param sortAscending
+     *      whether the list is being sorted in ascending order (true) or in
+     *      descending order (false)
+     * 
+     * @return
+     *      whether or not the element in position {@code i} should be followed by the
+     *      element in position {@code j} if sorted in
+     *      the order given by {@code sortAscending}
+     */
+    protected final boolean inOrderIndexes(int i, int j) {
+        int a = controller.getNumAtIndex(i);
+        int b = controller.getNumAtIndex(j);
+        return inOrder(a, b);
+    }
+
     protected final boolean isSorted() {
         for (int i = 0; i < sizeOfArray - 1; i++) {
             int a = controller.getNumAtIndex(i);
@@ -97,14 +122,17 @@ public abstract class Sorter {
             Thread.sleep(0, nanos);
         } catch (InterruptedException e) { }
 
+        if (shouldStop) {
+            throw new EventException((short)1, "Stop sorting"); // should get caught by the controller
+        }
         for (int i = 0; i < millis; i++) {
-            if (shouldStop) {
-                return;
-            }
-
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) { }
+
+            if (shouldStop) {
+                throw new EventException((short)1, "Stop sorting"); // should get caught by the controller
+            }
         }
     }
 

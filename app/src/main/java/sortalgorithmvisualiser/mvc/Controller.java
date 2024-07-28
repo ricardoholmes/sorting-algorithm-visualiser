@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.sound.sampled.LineUnavailableException;
 
+import org.w3c.dom.events.EventException;
+
 import sortalgorithmvisualiser.sorters.*;
 
 public class Controller {
@@ -17,12 +19,14 @@ public class Controller {
 		new SelectionSort(),
 		new InsertionSort(),
 		new CocktailSort(),
+		new CombSort(),
 		new QuickSort(),
 		new MergeSort(),
+		new BitonicSort(),
 		new HeapSort(),
 		new BogoSort(),
 		new StalinSort(),
-		new BogobogoSort()
+		new BogobogoSort(),
 	};
 
 	private Sorter sorter;
@@ -93,7 +97,7 @@ public class Controller {
 		sortThread = new Thread(() -> {
 			try {
 				sorter.sort();
-			} catch (Exception e) {
+			} catch (EventException e) {
 				return;
 			}
 
@@ -111,7 +115,6 @@ public class Controller {
 			return;
 		}
 
-		// Sound.stopSound();
 		Sound.stopSound();
 		sorter.stop();
 		BarPanel.stopDoneAnimation();
@@ -140,14 +143,8 @@ public class Controller {
 		return model.getValueAt(index);
 	}
 
-	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
-		int[] nums = model.getList();
-		int temp = nums[j];
-		nums[j] = nums[i];
-		nums[i] = temp;
-		
-		model.updateList(nums);
+		model.swapIndexes(i, j);
 		view.refreshView();
 	}
 
@@ -157,25 +154,7 @@ public class Controller {
     }
 
 	public void moveNumber(int currentIndex, int newIndex) {
-		if (currentIndex == newIndex) {
-			return;
-		}
-		int[] nums = model.getList();
-		int currentNum = nums[currentIndex];
-
-		if (newIndex > currentIndex) {
-			for (int i = currentIndex; i < newIndex; i++) {
-				nums[i] = nums[i + 1];
-			}
-		}
-		else if (newIndex < currentIndex) {
-			for (int i = currentIndex; i > newIndex; i--) {
-				nums[i] = nums[i - 1];
-			}
-		}
-
-		nums[newIndex] = currentNum;
-		model.updateList(nums);
+		model.moveNumber(currentIndex, newIndex);
 		view.refreshView();
 	}
 

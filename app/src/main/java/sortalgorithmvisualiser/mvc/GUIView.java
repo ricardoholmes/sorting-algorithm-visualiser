@@ -69,6 +69,7 @@ public class GUIView implements IView {
     public void doneSorting() {
         barPanel.doneSorting();
         Sound.stopSound();
+        optionsPanel.doneSorting();
     }
 
     public void popOutOptions() {

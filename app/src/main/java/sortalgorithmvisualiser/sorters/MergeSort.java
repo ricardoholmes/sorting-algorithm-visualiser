@@ -8,7 +8,6 @@ public class MergeSort extends Sorter {
 
     @Override
     public void sort() {
-        shouldStop = false;
         recursiveSort(0, sizeOfArray);
     }
 
@@ -27,10 +26,6 @@ public class MergeSort extends Sorter {
         int rightIndex = middle;
 
         while (leftIndex < rightIndex && rightIndex < end) {
-            if (shouldStop) {
-                return;
-            }
-
             int leftNum = controller.getNumAtIndex(leftIndex);
             int rightNum = controller.getNumAtIndex(rightIndex);
             if (inOrder(rightNum, leftNum)) {
