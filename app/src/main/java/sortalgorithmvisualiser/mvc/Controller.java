@@ -17,13 +17,14 @@ public class Controller {
 		new SelectionSort(),
 		new InsertionSort(),
 		new CocktailSort(),
+		new CombSort(),
 		new QuickSort(),
 		new MergeSort(),
-		new HeapSort(),
 		new BitonicSort(),
+		new HeapSort(),
 		new BogoSort(),
 		new StalinSort(),
-		new BogobogoSort()
+		new BogobogoSort(),
 	};
 
 	private Sorter sorter;
