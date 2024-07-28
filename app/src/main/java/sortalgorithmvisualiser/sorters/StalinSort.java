@@ -9,7 +9,7 @@ public class StalinSort extends Sorter {
     @Override
     public void sort() {
         int i = 1;
-        while (!shouldStop && i < sizeOfArray) {
+        while (i < sizeOfArray) {
             if (!inOrder(controller.getNumAtIndex(i-1), controller.getNumAtIndex(i))) {
                 controller.removeIndex(i);
                 sizeOfArray--;

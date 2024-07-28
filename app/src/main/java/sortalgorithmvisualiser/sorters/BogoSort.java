@@ -9,10 +9,6 @@ public class BogoSort extends Sorter {
     @Override
     public void sort() {
         while (!isSorted()) {
-            if (shouldStop) {
-                return;
-            }
-
             controller.shuffle();
         }
     }

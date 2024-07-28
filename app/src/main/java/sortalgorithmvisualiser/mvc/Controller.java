@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.sound.sampled.LineUnavailableException;
 
+import org.w3c.dom.events.EventException;
+
 import sortalgorithmvisualiser.sorters.*;
 
 public class Controller {
@@ -95,7 +97,7 @@ public class Controller {
 		sortThread = new Thread(() -> {
 			try {
 				sorter.sort();
-			} catch (Exception e) {
+			} catch (EventException e) {
 				return;
 			}
 

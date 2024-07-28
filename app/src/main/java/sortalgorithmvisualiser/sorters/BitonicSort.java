@@ -37,10 +37,6 @@ public class BitonicSort extends Sorter {
                 start++;
                 midpoint++;
             }
-
-            if (shouldStop) {
-                return;
-            }
         }
     }
 
@@ -65,10 +61,6 @@ public class BitonicSort extends Sorter {
         for (int i = start; i < start+k; i++) {
             if (inOrderIndexes(i+k, i) == direction) {
                 controller.swapIndexes(i, i+k);
-            }
-
-            if (shouldStop) {
-                return;
             }
         }
 

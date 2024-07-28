@@ -20,10 +20,6 @@ public class QuickSort extends Sorter {
         int pivotPos = start;
         int pivotVal = controller.getNumAtIndex(start);
         for (int i = start + 1; i < end; i++) {
-            if (shouldStop) {
-                return;
-            }
-
             if (inOrder(controller.getNumAtIndex(i), pivotVal)) {
                 controller.moveNumber(i, start);
                 pivotPos++;

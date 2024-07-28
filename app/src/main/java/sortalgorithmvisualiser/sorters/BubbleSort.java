@@ -13,10 +13,6 @@ public class BubbleSort extends Sorter {
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < sizeOfArray - 1 - iterations; i++) {
-                if (shouldStop) {
-                    return;
-                }
-
                 if (inOrder(controller.getNumAtIndex(i+1), controller.getNumAtIndex(i))) {
                     controller.swapIndexes(i, i+1);
                     sorted = false;

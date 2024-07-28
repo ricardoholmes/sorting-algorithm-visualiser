@@ -13,10 +13,6 @@ public class SelectionSort extends Sorter {
             int smallest = controller.getNumAtIndex(amountDone);
             int smallestIndex = amountDone;
             for (int i = amountDone; i < sizeOfArray; i++) {
-                if (shouldStop) {
-                    return;
-                }
-
                 int num = controller.getNumAtIndex(i);
 
                 if (inOrder(num, smallest)) {

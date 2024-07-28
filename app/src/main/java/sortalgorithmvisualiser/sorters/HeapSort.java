@@ -10,7 +10,7 @@ public class HeapSort extends Sorter {
     public void sort() {
         int start = sizeOfArray / 2;
         int end = sizeOfArray;
-        while (!shouldStop && end > 1) {
+        while (end > 1) {
             if (start > 0) {
                 start--;
             }
@@ -20,7 +20,7 @@ public class HeapSort extends Sorter {
             }
 
             int root = start;
-            while (!shouldStop && leftChild(root) < end) {
+            while (leftChild(root) < end) {
                 int rootVal = controller.getNumAtIndex(root);
 
                 int child = leftChild(root);

@@ -1,5 +1,7 @@
 package sortalgorithmvisualiser.sorters;
 
+import org.w3c.dom.events.EventException;
+
 import sortalgorithmvisualiser.mvc.Controller;
 
 public abstract class Sorter {
@@ -8,7 +10,7 @@ public abstract class Sorter {
     protected int sizeOfArray;
     private boolean sortAscending;
     
-    protected boolean shouldStop;
+    private boolean shouldStop;
     
     private static int comparisons = 0;
     
@@ -120,14 +122,17 @@ public abstract class Sorter {
             Thread.sleep(0, nanos);
         } catch (InterruptedException e) { }
 
+        if (shouldStop) {
+            throw new EventException((short)1, "Stop sorting"); // should get caught by the controller
+        }
         for (int i = 0; i < millis; i++) {
-            if (shouldStop) {
-                return;
-            }
-
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) { }
+
+            if (shouldStop) {
+                throw new EventException((short)1, "Stop sorting"); // should get caught by the controller
+            }
         }
     }
 
