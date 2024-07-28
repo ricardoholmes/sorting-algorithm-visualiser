@@ -1,6 +1,6 @@
 # Sorting Algorithm Visualiser
 
-![Screenshot of GUI](./assets/Example.png)
+![Screenshot of GUI](./assets/example.gif)
 
 ## License
 
