@@ -78,6 +78,28 @@ public abstract class Sorter {
         return sortAscending ^ (a > b);
     }
 
+    /**
+     * @param i
+     *      the index of a value from the list
+     * 
+     * @param j
+     *      the index of a value from the list, different to {@code i}
+     * 
+     * @param sortAscending
+     *      whether the list is being sorted in ascending order (true) or in
+     *      descending order (false)
+     * 
+     * @return
+     *      whether or not the element in position {@code i} should be followed by the
+     *      element in position {@code j} if sorted in
+     *      the order given by {@code sortAscending}
+     */
+    protected final boolean inOrderIndexes(int i, int j) {
+        int a = controller.getNumAtIndex(i);
+        int b = controller.getNumAtIndex(j);
+        return inOrder(a, b);
+    }
+
     protected final boolean isSorted() {
         for (int i = 0; i < sizeOfArray - 1; i++) {
             int a = controller.getNumAtIndex(i);
