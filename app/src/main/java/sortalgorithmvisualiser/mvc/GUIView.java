@@ -45,6 +45,7 @@ public class GUIView implements IView {
         mainFrame.setVisible(true);
 
         refreshView();
+        optionsPanel.setPreferredSize(optionsPanel.getSize());
 
         optionsPoppedOut = false;
     }

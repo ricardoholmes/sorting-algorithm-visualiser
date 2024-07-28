@@ -6,7 +6,7 @@
  * User Manual available at https://docs.gradle.org/8.1.1/userguide/building_java_projects.html
  */
 
-version = "1.0"
+version = "1.1"
 
 plugins {
     application
@@ -51,7 +51,7 @@ tasks.withType<Jar> {
 jlink {
     options = listOf("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
     launcher {
-        name = "sorting-algorithm-visualiser"
+        name = "Sorting Algorithm Visualiser"
     }
     jpackage {
         if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
