@@ -8,7 +8,6 @@ public class CocktailSort extends Sorter {
 
     @Override
     public void sort() {
-        shouldStop = false;
         boolean sorted = false;
         while (!sorted) {
             // sort forwards

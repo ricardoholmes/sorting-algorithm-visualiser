@@ -8,7 +8,6 @@ public class MergeSort extends Sorter {
 
     @Override
     public void sort() {
-        shouldStop = false;
         recursiveSort(0, sizeOfArray);
     }
 

@@ -141,7 +141,6 @@ public class Controller {
 		return model.getValueAt(index);
 	}
 
-	// the variable originally in position `i` will make the sound
 	public void swapIndexes(int i, int j) {
 		model.swapIndexes(i, j);
 		view.refreshView();

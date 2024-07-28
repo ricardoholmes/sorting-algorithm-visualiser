@@ -32,6 +32,7 @@ public abstract class Sorter {
         this.delay = delay;
         this.sortAscending = sortAscending;
         comparisons = 0;
+        shouldStop = false;
     }
 
     /**

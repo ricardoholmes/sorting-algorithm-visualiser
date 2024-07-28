@@ -27,6 +27,14 @@ public class CombSort extends Sorter {
                     controller.swapIndexes(i, i+gap);
                     sorted = false;
                 }
+
+                if (shouldStop) {
+                    return;
+                }
+            }
+
+            if (shouldStop) {
+                return;
             }
         }
     }

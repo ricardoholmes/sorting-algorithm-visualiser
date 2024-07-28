@@ -8,7 +8,6 @@ public class HeapSort extends Sorter {
 
     @Override
     public void sort() {
-        shouldStop = false;
         int start = sizeOfArray / 2;
         int end = sizeOfArray;
         while (!shouldStop && end > 1) {

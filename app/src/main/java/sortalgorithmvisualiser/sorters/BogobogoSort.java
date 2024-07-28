@@ -8,7 +8,6 @@ public class BogobogoSort extends Sorter {
 
     @Override
     public void sort() {
-        shouldStop = false;
         for (int i = 1; i < sizeOfArray; i++) {
             if (shouldStop) {
                 return;

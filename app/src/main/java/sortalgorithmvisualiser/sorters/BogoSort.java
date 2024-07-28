@@ -8,7 +8,6 @@ public class BogoSort extends Sorter {
 
     @Override
     public void sort() {
-        shouldStop = false;
         while (!isSorted()) {
             if (shouldStop) {
                 return;

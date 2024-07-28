@@ -8,7 +8,6 @@ public class BubbleSort extends Sorter {
 
     @Override
     public void sort() {
-        shouldStop = false;
         boolean sorted = false;
         int iterations = 0;
         while (!sorted) {
