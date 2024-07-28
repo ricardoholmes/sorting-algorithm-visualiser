@@ -143,6 +143,11 @@ public class BarPanel extends JPanel {
         int panelWidth = getWidth() - (marginSize * 2);
 
         int maxBars = panelWidth;
+        int maxBorderWidth = (panelWidth - 1) / 2;
+        if (barBorderWidth > maxBorderWidth) {
+            barBorderWidth = maxBorderWidth;
+        }
+
         if (hasBorder && mergeBorders) {
             maxBars -= barBorderWidth;
             maxBars /= 1 + barBorderWidth;
@@ -150,12 +155,7 @@ public class BarPanel extends JPanel {
         else if (hasBorder) {
             maxBars /= 1 + (2 * barBorderWidth);
         }
-        int maxBorderWidth = (panelWidth - 1) / 2;
         optionsPanel.setMaximums(maxBars, maxBorderWidth);
-
-        if (barBorderWidth > maxBorderWidth) {
-            barBorderWidth = maxBorderWidth;
-        }
         
         if (model.getArrayLength() > maxBars) {
             controller.generateList(maxBars);
