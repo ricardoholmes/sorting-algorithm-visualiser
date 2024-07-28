@@ -20,6 +20,7 @@ public class Controller {
 		new QuickSort(),
 		new MergeSort(),
 		new HeapSort(),
+		new BitonicSort(),
 		new BogoSort(),
 		new StalinSort(),
 		new BogobogoSort()
