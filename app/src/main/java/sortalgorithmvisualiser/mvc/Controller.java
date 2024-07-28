@@ -85,7 +85,10 @@ public class Controller {
 		Controller.currentDelay = delay;
 
 		model.resetStats();
-		BarPanel.resetBars();
+
+		if (view.getClass() == GUIView.class) {
+			BarPanel.resetBars();
+		}
 
 		sorter = sorters[chosenSorterIndex];
 		sorter.initialise(this, model.getArrayLength(), sortAscending, delay);
