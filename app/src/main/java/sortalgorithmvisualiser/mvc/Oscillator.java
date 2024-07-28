@@ -24,14 +24,6 @@ public class Oscillator {
     private int _end;
     private int _duration;
 
-    public Oscillator(double freq, int start) {
-        int duration = Sound.SAMPLE_RATE / 8;
-        _freq = freq;
-        _start = start;
-        _duration = duration;
-        _end = start + duration;
-    }
-
     public Oscillator(double freq, int start, int duration) {
         _freq = freq;
         _start = start;
@@ -101,7 +93,11 @@ public class Oscillator {
         }
         x -= hold;
 
-        return sustain / release * (release - x);
+        if (x < release) {
+            return sustain / release * (release - x);
+        }
+
+        return 0;
     }
 
     public void mix(double[] data, int p) {
