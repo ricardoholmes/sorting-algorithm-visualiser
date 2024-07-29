@@ -279,7 +279,7 @@ public class OptionsPanel extends JPanel {
             BarPanel.refresh();
         });
 
-        SpinnerModel marginSizeSpinnerModel = new SpinnerNumberModel(10, 0, Integer.MAX_VALUE, 1);
+        SpinnerModel marginSizeSpinnerModel = new SpinnerNumberModel(10, 0, 100, 1);
         JSpinner marginSizeSpinner = new JSpinner(marginSizeSpinnerModel);
         marginSizeSpinner.addChangeListener(e -> {
             BarPanel.marginSize = (int)marginSizeSpinner.getValue();
